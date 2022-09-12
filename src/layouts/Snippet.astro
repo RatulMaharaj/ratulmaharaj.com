@@ -16,7 +16,7 @@ const datetime = date.toISOString();
 const postDate = getLocaleTime(date);
 const currentPage = new URL(Astro.request.url).pathname;
 const allSnippets = await Astro.glob<Snippet>("../pages/snippets/*.mdx");
-console.log(allSnippets);
+
 const allSortedSnippets = sortMDByDate(allSnippets);
 const { prev, next } = getPreviousAndNextSnippets(
 	currentPage,

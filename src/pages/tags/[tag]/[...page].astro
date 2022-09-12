@@ -38,7 +38,6 @@ let blogs = []
 let snippets = []
 
 page.data.forEach(element => {
-	console.log(element)
 	if (element.frontmatter["layout"].replace("@/layouts/", "") == "Snippet"){
 		snippets.push(element)
 	} else {
@@ -46,9 +45,6 @@ page.data.forEach(element => {
 	}
 	
 });
-
-console.log("POSTS", blogs)
-console.log("SNIPPET", snippets)
 
 const { tag } = Astro.params;
 const meta = {
