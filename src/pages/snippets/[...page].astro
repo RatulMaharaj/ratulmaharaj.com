@@ -1,54 +1,54 @@
 ---
-import BlogPostPreview from "@/components/BlogPostPreview";
 import Pagination from "@/components/Paginator";
+import SnippetPreview from "@/components/SnippetPreview";
 import PageLayout from "@/layouts/Base";
-import type { MDXInstance, Page, Post } from "@/types";
+import type { MDXInstance, Page, Snippet } from "@/types";
 import { getAllTags, sortMDByDate } from "src/util";
 
 export async function getStaticPaths({ paginate }) {
-	const allPosts = await Astro.glob<Post>("./*.mdx");
-	const allPostsByDate = sortMDByDate(allPosts);
-	const allTags = getAllTags(allPosts);
-	return paginate(allPostsByDate, { props: { allTags }, pageSize: 10 });
+	const allSnippets = await Astro.glob<Snippet>("./*.mdx");
+	const allSnippetsByDate = sortMDByDate(allSnippets);
+	const allTags = getAllTags(allSnippets);
+	return paginate(allSnippetsByDate, { props: { allTags }, pageSize: 10 });
 }
 
 export interface Props {
-	page: Page<MDXInstance<Post>>;
+	page: Page<MDXInstance<Snippet>>;
 	allTags: string[];
 }
 
 const { page, allTags } = Astro.props as Props;
 
 const meta = {
-	title: "Posts",
-	description: "A collection of blog posts I've written.",
+	title: "Snippets",
+	description: "A collection of code snippets I find useful.",
 };
 
 const paginationProps = {
 	...(page.url.prev && {
 		prevUrl: {
 			url: page.url.prev,
-			text: `← Previous Posts`,
+			text: `← Previous`,
 		},
 	}),
 	...(page.url.next && {
 		nextUrl: {
 			url: page.url.next,
-			text: `Next Posts →`,
+			text: `Next →`,
 		},
 	}),
 };
 ---
 
 <PageLayout meta={meta}>
-	<h1 class="mb-6 title">Posts</h1>
+	<h1 class="mb-6 title">Snippets</h1>
 	<div class="grid gap-y-16 sm:grid-cols-[3fr_1fr] sm:gap-x-8">
-		<section aria-label="Blog post list">
+		<section aria-label="Blog Snippet list">
 			<ul class="text-left space-y-8">
 				{
 					page.data.map((p) => (
 						<li class="[&_q]:w-full flex flex-wrap items-center gap-x-2">
-							<BlogPostPreview post={p} as="h2" withDesc />
+							<SnippetPreview snippet={p} as="h2" withDesc />
 						</li>
 					))
 				}
@@ -83,7 +83,7 @@ const paginationProps = {
 								<a
 									class="flex items-center justify-center rounded-lg"
 									href={`/tags/${tag}`}
-									aria-label={`View all posts with the tag: ${tag}`}
+									aria-label={`View all Snippets with the tag: ${tag}`}
 								>
 									#{tag}
 								</a>

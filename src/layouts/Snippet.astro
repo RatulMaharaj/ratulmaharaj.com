@@ -1,40 +1,47 @@
 ---
 import Paginator from "@/components/Paginator";
-import type { Post } from "@/types";
-import { getLocaleTime, getPreviousAndNextPosts, sortMDByDate } from "src/util";
+import type { Snippet } from "@/types";
+import {
+	getLocaleTime,
+	getPreviousAndNextSnippets,
+	sortMDByDate,
+} from "src/util";
 import BaseLayout from "./Base.astro";
 
 const {
 	content: { title, description, publishDate, tags },
-	headings,
 } = Astro.props;
 const date = new Date(publishDate);
 const datetime = date.toISOString();
 const postDate = getLocaleTime(date);
 const currentPage = new URL(Astro.request.url).pathname;
-const allPosts = await Astro.glob<Post>("../pages/posts/*.mdx");
-const allSortedPosts = sortMDByDate(allPosts);
-const { prev, next } = getPreviousAndNextPosts(currentPage, allSortedPosts);
+const allSnippets = await Astro.glob<Snippet>("../pages/snippets/*.mdx");
+console.log(allSnippets);
+const allSortedSnippets = sortMDByDate(allSnippets);
+const { prev, next } = getPreviousAndNextSnippets(
+	currentPage,
+	allSortedSnippets
+);
 const paginationProps = {
 	...(prev && {
 		prevUrl: {
 			url: prev.url,
 			text: `← ${prev.frontmatter.title}`,
-			srLabel: " Previous Article:",
+			srLabel: " Previous Snippet:",
 		},
 	}),
 	...(next && {
 		nextUrl: {
 			url: next.url,
 			text: `${next.frontmatter.title} →`,
-			srLabel: "Next Article:",
+			srLabel: "Next Snippet:",
 		},
 	}),
 };
 ---
 
 <BaseLayout meta={{ title, description }}>
-	<div class="sm:grid sm:grid-cols-[3fr_1fr] sm:gap-x-10 sm:items-start">
+	<div class="sm:grid sm:grid-cols-[1fr] sm:items-start">
 		<article>
 			<h1 class="title">{title}</h1>
 			<span
@@ -79,27 +86,12 @@ const paginationProps = {
 			</span>
 			<p class="mt-8">{description}</p>
 			<div
+				id="snippet_container"
 				class="mt-12 prose prose-sm prose-cactus prose-headings:font-semibold prose-headings:before:content-['#'] prose-headings:before:text-accent prose-headings:before:absolute prose-headings:before:-ml-4 prose-th:before:content-none"
 			>
 				<slot />
 			</div>
 		</article>
-		<aside
-			class="invisible hidden text-right sm:sticky sm:top-20 sm:block sm:visible"
-		>
-			<h2 class="font-semibold">Table of Contents</h2>
-			<ul class="mt-4 text-xs space-y-2">
-				{
-					headings.map(({ slug, text }) => (
-						<li class="line-clamp-2 hover:text-accent">
-							<a href={`#${slug}`} aria-label={`Scroll to section: ${text}`}>
-								<span>&#35;</span> {text}
-							</a>
-						</li>
-					))
-				}
-			</ul>
-		</aside>
 	</div>
 	<div class="mt-24">
 		<Paginator {...paginationProps} />

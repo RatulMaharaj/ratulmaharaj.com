@@ -1,4 +1,4 @@
-import type { MDXInstance, Post } from "./types";
+import type { MDXInstance, Post, Snippet } from "./types";
 
 export function sortMDByDate(posts: MDXInstance<Post>[] = []) {
 	return posts.sort(
@@ -17,6 +17,18 @@ export function getPreviousAndNextPosts(
 	return {
 		prev: posts[index + 1] ?? null,
 		next: posts[index - 1] ?? null,
+	};
+}
+
+// This function expects the @arg posts to be sorted by sortMDByDate()
+export function getPreviousAndNextSnippets(
+	currentSlug: string,
+	snippets: MDXInstance<Snippet>[] = []
+) {
+	const index = snippets.findIndex(({ url }) => url === currentSlug);
+	return {
+		prev: snippets[index + 1] ?? null,
+		next: snippets[index - 1] ?? null,
 	};
 }
 

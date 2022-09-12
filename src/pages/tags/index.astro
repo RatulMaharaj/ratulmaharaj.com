@@ -1,14 +1,17 @@
 ---
 import PageLayout from "@/layouts/Base";
-import { getAllTagsWithCount } from "@/util";
 import type { Post } from "@/types";
+import { getAllTagsWithCount } from "@/util";
 
 const allPosts = await Astro.glob<Post>("../posts/*.mdx");
-const allTags = getAllTagsWithCount(allPosts);
+const allSnippets = await Astro.glob<Post>("../snippets/*.mdx");
+const allPostTags = getAllTagsWithCount(allPosts);
+const allSnippetTags = getAllTagsWithCount(allSnippets);
+const allTags = { ...allPostTags, ...allSnippetTags };
 
 const meta = {
-	title: "All Tags",
-	description: "All Tags from my blogs",
+	title: "Tags",
+	description: "All tags from my blog posts and snippets.",
 };
 ---
 
@@ -19,15 +22,20 @@ const meta = {
 			Object.keys(allTags).map((tag) => (
 				<li class="flex items-center gap-x-2">
 					<a
-						class="inline-block cactus-link"
+						class="cactus-link inline-block"
 						href={`/tags/${tag}`}
-						title={`View posts with the tag: ${tag}`}
+						title={`View posts or snippets with the tag: ${tag}`}
 					>
 						&#35;{tag}
 					</a>
 					<span class="inline-block">
 						- {allTags[tag]} Post{allTags[tag] > 1 && "s"}
 					</span>
+					{allSnippetTags[tag] && (
+						<span class="inline-block">
+							& {allSnippetTags[tag]} Snippet{allSnippetTags[tag] > 1 && "s"}
+						</span>
+					)}
 				</li>
 			))
 		}

@@ -1,19 +1,17 @@
-import { defineConfig } from "astro/config";
-import mdx from "@astrojs/mdx";
-import tailwind from "@astrojs/tailwind";
 import image from "@astrojs/image";
+import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
+import tailwind from "@astrojs/tailwind";
+import { defineConfig } from "astro/config";
 
 export default defineConfig({
 	markdown: {
-		shikiConfig: {
-			theme: "dracula",
-			wrap: true,
-		},
+		syntaxHighlight: 'prism',
 	},
-	site: "https://www.astro-theme-cactus.netlify.app",
+	site: "https://blog.ratulmaharaj.com",
 	integrations: [
-		mdx({}),
+		mdx({
+		}),
 		tailwind({
 			config: { applyBaseStyles: false },
 		}),

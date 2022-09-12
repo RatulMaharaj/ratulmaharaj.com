@@ -25,6 +25,13 @@ interface Post {
 	tags?: string[];
 }
 
+interface Snippet {
+	title: string;
+	description: string;
+	publishDate?: Date;
+	tags?: string[];
+}
+
 export type {
 	MDXInstance,
 	Page,
@@ -33,4 +40,5 @@ export type {
 	SiteMeta,
 	PaginationLink,
 	Post,
+	Snippet
 };

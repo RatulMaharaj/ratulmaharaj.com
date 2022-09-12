@@ -1,26 +1,26 @@
 ---
-import type { IElement, MDXInstance, Post } from "@/types";
+import type { IElement, MDXInstance, Snippet } from "@/types";
 import { getLocaleTime } from "@/util";
 export interface Props extends IElement {
-	post: MDXInstance<Post>;
+	snippet: MDXInstance<Snippet>;
 	withDesc?: boolean;
 }
 
-const { post, as: Element = "div", withDesc = false } = Astro.props as Props;
-const { publishDate } = post.frontmatter;
+const { snippet, as: Element = "div", withDesc = false } = Astro.props as Props;
+const { publishDate } = snippet.frontmatter;
 const date = new Date(publishDate);
 const datetime = date.toISOString();
-const postDate = getLocaleTime(date, { month: "short" });
+const snippetDate = getLocaleTime(date, { month: "short" });
 ---
 
 <div class="flex flex-col">
 	<div class="flex flex-row">
 		<time datetime={datetime} class="min-w-[120px] text-gray-500"
-			>{postDate}
+			>{snippetDate}
 		</time>
 		<Element>
-			<a href={post.url} class="inline-block cactus-link line-clamp-1">
-				{post.frontmatter.title}
+			<a href={snippet.url} class="inline-block cactus-link line-clamp-1">
+				{snippet.frontmatter.title}
 			</a>
 		</Element>
 	</div>
@@ -28,7 +28,7 @@ const postDate = getLocaleTime(date, { month: "short" });
 		{
 			withDesc && (
 				<p class="line-clamp-3 mt-3 block italic">
-					{post.frontmatter.description}
+					{snippet.frontmatter.description}
 				</p>
 			)
 		}
