@@ -15,11 +15,11 @@ const snippetDate = getLocaleTime(date, { month: "short" });
 
 <div class="flex flex-col">
 	<div class="flex flex-row">
-		<time datetime={datetime} class="min-w-[120px] text-gray-500"
+		<time datetime={datetime} class="min-w-[120px] text-gray-500 my-auto"
 			>{snippetDate}
 		</time>
 		<Element>
-			<a href={snippet.url} class="inline-block cactus-link line-clamp-1">
+			<a href={snippet.url} class="inline-block cactus-link">
 				{snippet.frontmatter.title}
 			</a>
 		</Element>

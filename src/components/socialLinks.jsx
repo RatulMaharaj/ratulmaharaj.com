@@ -7,7 +7,7 @@ import {
 
 export default function SocialLinks() {
 	return (
-		<ul class="flex flex-1 items-center gap-x-4 sm:flex-initial">
+		<ul className="flex flex-1 items-center gap-x-4 sm:flex-initial">
 			<li>
 				<a
 					className="inline-block py-2 px-1 text-lg sm:hover:text-link"
@@ -16,7 +16,7 @@ export default function SocialLinks() {
 					rel="noopener noreferrer"
 				>
 					<FaGithubAlt />
-					<span class="sr-only">Github</span>
+					<span className="sr-only">Github</span>
 				</a>
 			</li>
 			<li>
@@ -27,7 +27,7 @@ export default function SocialLinks() {
 					rel="noopener noreferrer"
 				>
 					<FaLinkedinIn />
-					<span class="sr-only">LinkedIn</span>
+					<span className="sr-only">LinkedIn</span>
 				</a>
 			</li>
 			<li>
@@ -38,7 +38,7 @@ export default function SocialLinks() {
 					rel="noopener noreferrer"
 				>
 					<FaTwitter />
-					<span class="sr-only">Twitter</span>
+					<span className="sr-only">Twitter</span>
 				</a>
 			</li>
 			<li>
@@ -49,7 +49,7 @@ export default function SocialLinks() {
 					rel="noopener noreferrer"
 				>
 					<FaEnvelope />
-					<span class="sr-only">Email</span>
+					<span className="sr-only">Email</span>
 				</a>
 			</li>
 		</ul>
