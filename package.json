@@ -1,7 +1,8 @@
 {
-	"name": "astro-cactus",
+	"name": "ratulmaharaj.com",
 	"version": "1.3.0",
 	"private": false,
+	"type": "module",
 	"scripts": {
 		"dev": "astro dev",
 		"start": "astro dev",

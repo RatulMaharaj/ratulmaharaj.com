@@ -3,7 +3,7 @@ import {
 	FaLinkedinIn,
 	FaTwitter,
 	FaEnvelope,
-} from "react-icons/fa";
+} from "react-icons/fa/index";
 
 export default function SocialLinks() {
 	return (

@@ -10,7 +10,7 @@ export default defineConfig({
   markdown: {
     syntaxHighlight: 'prism'
   },
-  site: "https://blog.ratulmaharaj.com",
+  site: "https://ratulmaharaj.com",
   integrations: [mdx({}), tailwind({
     config: {
       applyBaseStyles: false
