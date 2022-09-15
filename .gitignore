@@ -1,3 +1,9 @@
+# testing
+test.py
+snippet.py
+test.js
+snippet.js
+
 # build output
 dist/
 .output/
