@@ -12,7 +12,7 @@ A function is a block of code that is executed when it is called. It can take pa
 
 ## Why use functions?
 
-Functions are useful for creating reusable code. They can be used to perform a specific task. They can also be used to perform a specific task multiple times. They can also be used to perform a specific task multiple times with different parameters.
+Functions are useful for creating reusable code. They can be used to perform a specific task. They can also be used to perform a specific task multiple times or to perform a specific task multiple times with different parameters.
 
 ## Built-in functions
 
@@ -20,15 +20,15 @@ Python has a number of built-in functions. These are functions that are already 
 * `print()` which prints it's arguments to the screen,
 * `input()` which takes input from the user,
 * `len()` which returns the length of an object,
-* `type()` which returns the type of an object etc.
+* `type()` which returns the type of an object, and many others.
 
 ## User-defined functions
 
-User-defined or regular functions in python are custom functions which we can create with the `def` keyword. 
+User-defined or 'regular' functions in python are custom functions which we can create with the `def` keyword. 
 
 ### Arguments and return values
 
-They can take arguments and return values. The `return` keyword is used to return a value from a function. If no value is returned, the function returns `None`. The `return` keyword can also be used to exit a function early.
+User-defined functions can take arguments and return values. The `return` keyword is used to return a value from a function. If no value is returned, the function returns `None`. The `return` keyword can also be used to exit a function early.
 
 
 ```python
@@ -83,6 +83,8 @@ def add(a: int, b: int) -> int:
     return c
 ```
 
+The example above takes two integers and returns an integer.
+
 ### Default arguments
 
 Default arguments are used to specify a default value for an argument. If the argument is not passed to the function, the default value is used instead. Default arguments must be defined after all non-default arguments.
@@ -95,6 +97,7 @@ def add(a, b, c=0):
     return d
 
 add(1, 2) # returns 3
+add(1, 2, 3) # returns 6
 ```
 
 ### Arbitrary arguments (args)
@@ -218,6 +221,8 @@ def factorial(n):
 
 factorial(5) # returns 120
 ```
+
+I would be careful with these as they can cause infinite loops if not used correctly.
 
 ## Excersises
 
