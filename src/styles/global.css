@@ -65,8 +65,14 @@
 	}
 
 	#snippet_container pre {
-		@apply md:w-fit;
+		@apply mb-12 md:w-full md:max-w-full;
 	}
+
+	#snippet_container a {
+		@apply cactus-link;
+	}
+
 }
+
 @tailwind components;
 @tailwind utilities;

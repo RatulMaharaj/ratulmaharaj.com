@@ -28,12 +28,18 @@ const meta = {
 					>
 						&#35;{tag}
 					</a>
-					<span class="inline-block">
-						- {allTags[tag]} Post{allTags[tag] > 1 && "s"}
-					</span>
+					
+					{allPostTags[tag] && (<span class="inline-block">
+						- {allPostTags[tag]} Post{allPostTags[tag] > 1 ? "s": ""}
+					</span>)}
+
+					{
+						allPostTags[tag] && allSnippetTags[tag] ? <span>&#38;</span> : null
+					}
+
 					{allSnippetTags[tag] && (
 						<span class="inline-block">
-							& {allSnippetTags[tag]} Snippet{allSnippetTags[tag] > 1 && "s"}
+							{allSnippetTags[tag]} Snippet{allSnippetTags[tag] > 1 ? "s": ""}
 						</span>
 					)}
 				</li>

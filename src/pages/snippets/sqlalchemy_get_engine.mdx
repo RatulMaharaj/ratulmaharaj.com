@@ -1,0 +1,43 @@
+---
+layout: "@/layouts/Snippet"
+title: sqlalchemy_get_engine.py
+publishDate: 15 September 2022
+description: A simple function that creates a reuseable SQLalchemy engine.
+tags: ["python", "sqlalchemy"]
+---
+
+```py
+# Import required libraries
+from sqlalchemy import create_engine
+from sqlalchemy.engine import URL
+
+
+def get_engine(credentials: dict, db_driver: str = "ODBC Driver 17 for SQL Server"):
+    """Generate a resuable SQLalchemy engine object for mssql+pyodbc
+
+    Args:
+        credentials (dict): Should include keys for
+        "username", "password", "host", "port" and "database".
+
+        db_driver (str, optional): ODBC driver to use.
+        Defaults to "ODBC Driver 17 for SQL Server".
+
+    Returns:
+        Engine: SQLalchemy Engine object
+    """
+
+    # Generate the connection url
+    url = URL.create(
+        "mssql+pyodbc",
+        username=credentials["username"],
+        password=credentials["password"],
+        host=credentials["host"],
+        port=credentials["port"],
+        database=credentials["database"],
+        query=dict(driver=db_driver),
+    )
+
+    # Create and return an engine object
+    return create_engine(url, fast_executemany=True)
+
+```
