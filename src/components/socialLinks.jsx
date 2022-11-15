@@ -3,6 +3,7 @@ import {
 	FaLinkedinIn,
 	FaTwitter,
 	FaEnvelope,
+	FaMastodon
 } from "react-icons/fa/index";
 
 export default function SocialLinks() {
@@ -17,6 +18,17 @@ export default function SocialLinks() {
 				>
 					<FaGithubAlt />
 					<span className="sr-only">Github</span>
+				</a>
+			</li>
+			<li>
+				<a
+					className="inline-block py-2 px-1 text-lg sm:hover:text-link"
+					href="https://fosstodon.org/@RatulMaharaj"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					<FaMastodon />
+					<span className="sr-only">Mastodon</span>
 				</a>
 			</li>
 			<li>
