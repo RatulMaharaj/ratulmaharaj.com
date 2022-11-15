@@ -3,11 +3,11 @@
 	:root {
 		color-scheme: light;
 		--theme-bg: 210 20% 98%;
-		--theme-link: 234 89% 74%;
+		--theme-link: 239 84% 67%;
 		--theme-text: 202 10.5% 14.9%;
-		--theme-accent: 234 89% 74%;
+		--theme-accent: 239 84% 67%;
 		--theme-accent-2: 0 0% 6.7%;
-		--theme-quote: 234 89% 74%;
+		--theme-quote: 239 84% 67%;
 		--theme-menu-bg: hsl(210, 20%, 98% / 0.85);
 		/* Code theme */
 		--prism-background: #f3f4f6;
@@ -15,17 +15,17 @@
 		/* Code theme tokens */
 		--prism-token-constant: #b48ead;
 		--prism-token-string: #a855f7;
-		--prism-token-string-expression: #a855f7;
+		--prism-token-string-expression: #94a3b8;
 		--prism-token-comment: #94a3b8 ;
 		--prism-token-keyword: #6366f1;
-		--prism-token-operator: #a5b4fc;
+		--prism-token-operator: #818cf8;
 		--prism-token-parameter: #aa0000;
 		--prism-token-function: #a21caf;
-		--prism-token-punctuation: #a5b4fc;
+		--prism-token-punctuation: #818cf8;
 		--prism-token-link: #ee0000;
 		--prism-token-number: #b48ead;
 		--prism-token-important: #bf616a;
-		--prism-token-boolean: #a5b4fc;
+		--prism-token-boolean: #d946ef;
 	}
 
 	:root.dark {
@@ -42,8 +42,8 @@
 		--prism-color-text: #f8f8f2;
 		/* Code theme tokens */
 		--prism-token-constant: #b48ead;
-		--prism-token-string:#d8b4fe;
-		--prism-token-string-expression: #d8b4fe;
+		--prism-token-string:#a78bfa;
+		--prism-token-string-expression: #94a3b8;
 		--prism-token-comment: #94a3b8;
 		--prism-token-keyword: #a5b4fc;
 		--prism-token-operator: #a5b4fc;
@@ -53,7 +53,7 @@
 		--prism-token-link: #ee0000;
 		--prism-token-number: #93c5fd;
 		--prism-token-important: #bf616a;
-		--prism-token-boolean: #a5b4fc;
+		--prism-token-boolean: #e879f9;
 	}
 
 	html {
