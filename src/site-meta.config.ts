@@ -6,6 +6,7 @@ const siteMeta = {
   githubUrl: "https://github.com/ratulmaharaj/ratulmaharaj.com",
   themeColorLight: "#f9fafb",
   themeColorDark: "#111827",
+  image: "/images/og-image.png",
 }
 
 export default siteMeta;

@@ -1,8 +1,8 @@
 <p align="center">
-  <img alt="Astro Theme Cactus logo" src="./public/images/astro-theme-cactus.png" width="70" />
+  <img alt="Astro Theme Cactus logo" src="./public/images/og-image.png" width="1200" />
 </p>
 <h1 align="center">
-  Astro Theme Cactus 🚀🌵
+  Inspired heavily by Astro Theme Cactus 🚀🌵
 </h1>
 
 > Astro Theme Cactus is a simple opinionated starter built with the Astro framework. Use it to create an easy-to-use blog or website.
