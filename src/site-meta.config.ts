@@ -1,11 +1,11 @@
 const siteMeta = {
-  title: "Ratul Maharaj",
-  description: "Personal website and blog of Ratul Maharaj.",
+  title: "Ratul's Blog",
+  description: "Blog posts and code snippets by Ratul Maharaj.",
   lang: "en-ZA",
   ogLocale: "en_ZA",
   githubUrl: "https://github.com/ratulmaharaj/ratulmaharaj.com",
-  themeColorLight: "#fafafa",
-  themeColorDark: "#1d1f21",
+  themeColorLight: "#f9fafb",
+  themeColorDark: "#111827",
 }
 
 export default siteMeta;

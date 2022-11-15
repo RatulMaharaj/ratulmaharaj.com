@@ -1,7 +1,7 @@
 {
-	"name": "Astro Theme Cactus Demo",
-	"short_name": "Astro_Cactus",
-	"description": "Starter blog site for Astro",
+	"name": "A blog by Ratul Maharaj",
+	"short_name": "Ratul's Blog",
+	"description": "Blog posts and code snippets by Ratul Maharaj",
 	"icons": [
 		{
 			"src": "images/icon/192x192.png",
@@ -15,7 +15,7 @@
 		}
 	],
 	"start_url": "/",
-	"background_color": "#1d1f21",
-	"theme_color": "#2bbc8a",
+	"background_color": "#111827",
+	"theme_color": "#6366f1",
 	"display": "standalone"
 }
