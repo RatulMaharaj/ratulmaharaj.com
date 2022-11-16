@@ -25,7 +25,7 @@ export default function SocialLinks() {
 					className="inline-block py-2 px-1 text-lg sm:hover:text-link"
 					href="https://fosstodon.org/@RatulMaharaj"
 					target="_blank"
-					rel="noopener noreferrer"
+					rel="me"
 				>
 					<FaMastodon />
 					<span className="sr-only">Mastodon</span>
