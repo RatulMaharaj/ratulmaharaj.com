@@ -39,6 +39,32 @@ const {
 				colorThemeMetaTag.setAttribute("content", siteMeta.themeColorLight);
 			}
 		</script>
+
+		<script>
+		// get code blocks
+		const codeBlocks = document.querySelectorAll('pre code')
+
+		// loop through code blocks
+		codeBlocks.forEach((block: any, index) => {
+			// Add copy to clipboard button
+			const button = document.createElement('button')
+			button.className = 'copy'
+			button.innerText = 'Copy'
+			block.parentNode.appendChild(button)
+
+
+			// Add copy to clipboard functionality using navigator.clipboard
+			button.addEventListener('click', () => {
+				navigator.clipboard.writeText(block.innerText).then(() => {
+					button.innerText = 'Copied!'
+					setTimeout(() => {
+						button.innerText = 'Copy'
+					}, 2000)
+				})
+			})
+			
+		})
+	</script>
 	</head>
 	<body>
 		<SkipLink />
