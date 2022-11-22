@@ -13,7 +13,7 @@ Python has the ability to simplify the way in which we work with files. This is 
 
 We will start off by looking at some of the built in functions that we can use to read, write and delete data from files. Thereafter, we will look at how we can leverage the functionality within the pandas library to work with our data.
 
-### Working directories
+## Working directories
 
 Before we can start working with files, we need some way of telling python which directory our files live in. There are multiple ways to do so e.g. you can use the os module to change the working directory. However, I prefer to use the `pathlib` module as it is more intuitive and a little easier to use.
 
@@ -37,7 +37,7 @@ We can now easily refer to files within the working_directory using a relative p
 file_path = working_directory / 'data.csv'
 ```
 
-### Writing files
+## Writing files
 
 To write to a file we will be using the `open()` function. This function takes two arguments, the file name and the mode. The mode can be either `r` for read, `w` for write or `a` for append. The default mode is `r` if no mode is specified. The `open()` function returns a file object, which has a `write()` method for writing to the file.
 
@@ -49,7 +49,7 @@ file.close()
 ```
 
 
-### Reading files
+## Reading files
 
 To read a file we can again use the `open()` function. This time we will specify the mode as `r` for read.
 
@@ -91,7 +91,7 @@ content = file.readlines()
 file.close()
 ```
 
-### Deleting files
+## Deleting files
 
 To delete a file we will be using the `remove()` function from the `os` module. This function takes the path to the file as an argument and returns `None` if the file is deleted successfully.
 
@@ -103,7 +103,7 @@ import os
 os.remove(working_directory / "file.txt")
 ```
 
-### Using _with_ statements
+## Using _with_ statements
 
 The `open()` function returns a file object, which has a `close()` method for closing the file. However, if an exception is raised when we are performing operations on the file, the `close()` method will not be called and the file will remain open. This can lead to errors when trying to perform operations on the file. To avoid this, we can use a `with` statement. This will automatically close the file once we are done with it.
 
@@ -113,7 +113,7 @@ with open(working_directory / "file.txt", "w") as file:
     file.write("Hello world!")
 ```
 
-## Let pandas do the heavy lifting
+## Using pandas
 
 When working with data, we will often need to read data from a file and store it in a data structure. This is where the pandas library comes in handy. The pandas library has a `read_csv()` function which can be used to read data from a csv file and store it in a pandas dataframe. The `read_csv()` function takes the path to the file as an argument and returns a pandas dataframe.
 
