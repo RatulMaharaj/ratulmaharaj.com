@@ -4,10 +4,11 @@ import type { Post } from "@/types";
 import { getLocaleTime, getPreviousAndNextPosts, sortMDByDate } from "src/util";
 import BaseLayout from "./Base.astro";
 
-const {
+let {
 	content: { title, description, publishDate, tags },
 	headings,
 } = Astro.props;
+headings = headings.filter((heading) => heading.depth < 3);
 const date = new Date(publishDate);
 const datetime = date.toISOString();
 const postDate = getLocaleTime(date);
