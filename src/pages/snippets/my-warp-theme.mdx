@@ -1,0 +1,42 @@
+---
+layout: "@/layouts/Snippet"
+title: nightwind.yaml
+publishDate: 28 November 2022
+description: A custom warp terminal theme.
+tags: ["warp", "theme", "terminal"]
+---
+
+Here's a quick look at the terminal and what the theme looks like:
+
+<video controls style="margin: 1em 0;">
+    <source src="/video/warp-nightwind-demo.mp4" type="video/mp4"></source>
+</video>
+
+
+```yaml
+accent: "#4f46e5"
+background: "#111827"
+foreground: "#f9fafb"
+details: "darker"
+terminal_colors:
+  normal:
+    black: "#616161"
+    red: "#ef4444"
+    green: "#84cc16"
+    yellow: "#eab308"
+    blue: "#3b82f6"
+    magenta: "#8b5cf6"
+    cyan: "#0891b2"
+    white: "#f9fafb"
+  bright:
+    black: "#616161"
+    red: "#dc2626"
+    green: "#a3e635"
+    yellow: "#facc15"
+    blue: "#2563eb"
+    magenta: "#7c3aed"
+    cyan: "#06b6d4"
+    white: "#ffffff"
+```
+
+Save the yaml above as `nightwind.yaml` in your `~/.config/warp/themes` directory. Be sure to also check out the matching Nightwind VS Code theme!
