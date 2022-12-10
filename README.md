@@ -65,7 +65,7 @@ Adding a post is a simple as adding your .mdx file(s) to the `src/pages/posts/` 
 | layout                 | This is used to import [Markdown Layouts](https://docs.astro.build/en/core-concepts/layouts/#markdown-layouts), this theme uses `src/layouts/BlogPost.astro` as a wrapper for all blog posts. |
 | title \*               | Self explanatory. Used as the text link to the post, the h1 on the posts' page, and the pages' title property                                                                                 |
 | description \*         | Similar to above, used as the seo description property                                                                                                                                        |
-| publishDate \*         | Again pretty simple. To change the date format/locale, currently **en-GB**, update/pass the **locale** arg to function **getLocaleTime**, found in `src/util.ts`.                             |
+| pubDate \*         | Again pretty simple. To change the date format/locale, currently **en-GB**, update/pass the **locale** arg to function **getLocaleTime**, found in `src/util.ts`.                             |
 | tags                   | Tags are optional. Any new tag(s) will be shown in `yourdomain.com/posts` + `yourdomain.com/tags`, and generate the page(s) `yourdomain.com/tags/[yourTag]`                                   |
 
 ## Deploy

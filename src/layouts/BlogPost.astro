@@ -5,11 +5,11 @@ import { getLocaleTime, getPreviousAndNextPosts, sortMDByDate } from "src/util";
 import BaseLayout from "./Base.astro";
 
 let {
-	content: { title, description, publishDate, tags },
+	content: { title, description, pubDate, tags },
 	headings,
 } = Astro.props;
 headings = headings.filter((heading) => heading.depth < 3);
-const date = new Date(publishDate);
+const date = new Date(pubDate);
 const datetime = date.toISOString();
 const postDate = getLocaleTime(date);
 const currentPage = new URL(Astro.request.url).pathname;

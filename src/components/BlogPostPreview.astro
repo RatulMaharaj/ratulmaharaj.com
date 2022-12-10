@@ -7,8 +7,8 @@ export interface Props extends IElement {
 }
 
 const { post, as: Element = "div", withDesc = false } = Astro.props as Props;
-const { publishDate } = post.frontmatter;
-const date = new Date(publishDate);
+const { pubDate } = post.frontmatter;
+const date = new Date(pubDate);
 const datetime = date.toISOString();
 const postDate = getLocaleTime(date, { month: "short" });
 ---

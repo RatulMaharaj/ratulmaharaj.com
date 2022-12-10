@@ -9,9 +9,9 @@ import {
 import BaseLayout from "./Base.astro";
 
 const {
-	content: { title, description, publishDate, tags },
+	content: { title, description, pubDate, tags },
 } = Astro.props;
-const date = new Date(publishDate);
+const date = new Date(pubDate);
 const datetime = date.toISOString();
 const postDate = getLocaleTime(date);
 const currentPage = new URL(Astro.request.url).pathname;

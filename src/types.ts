@@ -21,14 +21,14 @@ type PaginationLink = {
 interface Post {
 	title: string;
 	description: string;
-	publishDate?: Date;
+	pubDate?: Date;
 	tags?: string[];
 }
 
 interface Snippet {
 	title: string;
 	description: string;
-	publishDate?: Date;
+	pubDate?: Date;
 	tags?: string[];
 }
 
