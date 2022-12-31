@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="Astro Theme Cactus logo" src="./public/images/og-image.png" width="1200" />
+  <img alt="Astro Theme Cactus logo" src="./public/images/og-image.webp" width="1200" />
 </p>
 <h1 align="center">
   Inspired heavily by Astro Theme Cactus 🚀🌵
