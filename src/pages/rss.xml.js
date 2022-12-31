@@ -1,7 +1,7 @@
 import rss from '@astrojs/rss';
 const postImportResult = import.meta.glob('./posts/*.{md,mdx}', { eager: true });
 const posts = Object.values(postImportResult);
-import { siteMeta } from "../site-meta.config"
+import  siteMeta  from "../site-meta.config"
 
 export const get = () => rss({
   title: `Ratul's Blog`,
