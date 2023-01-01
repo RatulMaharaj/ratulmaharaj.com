@@ -1,8 +1,7 @@
 import {
 	FaGithubAlt,
 	FaLinkedinIn,
-	FaTwitter,
-	FaEnvelope,
+	FaRssSquare,
 	FaMastodon
 } from "react-icons/fa/index";
 
@@ -45,23 +44,12 @@ export default function SocialLinks() {
 			<li>
 				<a
 					className="inline-block px-1 py-2 text-lg sm:hover:text-link"
-					href="https://twitter.com/RatulMaharaj"
+					href="/rss.xml"
 					target="_blank"
 					rel="noopener noreferrer"
 				>
-					<FaTwitter />
-					<span className="sr-only">Twitter</span>
-				</a>
-			</li>
-			<li>
-				<a
-					className="inline-block px-1 py-2 text-lg sm:hover:text-link"
-					href="mailto:ratulmaharaj@looped.co.za"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					<FaEnvelope />
-					<span className="sr-only">Email</span>
+					<FaRssSquare />
+					<span className="sr-only">RSS</span>
 				</a>
 			</li>
 		</ul>
