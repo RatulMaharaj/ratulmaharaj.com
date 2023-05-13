@@ -7,7 +7,7 @@ import { getAllTags, sortMDByDate } from "src/util";
 import Tags from "@/components/Tags";
 
 export async function getStaticPaths({ paginate }) {
-	const allPosts = await Astro.glob<Post>("./*.mdx");
+	const allPosts = await Astro.glob<Post>("./*.md");
 	const allPostsByDate = sortMDByDate(allPosts);
 	const allTags = getAllTags(allPosts);
 	return paginate(allPostsByDate, { props: { allTags }, pageSize: 10 });

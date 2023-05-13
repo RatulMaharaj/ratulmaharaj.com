@@ -17,6 +17,7 @@ Functions are useful for creating reusable code. They can be used to perform a s
 ## Built-in functions
 
 Python has a number of built-in functions. These are functions that are already defined in the Python language. They can be used without having to define them. Some of the most common built-in functions are:
+
 * `print()` which prints it's arguments to the screen,
 * `input()` which takes input from the user,
 * `len()` which returns the length of an object,
@@ -24,12 +25,11 @@ Python has a number of built-in functions. These are functions that are already 
 
 ## User-defined functions
 
-User-defined or 'regular' functions in python are custom functions which we can create with the `def` keyword. 
+User-defined or 'regular' functions in python are custom functions which we can create with the `def` keyword.
 
 ### Arguments and return values
 
 User-defined functions can take arguments and return values. The `return` keyword is used to return a value from a function. If no value is returned, the function returns `None`. The `return` keyword can also be used to exit a function early.
-
 
 ```python
 # Example of arguments and return values
@@ -144,6 +144,7 @@ add = lambda a, b: a + b
 
 add(1, 2) # returns 3
 ```
+
 ### Lamda functions in pandas
 
 Lamda functions are useful when used with pandas. They can be used to create new columns in a dataframe.

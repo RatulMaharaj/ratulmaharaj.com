@@ -5,7 +5,7 @@ import type { MDXInstance,Page,Post,Snippet } from "@/types";
 import { getAllTags,sortMDByDate } from "@/util";
 
 export async function getStaticPaths({ paginate }) {
-	const allPosts = await Astro.glob<Post>("../../posts/*.mdx");
+	const allPosts = await Astro.glob<Post>("../../posts/*.md");
 	const allSnippets = await Astro.glob<Snippet>("../../snippets/*.mdx");
 	const allPostsByDate = sortMDByDate(allPosts);
 	const allSnippetsByDate = sortMDByDate(allSnippets);

@@ -3,7 +3,7 @@ import PageLayout from "@/layouts/Base";
 import type { Post } from "@/types";
 import { getAllTagsWithCount } from "@/util";
 
-const allPosts = await Astro.glob<Post>("../posts/*.mdx");
+const allPosts = await Astro.glob<Post>("../posts/*.md");
 const allSnippets = await Astro.glob<Post>("../snippets/*.mdx");
 const allPostTags = getAllTagsWithCount(allPosts);
 const allSnippetTags = getAllTagsWithCount(allSnippets);

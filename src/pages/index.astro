@@ -12,7 +12,7 @@ const meta = {
 
 const MAX_POSTS = 10;
 const MAX_SNIPPETS = 5;
-const allPosts = await Astro.glob<Post>("./posts/*.mdx");
+const allPosts = await Astro.glob<Post>("./posts/*.md");
 const allSnippets = await Astro.glob<Snippet>("./snippets/*.mdx");
 const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 const allSnippetsByDate = sortMDByDate(allSnippets).slice(0, MAX_SNIPPETS);
