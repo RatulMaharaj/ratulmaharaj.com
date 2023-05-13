@@ -1,6 +1,5 @@
 ---
-import BlogPostPreview from "@/components/BlogPostPreview";
-import SnippetPreview from "@/components/SnippetPreview";
+import PreviewItem from "@/components/PreviewItem";
 import PageLayout from "@/layouts/Base";
 import type { MDXInstance,Page,Post,Snippet } from "@/types";
 import { getAllTags,sortMDByDate } from "@/util";
@@ -65,7 +64,7 @@ const meta = {
 				<ul class="space-y-8 text-left">
 					{blogs.map((p) => (
 						<li class="[&_q]:w-full flex flex-wrap items-center gap-x-2">
-							<BlogPostPreview post={p} as="h2" withDesc />
+							<PreviewItem post={p} as="h4" withDesc />
 						</li>
 					))}
 				</ul>
@@ -79,7 +78,7 @@ const meta = {
 				<ul class="space-y-8 text-left">
 					{snippets.map((p) => (
 						<li class="[&_q]:w-full flex flex-wrap items-center gap-x-2">
-							<SnippetPreview snippet={p} as="h2" withDesc />
+							<PreviewItem post={p} as="h4" withDesc />
 						</li>
 					))}
 				</ul>

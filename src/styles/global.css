@@ -79,6 +79,10 @@
 	.copy {
 		@apply invisible sm:visible absolute top-2 right-2 px-2 py-1 rounded text-textColor text-xs cursor-pointer bg-bgColor;
 	}
+
+	.category-tag {
+		@apply inline-block border border-accent text-accent rounded-md text-[10px] px-2 font-semibold mr-2 transition-all ease-in-out uppercase hover:opacity-90;
+	}
 }
 
 @tailwind components;

@@ -1,6 +1,5 @@
 ---
-import BlogPostPreview from "@/components/BlogPostPreview";
-import SnippetPreview from "@/components/SnippetPreview";
+import PreviewItem from "@/components/PreviewItem";
 import SocialList from "@/components/SocialList";
 import PageLayout from "@/layouts/Base";
 import type { Post, Snippet } from "@/types";
@@ -8,7 +7,7 @@ import { sortMDByDate } from "@/util";
 
 const meta = {
 	title: "Home",
-	description: "Hey there! I'm Ratul Maharaj, and this is my little corner of the internet where I share my thoughts and experiences with programming.",
+	description: "Hi there! I'm Ratul Maharaj, and this is my little corner of the internet where I share my thoughts and experiences with programming.",
 };
 
 const MAX_POSTS = 10;
@@ -21,9 +20,9 @@ const allSnippetsByDate = sortMDByDate(allSnippets).slice(0, MAX_SNIPPETS);
 
 <PageLayout meta={meta}>
 	<section>
-		<h1 class="mb-6 title">Hello World!</h1>
+		<h1 class="mb-6 title">Hi there!</h1>
 		<p class="mb-4">
-			My name is Ratul Maharaj and I am a 'professional' hobbyist developer. I'm
+			Welcome to my corner of the internet - my name is Ratul Maharaj. I'm
 			often experimenting with a variety of tech tools or trying to teach myself
 			something new. This blog is intended to remind me of what, how or why I
 			did something in the past. Hope you find it useful.
@@ -36,7 +35,7 @@ const allSnippetsByDate = sortMDByDate(allSnippets).slice(0, MAX_SNIPPETS);
 			{
 				allPostsByDate.map((p) => (
 					<li class="[&_q]:w-full flex flex-wrap items-center gap-x-2">
-						<BlogPostPreview post={p} as="h2" />
+						<PreviewItem post={p} as="h4" />
 					</li>
 				))
 			}
@@ -48,7 +47,7 @@ const allSnippetsByDate = sortMDByDate(allSnippets).slice(0, MAX_SNIPPETS);
 			{
 				allSnippetsByDate.map((p) => (
 					<li class="[&_q]:w-full flex flex-wrap items-center gap-x-2">
-						<SnippetPreview snippet={p} as="h2" />
+						<PreviewItem post={p} as="h4" />
 					</li>
 				))
 			}

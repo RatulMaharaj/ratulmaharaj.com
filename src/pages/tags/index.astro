@@ -22,15 +22,15 @@ const meta = {
 			Object.keys(allTags).map((tag) => (
 				<li class="flex items-center gap-x-2">
 					<a
-						class="cactus-link inline-block"
+						class="category-tag"
 						href={`/tags/${tag}`}
 						title={`View posts or snippets with the tag: ${tag}`}
 					>
-						&#35;{tag}
+						{tag}
 					</a>
 					
 					{allPostTags[tag] && (<span class="inline-block">
-						- {allPostTags[tag]} Post{allPostTags[tag] > 1 ? "s": ""}
+						{allPostTags[tag]} Post{allPostTags[tag] > 1 ? "s": ""}
 					</span>)}
 
 					{
