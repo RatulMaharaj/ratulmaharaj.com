@@ -7,7 +7,7 @@ tags: ["python", "pip"]
 author: "Ratul Maharaj"
 ---
 
-If you're working with python on your company's network, chances are you're behind a the firewall, you may have run into issues when trying to install python packages with pip. This is because pip doesn't know how to use your proxy. Hopefully this post will help.
+If you're working with python on your company's network, chances are you're behind a firewall and that you may have run into issues whilst trying to install python packages with pip. This is because pip doesn't know how to use your proxy. Maybe this will help.
 
 ## What's a proxy?
 
