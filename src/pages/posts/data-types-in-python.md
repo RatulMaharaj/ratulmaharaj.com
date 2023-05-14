@@ -4,6 +4,7 @@ title: Data types in python
 pubDate: 21 April 2020
 description: An exploration of various pythonic data types.
 tags: ["python"]
+author: "Ratul Maharaj"
 ---
 
 If you haven't yet installed python and set up a development environment, I would suggest that you first read this post on [getting started with python.](/posts/getting-started-with-python/)

@@ -4,6 +4,7 @@ title: Get started with python
 pubDate: 29 March 2020
 description: Everything you need to start writing code in python.
 tags: ["python"]
+author: "Ratul Maharaj"
 ---
 
 ## What is this thing?

@@ -4,6 +4,7 @@ title: Basic functional programming in python
 pubDate: 31 October 2022
 description: And why the func should you care?!
 tags: ["python", "functions"]
+author: "Ratul Maharaj"
 ---
 
 ## What is a function?

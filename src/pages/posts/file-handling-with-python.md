@@ -4,6 +4,7 @@ title: File handling with python
 pubDate: 8 November 2022
 description: Using python to read, write and delete files
 tags: ["python", "functions"]
+author: "Ratul Maharaj"
 ---
 
 
