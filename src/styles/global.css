@@ -22,7 +22,7 @@
 		--prism-token-parameter: #aa0000;
 		--prism-token-function: #a21caf;
 		--prism-token-punctuation: #818cf8;
-		--prism-token-link: #ee0000;
+		--prism-token-link: #a855f7;
 		--prism-token-number: #b48ead;
 		--prism-token-important: #bf616a;
 		--prism-token-boolean: #d946ef;
@@ -50,7 +50,7 @@
 		--prism-token-parameter: #aa0000;
 		--prism-token-function: #f0abfc;
 		--prism-token-punctuation: #a5b4fc;
-		--prism-token-link: #ee0000;
+		--prism-token-link: #a78bfa;
 		--prism-token-number: #93c5fd;
 		--prism-token-important: #bf616a;
 		--prism-token-boolean: #e879f9;
@@ -82,6 +82,14 @@
 
 	.category-tag {
 		@apply inline-block border border-accent text-accent rounded-md text-[10px] px-2 font-semibold mr-2 transition-all ease-in-out uppercase hover:opacity-90;
+	}
+
+	blockquote > p::before, blockquote > p::after {
+		content: none !important;
+	}
+
+	blockquote {
+		@apply bg-accent bg-opacity-5 py-0.5 rounded-sm
 	}
 }
 

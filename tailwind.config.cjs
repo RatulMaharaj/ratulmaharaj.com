@@ -45,7 +45,7 @@ module.exports = {
 							borderRadius: "2px",
 						},
 						blockquote: {
-							borderLeftWidth: "none",
+							borderColor: "hsl(var(--theme-accent))"
 						},
 						hr: {
 							borderTopStyle: "dashed",
