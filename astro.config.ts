@@ -4,9 +4,14 @@ import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
+import vercel from "@astrojs/vercel/serverless";
 
 // https://astro.build/config
 export default defineConfig({
+  output: 'server',
+  adapter: vercel({
+    analytics: true
+  }),
   markdown: {
     syntaxHighlight: 'prism'
   },
@@ -15,5 +20,5 @@ export default defineConfig({
     config: {
       applyBaseStyles: false
     }
-  }), image(), sitemap(), react()]
+  }), image(), sitemap(), react()],
 });

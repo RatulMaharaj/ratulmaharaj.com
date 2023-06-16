@@ -48,6 +48,7 @@
 	"dependencies": {
 		"@astrojs/react": "^2.2.1",
 		"@astrojs/rss": "^2.4.3",
+		"@astrojs/vercel": "^3.5.0",
 		"@mdx-js/rollup": "^2.3.0",
 		"date-fns": "^2.30.0",
 		"markdown-it": "^13.0.1",
