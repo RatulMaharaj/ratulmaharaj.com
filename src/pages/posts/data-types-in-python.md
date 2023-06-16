@@ -1,8 +1,8 @@
 ---
 layout: "@/layouts/BlogPost"
-title: Data types in python
+title: Data types in Python
 pubDate: 21 April 2020
-description: An exploration of various pythonic data types.
+description: An exploration of various Pythonic data types.
 tags: ["python"]
 author: "Ratul Maharaj"
 ---
@@ -23,15 +23,15 @@ This is by no means an exhaustive list, but is likely to be the data types you u
 
 In python, numerical values can be stored in 3 distinct data types: _integers_, _floating point numbers_ and _complex numbers._
 
-**Integers**
+#### Integers
 
 Integers in python are represented by the `int` class and can contain positive or negative whole numbers.
 
-**Floats**
+#### Floats
 
 Decimal numbers in python are represented by the `float` class. These can be positive or negative real numbers specified by the presence of a decimal point .
 
-**Complex numbers**
+#### Complex numbers
 
 Complex numbers are are represented by the `complex` class. These are specified as (real part) + (imaginary part)j.
 

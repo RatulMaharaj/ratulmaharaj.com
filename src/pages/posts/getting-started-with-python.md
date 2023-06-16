@@ -2,7 +2,7 @@
 layout: "@/layouts/BlogPost"
 title: Get started with python
 pubDate: 29 March 2020
-description: Everything you need to start writing code in python.
+description: Everything you need to start writing code in Python.
 tags: ["python"]
 author: "Ratul Maharaj"
 ---

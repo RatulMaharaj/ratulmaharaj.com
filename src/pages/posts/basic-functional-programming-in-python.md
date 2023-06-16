@@ -1,6 +1,6 @@
 ---
 layout: "@/layouts/BlogPost"
-title: Basic functional programming in python
+title: Basic functional programming in Python
 pubDate: 31 October 2022
 description: And why the func should you care?!
 tags: ["python", "functions"]

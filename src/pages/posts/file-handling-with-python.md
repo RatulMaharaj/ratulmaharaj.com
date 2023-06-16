@@ -1,8 +1,8 @@
 ---
 layout: "@/layouts/BlogPost"
-title: File handling with python
+title: File handling with Python
 pubDate: 8 November 2022
-description: Using python to read, write and delete files.
+description: Using Python to read, write and delete files.
 tags: ["python", "functions"]
 author: "Ratul Maharaj"
 ---
@@ -26,10 +26,9 @@ from pathlib import Path
 working_directory = Path('/path/to/working/directory')
 ```
 
-Something to note when providing a path to a directory on windows is that you need to use double backslashes. This is because the backslash is an escape character in python. Therefore, if you want to use a backslash in your path, you need to escape it with another backslash. For example, if you want to use the path `C:\Users\username\Documents` you need to use `C:\\Users\\username\\Documents`. 
+Something to note when providing a path to a directory on windows is that you need to use double backslashes. This is because the backslash is an escape character in python. Therefore, if you want to use a backslash in your path, you need to escape it with another backslash. For example, if you want to use the path `C:\Users\username\Documents` you need to use `C:\\Users\\username\\Documents`.
 
 Alternatively, you can use a raw string by prefixing the path with an `r`. For example, `r'C:\Users\username\Documents'`. This will tell python to treat the backslashes as a raw string and not an escape character.
-
 
 We can now easily refer to files within the working_directory using a relative path. For example, if we have a file called `data.csv` in our working directory, we can refer to it as follows:
 
@@ -48,7 +47,6 @@ file = open(working_directory / "file.txt", "w")
 file.write("Hello world!")
 file.close()
 ```
-
 
 ## Reading files
 

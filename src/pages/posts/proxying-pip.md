@@ -2,7 +2,7 @@
 layout: "@/layouts/BlogPost"
 title: Proxying pip
 pubDate: 15 May 2023
-description: How to install python packages with pip when you're behind a company firewall.
+description: How to install Python packages with pip when you're behind a company firewall.
 tags: ["python", "pip"]
 author: "Ratul Maharaj"
 ---
