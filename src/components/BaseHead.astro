@@ -7,7 +7,8 @@ export type Props = SiteMeta;
 
 const {
 	title,
-	description = siteMeta.description,
+	description,
+	pubDate
 } = Astro.props as Props;
 
 const titleSeparator = "•";
@@ -40,7 +41,12 @@ const image = canonicalURL.origin + siteMeta.image
 <meta property="og:description" content={description} />
 <meta property="og:image:alt" content="Open graph image for Ratul's blog." />
 
-{image && <meta property="og:image" content={image} />}
+{ 
+	pubDate ? 
+	<meta property="og:image" content={`https://og.ratulmaharaj.com/api/blogpost?title=${encodeURI(title)}&description=${encodeURI(description)}&date=${encodeURI(pubDate)}`}} /> 
+	: 
+	<meta property="og:image" content={image} /> 
+}
 
 <!-- Twitter -->
 <meta

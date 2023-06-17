@@ -10,6 +10,7 @@ type SiteMeta = {
 	title: string;
 	description?: string;
 	image?: string;
+	pubDate?: string;
 };
 
 type PaginationLink = {
