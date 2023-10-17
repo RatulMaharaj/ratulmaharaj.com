@@ -5,10 +5,15 @@ import type { MDXInstance,Page,Post,Snippet } from "@/types";
 import { getAllTags,sortMDByDate } from "@/util";
 
 export async function getStaticPaths({ paginate }) {
+	// get posts and snippets
 	const allPosts = await Astro.glob<Post>("../../posts/*.md");
 	const allSnippets = await Astro.glob<Snippet>("../../snippets/*.mdx");
+
+	// sort by date
 	const allPostsByDate = sortMDByDate(allPosts);
 	const allSnippetsByDate = sortMDByDate(allSnippets);
+
+	// get all tags
 	const allPostsAndSnippetsByDate = [...allPostsByDate, ...allSnippetsByDate];
 	let allTags = [
 		...getAllTags(allPostsByDate),
@@ -17,7 +22,7 @@ export async function getStaticPaths({ paginate }) {
 	// remove duplicates
 	allTags = [...new Set(allTags)];
 
-	return allTags.map((tag) => {
+	return allTags.flatMap((tag) => {
 		const filterItems = allPostsAndSnippetsByDate.filter((item) =>
 			item.frontmatter.tags?.includes(tag)
 		);

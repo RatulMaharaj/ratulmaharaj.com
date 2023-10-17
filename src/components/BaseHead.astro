@@ -35,8 +35,8 @@ const image = canonicalURL.origin + siteMeta.image
 <!-- Open Graph / Facebook -->
 <meta property="og:locale" content={siteMeta.ogLocale} />
 <meta property="og:type" content="website" />
-<meta property="og:url" content={canonicalURL} />
-<link rel="canonical" href={canonicalURL} />
+<meta property="og:url" content={canonicalURL.toString()} />
+<link rel="canonical" href={canonicalURL.toString()} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:image:alt" content="Open graph image for Ratul's blog." />

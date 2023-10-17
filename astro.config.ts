@@ -1,4 +1,3 @@
-import image from "@astrojs/image";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
@@ -10,15 +9,15 @@ import vercel from "@astrojs/vercel/static";
 export default defineConfig({
   output: 'static',
   adapter: vercel({
-    analytics: true
+    webAnalytics: {
+      enabled: true,
+    }
   }),
   markdown: {
     syntaxHighlight: 'prism'
   },
   site: "https://ratulmaharaj.com",
   integrations: [mdx({}), tailwind({
-    config: {
-      applyBaseStyles: false
-    }
-  }), image(), sitemap(), react()],
+    applyBaseStyles: true,
+  }), sitemap(), react()],
 });
