@@ -34,7 +34,7 @@ The `<username>` and `<uri_encoded_password>` are your windows credentials.
 The `<uri_encoded_password>` is the URI encoded version of your password where any special characters are replaced with their % encoded counterparts  e.g. `password!` becomes `password%21`. Here are the commonly used characters and their encoded counterparts:
 
 | Character | Encoded Character |
-| --------- | ------- |
+| :---------: | :-------: |
 | !         | %21     |
 | @         | %40     |
 | #         | %23     |

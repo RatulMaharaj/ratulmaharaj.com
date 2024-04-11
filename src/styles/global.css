@@ -2,16 +2,14 @@
 @layer base {
 	:root {
 		color-scheme: light;
-		--theme-bg: 210 20% 98%;
-		--theme-link: 239 84% 67%;
-		--theme-text: 202 10.5% 14.9%;
-		--theme-accent: 239 84% 67%;
-		--theme-accent-2: 0 0% 6.7%;
+		--theme-surface: 95% 0 295;
+		--theme-surface-content: 15% 0.01 295;
+		--theme-primary: 60% 0.23 300;
+		--theme-neutral: 90% 0 295
 		--theme-quote: 239 84% 67%;
-		--theme-menu-bg: hsl(210, 20%, 98% / 0.85);
 		/* Code theme */
-		--prism-background: #f3f4f6;
-		--prism-color-text: #2e3440;
+		--prism-background: #dddddd;
+		--prism-color-text: #0d0d0d;
 		/* Code theme tokens */
 		--prism-token-constant: #b48ead;
 		--prism-token-string: #a855f7;
@@ -30,16 +28,14 @@
 
 	:root.dark {
 		color-scheme: dark;
-		--theme-bg: 221 39% 11%;
-		--theme-link: 234 89% 74%;
-		--theme-text: 220 2.9% 79.4%;
-		--theme-accent: 234 89% 74%;
-		--theme-accent-2: 0 0% 93.3%;
+		--theme-surface: 15% 0.01 295;
+		--theme-surface-content: 95% 0 295;
+		--theme-primary: 60% 0.23 300;
+		--theme-neutral: 50% 0 295
 		--theme-quote: 234 89% 74%;
-		--theme-menu-bg: hsl(221 39% 11% / 0.85);
 		/* Code theme */
-		--prism-background: #1f2937;
-		--prism-color-text: #f8f8f2;
+		--prism-background: #111118;
+		--prism-color-text: #dddddd;
 		/* Code theme tokens */
 		--prism-token-constant: #b48ead;
 		--prism-token-string:#a78bfa;
@@ -57,19 +53,15 @@
 	}
 
 	html {
-		@apply h-full scroll-smooth;
+		@apply h-full scroll-smooth bg-surface text-surface-content transition-colors duration-500;
 	}
 
 	html body {
-		@apply mx-auto flex h-full max-w-5xl flex-col bg-bgColor px-8 pt-16 font-mono text-sm font-normal text-textColor antialiased;
+		@apply mx-auto flex h-full max-w-5xl flex-col px-8 pt-16 font-mono text-sm font-normal antialiased;
 	}
 
 	#snippet_container pre {
 		@apply mb-12 md:w-full md:max-w-full;
-	}
-
-	#snippet_container a {
-		@apply cactus-link;
 	}
 
 	pre {
@@ -77,11 +69,11 @@
 	}
 
 	.copy {
-		@apply invisible sm:visible absolute top-2 right-2 px-2 py-1 rounded text-textColor text-xs cursor-pointer bg-bgColor;
+		@apply invisible sm:visible absolute top-2 right-2 px-2 py-1 rounded text-xs cursor-pointer;
 	}
 
 	.category-tag {
-		@apply inline-block border border-accent text-accent rounded-md text-[10px] px-2 font-semibold mr-2 transition-all ease-in-out uppercase hover:opacity-90;
+		@apply inline-block border border-primary text-primary rounded-md text-[10px] px-2 font-semibold mr-2 transition-all ease-in-out uppercase hover:opacity-90;
 	}
 
 	blockquote > p::before, blockquote > p::after {
@@ -89,7 +81,7 @@
 	}
 
 	blockquote {
-		@apply bg-accent bg-opacity-5 py-0.5 rounded-sm
+		@apply bg-primary bg-opacity-5 py-0.5 rounded-sm
 	}
 }
 

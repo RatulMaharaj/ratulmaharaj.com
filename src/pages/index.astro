@@ -1,64 +1,40 @@
 ---
+import Bio from "@/components/Bio";
 import PreviewItem from "@/components/PreviewItem";
 import SocialList from "@/components/SocialList";
 import PageLayout from "@/layouts/Base";
-import type { Post, Snippet } from "@/types";
+import type { Post } from "@/types";
 import { sortMDByDate } from "@/util";
 
 const meta = {
-	title: "Home",
-	description: "Hi there! I'm Ratul Maharaj, and this is my little corner of the internet where I share my thoughts and experiences with programming.",
+  title: "Home",
+  description:
+    "Hi there! I'm Ratul Maharaj, and this is my little corner of the internet where I share my thoughts and experiences with programming.",
 };
 
 const MAX_POSTS = 10;
-const MAX_SNIPPETS = 5;
 const allPosts = await Astro.glob<Post>("./posts/*.md");
-const allSnippets = await Astro.glob<Snippet>("./snippets/*.mdx");
 const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
-const allSnippetsByDate = sortMDByDate(allSnippets).slice(0, MAX_SNIPPETS);
 ---
 
 <PageLayout meta={meta}>
-	<section>
-		<h1 class="mb-6 title">Hi there!</h1>
-		<p class="mb-4">
-			Welcome to my corner of the internet - my name is Ratul Maharaj. I'm
-			often experimenting with a variety of tech tools or trying to teach myself
-			something new. This blog is intended to remind me of what, how or why I
-			did something in the past. Hope you find it useful.
-		</p>
-		<SocialList />
-	</section>
-	<section aria-label="Blog post list" class="mt-16">
-		<h2 class="mb-4 text-xl title">Latest Posts</h2>
-		<ul class="space-y-4 sm:space-y-2">
-			{
-				allPostsByDate.map((p) => (
-					<li class="[&_q]:w-full flex flex-wrap items-center gap-x-2">
-						<PreviewItem post={p} as="h4" />
-					</li>
-				))
-			}
-		</ul>
-	</section>
-	<section aria-label="Blog post list" class="mt-16">
-		<h2 class="mb-4 text-xl title">Latest Code Snippets</h2>
-		<ul class="space-y-4 sm:space-y-2">
-			{
-				allSnippetsByDate.map((p) => (
-					<li class="[&_q]:w-full flex flex-wrap items-center gap-x-2">
-						<PreviewItem post={p} as="h4" />
-					</li>
-				))
-			}
-		</ul>
-	</section>
-	<section aria-label="Blog post list" class="mt-16">
-		<p>
-			Thank you to the creators of the <a
-				href="https://github.com/chrismwilliams/astro-theme-cactus"
-				class="inline-block cactus-link">Astro Cactus</a
-			> theme which was used to create this site.
-		</p>
-	</section>
+  <section class="grid grid-cols-1 gap-y-8">
+    <Bio />
+    <div class="flex gap-x-4">
+      <p>Find me on:</p>
+      <SocialList />
+    </div>
+  </section>
+  <section aria-label="Blog post list" class="mt-16">
+    <h2 class="mb-4">Recent Posts</h2>
+    <ul class="space-y-4 sm:space-y-2">
+      {
+        allPostsByDate.map((p) => (
+          <li class="[&_q]:w-full flex flex-wrap items-center gap-x-2">
+            <PreviewItem post={p} as="h4" />
+          </li>
+        ))
+      }
+    </ul>
+  </section>
 </PageLayout>

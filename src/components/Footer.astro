@@ -1,34 +1,13 @@
 ---
 const year = new Date().getFullYear();
+import SocialList from "./SocialList.astro";
 ---
 
-<footer>
-	<div>
-		Copyright &copy; {year}
-		<span aria-label="rocket emoji">🚀</span>
-		Ratul Maharaj
-	</div>
-	<nav aria-label="More on this site">
-		<a href="/">Home</a>
-		<a href="/posts">Blog</a>
-		<a href="/snippets">Snippets</a>
-	</nav>
+<footer class="py-4 mt-20 grid grid-cols-2 place-content-center">
+  <div class="flex items-center justify-start text-sm">
+    &copy; Ratul Maharaj {year}&nbsp;<span aria-label="rocket emoji">🚀</span>
+  </div>
+  <div class="flex items-center justify-end">
+    <SocialList />
+  </div>
 </footer>
-
-<style>
-	footer {
-		@apply mt-auto flex w-full flex-col items-center justify-center gap-y-2 pt-20 pb-4 text-center align-top text-gray-500 dark:text-gray-400 sm:flex-row sm:justify-between sm:text-xs;
-
-		> div {
-			@apply mr-0 sm:mr-4;
-		}
-
-		nav {
-			@apply flex gap-x-2 sm:gap-x-0 sm:divide-x sm:divide-gray-400 ;
-
-			a {
-				@apply px-4 py-2 sm:py-0 sm:px-2 sm:hover:text-textColor sm:hover:underline;
-			}
-		}
-	}
-</style>

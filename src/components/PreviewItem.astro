@@ -21,13 +21,13 @@ const postDate = format(date, "MMM d, yyyy");
 	</div>
 	<div class="flex flex-col">
 		<Element>
-			<a href={post.url} class="flex items-start justify-start mb-1 dark:text-white text-textColour font-bold text-base">
+			<a href={post.url} class="flex items-start justify-start mb-1 dark:text-white font-bold text-base">
 				{post.frontmatter.title}
 			</a>
 		</Element>
 		{
 			withDesc && (
-				<p class="line-clamp-3 block italic mb-2 text-textColour">
+				<p class="line-clamp-3 block italic mb-2">
 					{post.frontmatter.description}
 				</p>
 			)

@@ -9,7 +9,7 @@ const { allTags } = Astro.props as Props;
     <h2 class="mb-4 flex items-center text-lg font-semibold">
         Tags
     </h2>
-    <ul class="text-accent flex flex-wrap gap-y-2">
+    <ul class="text-primary flex flex-wrap gap-y-2">
         {allTags.map((tag) => (
             <li>
                 <a
@@ -24,7 +24,7 @@ const { allTags } = Astro.props as Props;
     </ul>
     <span class="mt-4 block sm:text-right">
         <a
-            class="sm:hover:text-accent"
+            class="sm:hover:text-primary"
             href="/tags"
             aria-label="View all blog categories"
         >

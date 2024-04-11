@@ -5,8 +5,8 @@ import { getLocaleTime, getPreviousAndNextPosts, sortMDByDate } from "src/util";
 import BaseLayout from "./Base.astro";
 
 let {
-	content: { title, description, pubDate, tags },
-	headings,
+  content: { title, description, pubDate, tags },
+  headings,
 } = Astro.props;
 headings = headings.filter((heading) => heading.depth < 3);
 const date = new Date(pubDate);
@@ -17,77 +17,80 @@ const allPosts = await Astro.glob<Post>("../pages/posts/*.md");
 const allSortedPosts = sortMDByDate(allPosts);
 const { prev, next } = getPreviousAndNextPosts(currentPage, allSortedPosts);
 const paginationProps = {
-	...(prev && {
-		prevUrl: {
-			url: prev.url,
-			text: `← ${prev.frontmatter.title}`,
-			srLabel: " Previous Article:",
-		},
-	}),
-	...(next && {
-		nextUrl: {
-			url: next.url,
-			text: `${next.frontmatter.title} →`,
-			srLabel: "Next Article:",
-		},
-	}),
+  ...(prev && {
+    prevUrl: {
+      url: prev.url,
+      text: `← ${prev.frontmatter.title}`,
+      srLabel: " Previous Article:",
+    },
+  }),
+  ...(next && {
+    nextUrl: {
+      url: next.url,
+      text: `${next.frontmatter.title} →`,
+      srLabel: "Next Article:",
+    },
+  }),
 };
 ---
 
 <BaseLayout meta={{ title, description, pubDate }}>
-	<div class="sm:grid sm:grid-cols-[3fr_1fr] sm:gap-x-10 sm:items-start">
-		<article>
-			<h1 class="title">{title}</h1>
-			<time datetime={datetime} class="uppercase font-bold text-xs text-gray-500">{postDate}</time>
-			<div class="mt-4">{description}</div>
-			<div
-				class="mt-12 prose prose-sm prose-cactus prose-headings:font-semibold w-full max-w-full"
-			>
-				<slot />
-			</div>
-		</article>
-		<aside
-			class="invisible hidden text-right sm:sticky sm:top-20 sm:block sm:visible"
-		>
-			<h2 class="font-semibold">Table of Contents</h2>
-			<ul class="mt-4 text-xs space-y-2">
-				{
-					headings.map(({ slug, text }) => (
-						<li class="line-clamp-2 hover:text-accent">
-							<a href={`#${slug}`} aria-label={`Scroll to section: ${text}`}>
-								{text}
-							</a>
-						</li>
-					))
-				}
-			</ul>
-		</aside>
-	</div>
-	<div class="mt-10">
-		{
-			tags?.length && (
-				<ul class="flex items-center py-4">
-					{tags.map((tag: string) => (
-						<li>
-							<a
-								class="category-tag"
-								aria-label={`View more blogs with the tag ${tag}`}
-								href={`/tags/${tag}`}
-								>
-								{tag}
-							</a>
-						</li>
-						))}
-				</ul>
-				)
-		}
-		<Paginator {...paginationProps} />
-	</div>
+  <div class="sm:grid sm:grid-cols-[3fr_1fr] sm:gap-x-10 sm:items-start">
+    <article>
+      <h1 class="title">{title}</h1>
+      <time
+        datetime={datetime}
+        class="uppercase font-bold text-xs text-gray-500">{postDate}</time
+      >
+      <div class="mt-4">{description}</div>
+      <div
+        class="mt-12 prose prose-sm prose-headings:font-semibold w-full max-w-full"
+      >
+        <slot />
+      </div>
+    </article>
+    <aside
+      class="invisible hidden text-right sm:sticky sm:top-20 sm:block sm:visible"
+    >
+      <h2 class="font-semibold">Table of Contents</h2>
+      <ul class="mt-4 text-xs space-y-2">
+        {
+          headings.map(({ slug, text }) => (
+            <li class="line-clamp-2 hover:text-primary">
+              <a href={`#${slug}`} aria-label={`Scroll to section: ${text}`}>
+                {text}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </aside>
+  </div>
+  <div class="mt-10">
+    {
+      tags?.length && (
+        <ul class="flex items-center py-4">
+          {tags.map((tag: string) => (
+            <li>
+              <a
+                class="category-tag"
+                aria-label={`View more blogs with the tag ${tag}`}
+                href={`/tags/${tag}`}
+              >
+                {tag}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+    <Paginator {...paginationProps} />
+  </div>
 </BaseLayout>
 
 <style>
-	/* Hide the weird code block adding the language */
-	:global(article pre .language-id) {
-		@apply hidden;
-	}
+  /* Hide the weird code block adding the language */
+  :global(article pre .language-id) {
+    @apply hidden;
+  }
 </style>
