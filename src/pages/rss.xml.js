@@ -1,16 +1,14 @@
 import rss from '@astrojs/rss';
-const postImportResult = import.meta.glob('./posts/*.md', { eager: true });
-const posts = Object.values(postImportResult);
-import  siteMeta  from "../site-meta.config"
 import sanitizeHtml from 'sanitize-html';
 
-export const get = () => rss({
+export function GET(context) {
+  const postImportResult = import.meta.glob('./posts/*.md', { eager: true });
+  const posts = Object.values(postImportResult);
+  
+  return rss({
   title: `Ratul's Blog`,
-  description: siteMeta.longDescription,
-  site: import.meta.env.SITE,
-  xmlns: {
-
-  },
+  description: `Personal blog of Ratul Maharaj`,
+  site: context.site,
   items: posts.map((post) => ({
     link: post.url,
     title: post.frontmatter.title,
@@ -20,7 +18,8 @@ export const get = () => rss({
     content: sanitizeHtml(post.compiledContent()),
 
   })),
-  customData: `<language>en-za</language>`,
+  customData: `<language>en-ZA</language>`,
   stylesheet: '/src/styles/rss.xsl',
   trailingSlash: false,
-});
+})
+}
