@@ -19,7 +19,7 @@ export function GET(context) {
 
   })),
   customData: `<language>en-ZA</language>`,
-  stylesheet: '/src/styles/rss.xsl',
+  stylesheet: '/rss/styles.xsl',
   trailingSlash: false,
 })
 }
