@@ -1,8 +1,8 @@
 code[class*="language-"],
 pre[class*="language-"] {
-	color: var(--prism-color-text);
+	color: oklch(var(--theme-surface-content));
 	background: none;
-	font-family: "Fira Code", Consolas, Monaco, "Andale Mono", "Ubuntu Mono",
+	font-family: "Monaspace Krypton", Consolas, Monaco, "Andale Mono", "Ubuntu Mono",
 		monospace;
 	text-align: left;
 	white-space: pre;

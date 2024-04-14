@@ -2,26 +2,34 @@
 import type { PaginationLink } from "@/types";
 
 export interface Props {
-	prevUrl?: PaginationLink;
-	nextUrl?: PaginationLink;
+  prevUrl?: PaginationLink;
+  nextUrl?: PaginationLink;
 }
 
 const { prevUrl, nextUrl } = Astro.props as Props;
 ---
 
-{(prevUrl || nextUrl) && (
-	<nav class="flex items-center gap-x-4">
-		{prevUrl && (
-			<a class="mr-auto py-2 sm:hover:text-primary" href={prevUrl.url}>
-				{prevUrl.srLabel && <span class="sr-only">{prevUrl.srLabel}</span>}
-				{prevUrl.text ? prevUrl.text : "Previous"}
-			</a>
-		)}
-		{nextUrl && (
-			<a class="ml-auto py-2 sm:hover:text-primary" href={nextUrl.url}>
-				{nextUrl.srLabel && <span class="sr-only">{nextUrl.srLabel}</span>}
-				{nextUrl.text ? nextUrl.text : "Next"}
-			</a>
-		)}
-	</nav>
-)}
+{
+  (prevUrl || nextUrl) && (
+    <nav class="flex items-center gap-x-4">
+      {prevUrl && (
+        <a
+          class="hover:bg-surface-content/5 hover:px-4 rounded-md transition-all duration-500 py-2 cursor-pointer"
+          href={prevUrl.url}
+        >
+          {prevUrl.srLabel && <span class="sr-only">{prevUrl.srLabel}</span>}
+          {prevUrl.text ? prevUrl.text : "Previous"}
+        </a>
+      )}
+      {nextUrl && (
+        <a
+          class="ml-auto hover:bg-surface-content/5 hover:px-4 rounded-md transition-all duration-500 py-2 cursor-pointer"
+          href={nextUrl.url}
+        >
+          {nextUrl.srLabel && <span class="sr-only">{nextUrl.srLabel}</span>}
+          {nextUrl.text ? nextUrl.text : "Next"}
+        </a>
+      )}
+    </nav>
+  )
+}

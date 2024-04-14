@@ -1,4 +1,5 @@
-const plugin = require("tailwindcss/plugin");
+const defaultTheme = require('tailwindcss/defaultTheme')
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
 	content: ["./src/**/*.{astro,html,js,jsx,md,svelte,ts,tsx,vue}"],
@@ -14,6 +15,10 @@ module.exports = {
 			transitionProperty: {
 				height: "height",
 			},
+			fontFamily: {
+				sans: ["Monaspace Argon", ...defaultTheme.fontFamily.sans],
+				mono: ["Monaspace Krypton", ...defaultTheme.fontFamily.mono],
+			},
 			typography: (theme) => ({
 				DEFAULT: {
 					css: {
@@ -26,6 +31,9 @@ module.exports = {
 						},
 						h1: {
 							color: "oklch(var(--theme-surface-content))",
+							"&::before": {
+								content: "#",
+							}
 						},
 						h2: {
 							color: "oklch(var(--theme-surface-content))",
@@ -40,13 +48,12 @@ module.exports = {
 							fontWeight: "700",
 						},
 						code: {
-							backgroundColor: "var(--prism-background)",
 							padding: "0.1em",
 							borderRadius: "3px",
 						},
 						blockquote: {
 							color: "oklch(var(--theme-surface-content))",
-							borderColor: "oklch(var(--theme-primary))"
+							borderColor: "oklch(var(--theme-primary))",
 						},
 						hr: {
 							borderTopStyle: "solid",

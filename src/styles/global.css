@@ -8,8 +8,7 @@
 		--theme-neutral: 90% 0 295
 		--theme-quote: 239 84% 67%;
 		/* Code theme */
-		--prism-background: #dddddd;
-		--prism-color-text: #0d0d0d;
+		--prism-background: oklch(90% 0 295);
 		/* Code theme tokens */
 		--prism-token-constant: #b48ead;
 		--prism-token-string: #a855f7;
@@ -34,8 +33,7 @@
 		--theme-neutral: 50% 0 295
 		--theme-quote: 234 89% 74%;
 		/* Code theme */
-		--prism-background: #111118;
-		--prism-color-text: #dddddd;
+		--prism-background: oklch(20% 0.01 295);
 		/* Code theme tokens */
 		--prism-token-constant: #b48ead;
 		--prism-token-string:#a78bfa;
@@ -52,6 +50,19 @@
 		--prism-token-boolean: #e879f9;
 	}
 
+	/* Register your custom font family and tell the browser where to find it. */
+	@font-face {
+		font-family: 'Monaspace Argon';
+		src: url('/fonts/MonaspaceArgonVarVF[wght,wdth,slnt].woff2') format('woff2');
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: 'Monaspace Krypton';
+		src: url('/fonts/MonaspaceKryptonVarVF[wght,wdth,slnt].woff2') format('woff2');
+		font-display: swap;
+	}
+
 	html {
 		@apply h-full scroll-smooth bg-surface text-surface-content transition-colors duration-500;
 	}
@@ -62,7 +73,7 @@
 	}
 
 	html body {
-		@apply mx-auto flex h-full max-w-5xl flex-col px-8 pt-16 font-mono text-sm font-normal antialiased;
+		@apply mx-auto flex h-full max-w-5xl flex-col px-8 pt-16 font-sans text-sm font-normal antialiased;
 	}
 
 	#snippet_container pre {
@@ -72,6 +83,11 @@
 	pre {
 		@apply relative;
 	}
+
+	* {
+		font-variant-ligatures: discretionary-ligatures;
+	}
+
 
 	.copy {
 		@apply invisible sm:visible absolute top-2 right-2 px-2 py-1 rounded text-xs cursor-pointer;
