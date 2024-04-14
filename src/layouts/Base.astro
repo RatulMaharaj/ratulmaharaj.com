@@ -7,72 +7,75 @@ import type { SiteMeta } from "@/types";
 import siteMeta from "src/site-meta.config";
 
 export type Props = {
-	meta: SiteMeta;
+  meta: SiteMeta;
 };
 
 const {
-	meta: { title, description, pubDate, image },
+  meta: { title, description, pubDate, image },
 } = Astro.props as Props;
 ---
 
 <html lang={siteMeta.lang}>
-	<head>
-		<BaseHead title={title} description={description} image={image} pubDate={pubDate} />
-		<link href="/prism.css" rel="stylesheet" />
-		<script define:vars={{ siteMeta }}>
-			const root = document.documentElement;
-			const colorThemeMetaTag = document.querySelector(
-				"meta[name='theme-color']"
-			);
-			const theme =
-				typeof localStorage !== "undefined"
-					? localStorage.getItem("theme")
-					: null;
-			if (
-				theme === "dark" ||
-				(!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)
-			) {
-				root.classList.add("dark");
-				colorThemeMetaTag.setAttribute("content", siteMeta.themeColorDark);
-			} else {
-				root.classList.remove("dark");
-				colorThemeMetaTag.setAttribute("content", siteMeta.themeColorLight);
-			}
-		</script>
+  <head>
+    <BaseHead
+      title={title}
+      description={description}
+      image={image}
+      pubDate={pubDate}
+    />
+    <link href="/prism.css" rel="stylesheet" />
+    <script define:vars={{ siteMeta }}>
+      const root = document.documentElement;
+      const colorThemeMetaTag = document.querySelector(
+        "meta[name='theme-color']"
+      );
+      const theme =
+        typeof localStorage !== "undefined"
+          ? localStorage.getItem("theme")
+          : null;
+      if (
+        theme === "dark" ||
+        (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        root.classList.add("dark");
+        colorThemeMetaTag.setAttribute("content", siteMeta.themeColorDark);
+      } else {
+        root.classList.remove("dark");
+        colorThemeMetaTag.setAttribute("content", siteMeta.themeColorLight);
+      }
+    </script>
 
-		<script>
-		// get code blocks
-		const codeBlocks = document.querySelectorAll('pre code')
+    <script>
+      // get code blocks
+      const codeBlocks = document.querySelectorAll("pre code");
 
-		// loop through code blocks
-		codeBlocks.forEach((block: any, index) => {
-			// Add copy to clipboard button
-			const button = document.createElement('button')
-			button.className = 'copy'
-			button.innerText = 'Copy'
-			block.parentNode.appendChild(button)
+      // loop through code blocks
+      codeBlocks.forEach((block: any, index) => {
+        // Add copy to clipboard button
+        const button = document.createElement("button");
+        button.className = "copy";
+        button.innerText = "Copy";
+        block.parentNode.appendChild(button);
 
-
-			// Add copy to clipboard functionality using navigator.clipboard
-			button.addEventListener('click', () => {
-				navigator.clipboard.writeText(block.innerText).then(() => {
-					button.innerText = 'Copied!'
-					setTimeout(() => {
-						button.innerText = 'Copy'
-					}, 2000)
-				})
-			})
-			
-		})
-	</script>
-	</head>
-	<body>
-		<SkipLink />
-		<Header />
-		<main id="main" class="flex-1">
-			<slot />
-		</main>
-		<Footer />
-	</body>
-	<slot name="rss-writer" />
+        // Add copy to clipboard functionality using navigator.clipboard
+        button.addEventListener("click", () => {
+          navigator.clipboard.writeText(block.innerText).then(() => {
+            button.innerText = "Copied!";
+            setTimeout(() => {
+              button.innerText = "Copy";
+            }, 2000);
+          });
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <SkipLink />
+    <Header />
+    <main id="main" class="flex-1">
+      <slot />
+    </main>
+    <Footer />
+    <slot name="rss-writer" />
+  </body>
 </html>

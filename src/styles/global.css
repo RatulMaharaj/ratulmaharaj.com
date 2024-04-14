@@ -56,6 +56,11 @@
 		@apply h-full scroll-smooth bg-surface text-surface-content transition-colors duration-500;
 	}
 
+	/* selection */
+	::selection{
+		@apply bg-primary/20 text-surface-content;
+	}
+
 	html body {
 		@apply mx-auto flex h-full max-w-5xl flex-col px-8 pt-16 font-mono text-sm font-normal antialiased;
 	}
@@ -73,7 +78,7 @@
 	}
 
 	.category-tag {
-		@apply inline-block border border-primary text-primary rounded-md text-[10px] px-2 font-semibold mr-2 transition-all ease-in-out uppercase hover:opacity-90;
+		@apply inline-block border border-primary cursor-pointer text-primary rounded-md text-[10px] px-2 font-semibold transition-all ease-in-out uppercase hover:bg-primary hover:text-surface mr-2;
 	}
 
 	blockquote > p::before, blockquote > p::after {

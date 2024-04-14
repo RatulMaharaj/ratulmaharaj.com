@@ -17,18 +17,24 @@ module.exports = {
 			typography: (theme) => ({
 				DEFAULT: {
 					css: {
-						color: theme("colors.surface-content"),
+						color: "oklch(var(--theme-surface-content))",
+						a: {
+							color: "oklch(var(--theme-surface-content))",
+							"&:hover": {
+								color: "oklch(var(--theme-primary))",
+							},
+						},
 						h1: {
-							color: theme("colors.surface-content"),
+							color: "oklch(var(--theme-surface-content))",
 						},
 						h2: {
-							color: theme("colors.surface-content"),
+							color: "oklch(var(--theme-surface-content))",
 						},
 						h3: {
-							color: theme("colors.surface-content"),
+							color: "oklch(var(--theme-surface-content))",
 						},
 						h4: {
-							color: theme("colors.surface-content"),
+							color: "oklch(var(--theme-surface-content))",
 						},
 						strong: {
 							fontWeight: "700",
@@ -39,7 +45,7 @@ module.exports = {
 							borderRadius: "3px",
 						},
 						blockquote: {
-							color: theme("colors.surface-content"),
+							color: "oklch(var(--theme-surface-content))",
 							borderColor: "oklch(var(--theme-primary))"
 						},
 						hr: {
@@ -66,7 +72,7 @@ module.exports = {
 						code: {
 							fontSize: theme("fontSize.sm")[0],
 							fontWeight: "400",
-							color: theme("colors.surface-content"),
+							color: "oklch(var(--theme-surface-content))",
 						},
 					},
 				},

@@ -26,15 +26,23 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
     </div>
   </section>
   <section aria-label="Blog post list" class="mt-16">
-    <h2 class="mb-4">Recent Posts</h2>
+    <h2 class="mb-4 uppercase font-bold">Recent Posts</h2>
     <ul class="space-y-4 sm:space-y-2">
       {
         allPostsByDate.map((p) => (
           <li class="[&_q]:w-full flex flex-wrap items-center gap-x-2">
-            <PreviewItem post={p} as="h4" />
+            <a href={p.url}>
+              <PreviewItem post={p} />
+            </a>
           </li>
         ))
       }
     </ul>
+    <br />
+    <a
+      href="/posts"
+      class="hover:bg-surface-content/5 hover:px-4 rounded-md transition-all duration-500 py-2 cursor-pointer"
+      >See all posts &rarr;</a
+    >
   </section>
 </PageLayout>

@@ -7,55 +7,57 @@ import { getAllTags, sortMDByDate } from "src/util";
 import Tags from "@/components/Tags";
 
 export async function getStaticPaths({ paginate }) {
-	const allPosts = await Astro.glob<Post>("./*.md");
-	const allPostsByDate = sortMDByDate(allPosts);
-	const allTags = getAllTags(allPosts);
-	return paginate(allPostsByDate, { props: { allTags }, pageSize: 10 });
+  const allPosts = await Astro.glob<Post>("./*.md");
+  const allPostsByDate = sortMDByDate(allPosts);
+  const allTags = getAllTags(allPosts);
+  return paginate(allPostsByDate, { props: { allTags }, pageSize: 10 });
 }
 
 export interface Props {
-	page: Page<MDXInstance<Post>>;
-	allTags: string[];
+  page: Page<MDXInstance<Post>>;
+  allTags: string[];
 }
 
 const { page, allTags } = Astro.props as Props;
 
 const meta = {
-	title: "Posts",
-	description: "A collection of blog posts I've written.",
+  title: "Posts",
+  description: "A collection of blog posts I've written.",
 };
 
 const paginationProps = {
-	...(page.url.prev && {
-		prevUrl: {
-			url: page.url.prev,
-			text: `← Previous Posts`,
-		},
-	}),
-	...(page.url.next && {
-		nextUrl: {
-			url: page.url.next,
-			text: `Next Posts →`,
-		},
-	}),
+  ...(page.url.prev && {
+    prevUrl: {
+      url: page.url.prev,
+      text: `← Previous Posts`,
+    },
+  }),
+  ...(page.url.next && {
+    nextUrl: {
+      url: page.url.next,
+      text: `Next Posts →`,
+    },
+  }),
 };
 ---
 
 <PageLayout meta={meta}>
-	<h1 class="mb-6 title">Posts</h1>
-	<div class="grid gap-y-16 sm:grid-cols-[3fr_1fr] sm:gap-x-8">
-		<section aria-label="Blog post list">
-			<ul class="text-left space-y-8">
-				{
-					page.data.map((p) => (
-						<li class="[&_q]:w-full flex flex-wrap items-center gap-x-2">
-							<PreviewItem post={p} as="h4" withDesc />
-						</li>
-					))
-				}
-			</ul>
-			<Pagination {...paginationProps} />
-		</section>
-		<Tags allTags={allTags}/>
-	</div>
+  <h1 class="mb-6 title">Posts</h1>
+  <div class="grid gap-y-16 sm:grid-cols-[3fr_1fr] sm:gap-x-8">
+    <section aria-label="Blog post list">
+      <ul class="text-left space-y-8">
+        {
+          page.data.map((p) => (
+            <li class="[&_q]:w-full flex flex-wrap items-center gap-x-2">
+              <a href={p.url}>
+                <PreviewItem post={p} />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <Pagination {...paginationProps} />
+    </section>
+    <Tags allTags={allTags} />
+  </div>
 </PageLayout>

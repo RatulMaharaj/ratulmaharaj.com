@@ -10,13 +10,24 @@ const url = new URL(Astro.request.url);
     class="text-lg"
     aria-current={url.pathname === "/" ? "page" : false}
   >
-    <h1 class="group font-medium">
-      <span class="transition-all duration-0">Ratuls</span><span class="text-gray-300 group-hover:text-gray-400 transition-all duration-300">[</span><span
-        class="text-gray-300 group-hover:text-primary transition-all duration-300">'</span
-      ><span class="text-surface-content/50 group-hover:text-primary transition-all duration-300">Blog</span><span
-        class="text-gray-300 group-hover:text-primary transition-all duration-300">'</span
-      ><span class="text-gray-300 group-hover:text-gray-400 transition-all duration-300">]</span>
-    </h1>
+    <span class="group font-medium">
+      <span class="transition-all duration-0">Ratuls</span><span
+        class="text-gray-300 group-hover:text-gray-400 transition-all duration-500"
+        >[</span
+      ><span
+        class="text-gray-300 group-hover:text-primary transition-all duration-500"
+        >'</span
+      ><span
+        class="text-surface-content/50 group-hover:text-primary transition-all duration-500"
+        >Blog</span
+      ><span
+        class="text-gray-300 group-hover:text-primary transition-all duration-500"
+        >'</span
+      ><span
+        class="text-gray-300 group-hover:text-gray-400 transition-all duration-500"
+        >]</span
+      >
+    </span>
   </a>
   <ThemeToggle />
 </header>

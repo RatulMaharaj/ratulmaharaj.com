@@ -1,93 +1,76 @@
 ---
 import PreviewItem from "@/components/PreviewItem";
 import PageLayout from "@/layouts/Base";
-import type { MDXInstance,Page,Post,Snippet } from "@/types";
-import { getAllTags,sortMDByDate } from "@/util";
+import type { MDXInstance, Page, Post, Snippet } from "@/types";
+import { getAllTags, sortMDByDate } from "@/util";
 
 export async function getStaticPaths({ paginate }) {
-	// get posts and snippets
-	const allPosts = await Astro.glob<Post>("../../posts/*.md");
-	const allSnippets = await Astro.glob<Snippet>("../../snippets/*.mdx");
+  // get posts and snippets
+  const allPosts = await Astro.glob<Post>("../../posts/*.md");
 
-	// sort by date
-	const allPostsByDate = sortMDByDate(allPosts);
-	const allSnippetsByDate = sortMDByDate(allSnippets);
+  // sort by date
+  const allPostsByDate = sortMDByDate(allPosts);
 
-	// get all tags
-	const allPostsAndSnippetsByDate = [...allPostsByDate, ...allSnippetsByDate];
-	let allTags = [
-		...getAllTags(allPostsByDate),
-		...getAllTags(allSnippetsByDate),
-	];
-	// remove duplicates
-	allTags = [...new Set(allTags)];
+  // get all tags
+  const allPostsAndSnippetsByDate = [...allPostsByDate];
+  let allTags = [...getAllTags(allPostsByDate)];
+  // remove duplicates
+  allTags = [...new Set(allTags)];
 
-	return allTags.flatMap((tag) => {
-		const filterItems = allPostsAndSnippetsByDate.filter((item) =>
-			item.frontmatter.tags?.includes(tag)
-		);
-		return paginate(filterItems, {
-			params: { tag },
-			pageSize: 10,
-		});
-	});
+  return allTags.flatMap((tag) => {
+    const filterItems = allPostsAndSnippetsByDate.filter((item) =>
+      item.frontmatter.tags?.includes(tag)
+    );
+    return paginate(filterItems, {
+      params: { tag },
+      pageSize: 10,
+    });
+  });
 }
 
 export interface Props {
-	page: Page<MDXInstance<Post | Snippet>>;
+  page: Page<MDXInstance<Post | Snippet>>;
 }
 
 const { page } = Astro.props as Props;
-let blogs = []
-let snippets = []
+let blogs = [];
+let snippets = [];
 
-page.data.forEach(element => {
-	if (element.frontmatter["layout"].replace("@/layouts/", "") == "Snippet"){
-		snippets.push(element)
-	} else {
-		blogs.push(element)
-	}
-	
+page.data.forEach((element) => {
+  if (element.frontmatter["layout"].replace("@/layouts/", "") == "Snippet") {
+    snippets.push(element);
+  } else {
+    blogs.push(element);
+  }
 });
 
 const { tag } = Astro.params;
 const meta = {
-	title: `Tag: ${tag}`,
-	description: `View all posts and snippets tagged with ${tag}.`,
+  title: `Tag: ${tag}`,
+  description: `View all posts and snippets tagged with ${tag}.`,
 };
 ---
 
 <PageLayout meta={meta}>
-	<h1 class="flex items-center mb-6 title">
-		Tag: {tag}
-	</h1>
-	<section aria-label="Blog post list">
-		<br/>
-		{
-			blogs.length > 0 && (
-				<h2 class="flex items-center mb-6 text-xl font-bold">Posts</h2>
-				<ul class="space-y-8 text-left">
-					{blogs.map((p) => (
-						<li class="[&_q]:w-full flex flex-wrap items-center gap-x-2">
-							<PreviewItem post={p} as="h4" withDesc />
-						</li>
-					))}
-				</ul>
-			)
-		}
-		<br/>
-		<br/>
-		{
-			snippets.length > 0 && (
-				<h2 class="flex items-center mb-6 text-xl font-bold">Snippets</h2>
-				<ul class="space-y-8 text-left">
-					{snippets.map((p) => (
-						<li class="[&_q]:w-full flex flex-wrap items-center gap-x-2">
-							<PreviewItem post={p} as="h4" withDesc />
-						</li>
-					))}
-				</ul>
-			)
-		}
-	</section>
+  <section aria-label="Blog post list">
+    <h1 class="flex items-center mb-6 uppercase font-bold">
+      Posts tagged with: <span class="category-tag ml-2">{tag}</span>
+    </h1>
+    <br />
+    {
+      blogs.length > 0 && (
+        <>
+          <ul class="space-y-8 text-left">
+            {blogs.map((p) => (
+              <li class="[&_q]:w-full flex flex-wrap items-center gap-x-2">
+                <a href={p.url}>
+                  <PreviewItem post={p} />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </>
+      )
+    }
+  </section>
 </PageLayout>

@@ -1,45 +1,45 @@
 ---
 import type { IElement, MDXInstance, Post } from "@/types";
-import {format} from "date-fns"
+import { format } from "date-fns";
 export interface Props extends IElement {
-	post: MDXInstance<Post>;
-	withDesc?: boolean;
+  post: MDXInstance<Post>;
+  includeDescription?: boolean;
 }
 
-const { post, as: Element = "div", withDesc = true } = Astro.props as Props;
+const { post, includeDescription = true } = Astro.props as Props;
 const { pubDate } = post.frontmatter;
 const date = new Date(pubDate);
 const datetime = date.toISOString();
 const postDate = format(date, "MMM d, yyyy");
 ---
 
-<div class="flex flex-col w-full mb-8">
-	<div class="flex flex-row items-center mb-2">
-		<time datetime={datetime} class="uppercase font-bold text-xs text-gray-500 my-auto">
-			{postDate}
-		</time>
-	</div>
-	<div class="flex flex-col">
-		<Element>
-			<a href={post.url} class="flex items-start justify-start mb-1 dark:text-white font-bold text-base">
-				{post.frontmatter.title}
-			</a>
-		</Element>
-		{
-			withDesc && (
-				<p class="line-clamp-3 block italic mb-2">
-					{post.frontmatter.description}
-				</p>
-			)
-		}
-	</div>
-	<div>
-		{
-			post.frontmatter.tags.map((tag) => (
-				<a href={`/tags/${tag}`} class="category-tag">
-					{tag}
-				</a>
-			))
-		}
-	</div>
+<div
+  class="flex flex-col w-full hover:bg-surface-content/5 py-4 hover:px-4 transition-all rounded-md duration-300 cursor-pointer gap-y-4"
+>
+  <div class="mb-2">
+    <time datetime={datetime} class="text-surface-content/50 text-xs">
+      {postDate}
+    </time>
+  </div>
+  <h4
+    class="flex items-start mb-1 justify-start text-surface-content font-bold text-sm duration-500"
+  >
+    {post.frontmatter.title}
+  </h4>
+  {
+    includeDescription && (
+      <p class="line-clamp-3 text-xs block text-surface-content/80 italic duration-500">
+        {post.frontmatter.description}
+      </p>
+    )
+  }
+  <div class="flex flex-row">
+    {
+      post.frontmatter.tags.map((tag) => (
+        <a href={`/tags/${tag}`} class="category-tag">
+          {tag}
+        </a>
+      ))
+    }
+  </div>
 </div>
