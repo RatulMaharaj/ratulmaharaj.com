@@ -24,6 +24,12 @@ const {
       pubDate={pubDate}
     />
     <link href="/prism.css" rel="stylesheet" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Ratul's Blog"
+      href={`${Astro.site}rss.xml`}
+    />
     <script define:vars={{ siteMeta }}>
       const root = document.documentElement;
       const colorThemeMetaTag = document.querySelector(
