@@ -29,7 +29,7 @@ Integers in python are represented by the `int` class and can contain positive o
 
 #### Floats
 
-Decimal numbers in python are represented by the `float` class. These can be positive or negative real numbers specified by the presence of a decimal point .
+Decimal numbers in python are represented by the `float` class. These can be positive or negative real numbers specified by the presence of a decimal point.
 
 #### Complex numbers
 
