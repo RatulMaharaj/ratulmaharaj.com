@@ -1,6 +1,6 @@
 ---
 layout: "@/layouts/BlogPost"
-title: Get started with python
+title: Get started with Python
 pubDate: 29 March 2020
 description: Everything you need to start writing code in Python.
 tags: ["python"]

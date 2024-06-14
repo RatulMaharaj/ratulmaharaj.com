@@ -1,6 +1,6 @@
 ---
 layout: "@/layouts/BlogPost"
-title:  My 2024 Stack
+title:  My 2024 stack
 pubDate: 17 April 2024
 description: The tools & tech I'm using as a full stack web developer in 2024.
 tags: ["stack", "frameworks", "javascript", "python"]
