@@ -1,6 +1,6 @@
 ---
 layout: "@/layouts/BlogPost"
-title: Tauri V2 updater
+title: Tauri v2 updater
 pubDate: 15 June 2024
 description: Making new app versions available to users automatically.
 tags: ["tauri", "rust", "python", "javascript"]

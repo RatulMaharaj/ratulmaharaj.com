@@ -7,10 +7,9 @@ export type Props = SiteMeta;
 
 const { title, description, pubDate } = Astro.props as Props;
 
-const titleSeparator = "•";
+const titleSeparator = "-";
 const siteTitle = `${title} ${titleSeparator} ${siteMeta.title}`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const image = canonicalURL.origin + siteMeta.image;
 ---
 
 <meta charset="utf-8" />
@@ -33,6 +32,7 @@ const image = canonicalURL.origin + siteMeta.image;
 <meta property="og:type" content="website" />
 <meta property="og:url" content={canonicalURL.toString()} />
 <link rel="canonical" href={canonicalURL.toString()} />
+
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:image:alt" content="Open graph image for Ratul's blog." />
@@ -52,10 +52,19 @@ const image = canonicalURL.origin + siteMeta.image;
 }
 
 <!-- Twitter -->
-<meta
-  property="twitter:card"
-  content={image ? "summary_large_image" : "summary"}
-/>
+<meta property="twitter:card" content={"summary_large_image"} />
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
-{image && <meta property="twitter:image" content={image} />}
+{
+  pubDate ? (
+    <meta
+      property="twitter:image"
+      content={`https://og.ratulmaharaj.com/api/blogpost?title=${encodeURI(title)}&description=${encodeURI(description)}&date=${encodeURI(pubDate)}`}
+    />
+  ) : (
+    <meta
+      property="twitter:image"
+      content={`https://og.ratulmaharaj.com/api/blog`}
+    />
+  )
+}
