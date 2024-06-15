@@ -5,20 +5,16 @@ import "../styles/global.css";
 
 export type Props = SiteMeta;
 
-const {
-	title,
-	description,
-	pubDate
-} = Astro.props as Props;
+const { title, description, pubDate } = Astro.props as Props;
 
 const titleSeparator = "•";
 const siteTitle = `${title} ${titleSeparator} ${siteMeta.title}`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const image = canonicalURL.origin + siteMeta.image
+const image = canonicalURL.origin + siteMeta.image;
 ---
 
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width , initial-scale=1"/>
+<meta name="viewport" content="width=device-width , initial-scale=1" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
 <!-- Primary Meta Tags -->
@@ -41,17 +37,24 @@ const image = canonicalURL.origin + siteMeta.image
 <meta property="og:description" content={description} />
 <meta property="og:image:alt" content="Open graph image for Ratul's blog." />
 
-{ 
-	pubDate ? 
-	<meta property="og:image" content={`https://og.ratulmaharaj.com/api/blogpost?title=${encodeURI(title)}&description=${encodeURI(description)}&date=${encodeURI(pubDate)}`}} /> 
-	: 
-	<meta property="og:image" content={image} /> 
+{
+  pubDate ? (
+    <meta
+      property="og:image"
+      content={`https://og.ratulmaharaj.com/api/blogpost?title=${encodeURI(title)}&description=${encodeURI(description)}&date=${encodeURI(pubDate)}`}
+    />
+  ) : (
+    <meta
+      property="og:image"
+      content={`https://og.ratulmaharaj.com/api/blog`}
+    />
+  )
 }
 
 <!-- Twitter -->
 <meta
-	property="twitter:card"
-	content={image ? "summary_large_image" : "summary"}
+  property="twitter:card"
+  content={image ? "summary_large_image" : "summary"}
 />
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
