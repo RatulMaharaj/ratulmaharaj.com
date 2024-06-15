@@ -9,15 +9,15 @@ author: "Ratul Maharaj"
 
 As of writing this post, the beta release of Tauri v2 is available, and I'm helping build a desktop app using it. 
 
-This post will outline how we implemented a basic version of the Tauri updater. Our app has a Next.js (static site) on the frontend. It's is backed by an independent FastAPI server running on [render.com](https://render.com).
+This post will outline how we implemented a basic version of the Tauri updater. Our app has a Next.js (static site) on the frontend. It's backed by an independent FastAPI server running on [render.com](https://render.com).
 
 ## TL;DR
 
-We release new versions of our app using GitHub Actions and GitHub Releases. We have a 'publish' github action workflow which uses the [official @tauri-apps/tauri-action](https://github.com/tauri-apps/tauri-action) github action to build and sign the app. Once this is done, the workflow drafts a new release on GitHub and uploads the built assets to the release.
+We release new versions of our app using GitHub Actions and GitHub Releases. We have a 'publish' GitHub action workflow which uses the [official @tauri-apps/tauri-action](https://github.com/tauri-apps/tauri-action) GitHub action to build and sign the app. Once this is done, the workflow drafts a new release on GitHub and uploads the built assets to the release.
 
-One of the files uploaded to this github release is a `latest.json` file which contains the version number and download URLs of the latest release as required by the Tauri updater. I could not figure out how to read the raw version of this file directly from the release using the API (I know you can do it from a repo - so you could also consider committing this file to a branch). As a workaround, we use our FastAPI server to download the latest release file from the GitHub release and then serve up the contents of it via an internal API.
+One of the files uploaded to this GitHub release is a `latest.json` file which contains the version number and download URLs of the latest release as required by the Tauri updater. I could not figure out how to read the raw version of this file directly from the release using the API (I know you can do it from a repo - so you could also consider committing this file to a branch). As a workaround, we use our FastAPI server to download the latest release file from the GitHub release and then serve up the contents of it via an internal API.
 
-When the tauri app starts, it makes a request to the FastAPI server to get the latest release information. If the version of the latest release is greater than the current version, the app will prompt the user to update to the new version. If the user decides to update, the app will restart after having downloaded and installed the latest version.
+When the app starts, it makes a request to the FastAPI server to get the latest release information. If the version of the latest release is greater than the current version, the app will prompt the user to update to the new version. If the user decides to update, the app will restart after having downloaded and installed the latest version.
 
 What follows is some practical guidance on how to implement this:
 
@@ -122,9 +122,9 @@ You will need to update the app permissions in the `src-tauri/capabilities/main.
   ]
 ```
 
-## Release via github actions
+## Release via GitHub actions
 
-Here's what the build and publish step of our github action looks like:
+Here's what the build and publish step of our GitHub action looks like:
 
 ```yaml
 - uses: tauri-apps/tauri-action@v0
