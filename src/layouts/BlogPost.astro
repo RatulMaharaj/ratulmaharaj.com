@@ -6,6 +6,7 @@ import BaseLayout from "./Base.astro";
 import SocialList from "@/components/SocialList";
 
 let {
+  url,
   content: { title, description, pubDate, tags },
   headings,
 } = Astro.props;
@@ -67,6 +68,12 @@ const paginationProps = {
           <div class="flex items-center gap-x-2">
             Reach out on: <SocialList rss={false} github={false} />
           </div>
+        </div>
+        <div class="flex pt-10 items-center justify-end text-xs">
+          <a
+            href={`https://github.com/RatulMaharaj/ratulmaharaj.com/edit/main/src/pages/${url}.md`}
+            >Edit this page</a
+          >
         </div>
       </div>
     </article>
