@@ -3,6 +3,7 @@ import Paginator from "@/components/Paginator";
 import type { Post } from "@/types";
 import { getLocaleTime, getPreviousAndNextPosts, sortMDByDate } from "src/util";
 import BaseLayout from "./Base.astro";
+import SocialList from "@/components/SocialList";
 
 let {
   content: { title, description, pubDate, tags },
@@ -56,6 +57,17 @@ const paginationProps = {
         class="prose prose-sm prose-headings:font-semibold w-full max-w-full"
       >
         <slot />
+        <div class="mt-2 pt-2 flex flex-col">
+          <h3>Thanks for reading! 🫶</h3>
+          <p>
+            I would love to hear your thoughts on this. If you have any
+            questions or comments, please feel free to reach out on any of the
+            platforms below. I look forward to connecting with you!
+          </p>
+          <div class="flex items-center gap-x-2">
+            Reach out on: <SocialList rss={false} github={false} />
+          </div>
+        </div>
       </div>
     </article>
     <aside

@@ -7,27 +7,10 @@ const url = new URL(Astro.request.url);
 <header class="flex items-center pb-10">
   <a
     href="/"
-    class="text-lg"
+    class="flex items-center text-lg whitespace-nowrap hover:underline underline-offset-2"
     aria-current={url.pathname === "/" ? "page" : false}
   >
-    <span class="group font-medium">
-      <span class="transition-all duration-0">Ratuls</span><span
-        class="text-gray-300 group-hover:text-gray-400 transition-all duration-500"
-        >[</span
-      ><span
-        class="text-gray-300 group-hover:text-primary transition-all duration-500"
-        >'</span
-      ><span
-        class="text-surface-content/50 group-hover:text-primary transition-all duration-500"
-        >Blog</span
-      ><span
-        class="text-gray-300 group-hover:text-primary transition-all duration-500"
-        >'</span
-      ><span
-        class="text-gray-300 group-hover:text-gray-400 transition-all duration-500"
-        >]</span
-      >
-    </span>
+    Ratul's Blog
   </a>
   <ThemeToggle />
 </header>
