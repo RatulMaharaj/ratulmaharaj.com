@@ -1,0 +1,16 @@
+---
+// PostHog
+---
+
+<script>
+  import posthog from "posthog-js";
+  if (
+    !window.location.host.includes("127.0.0.1") &&
+    !window.location.host.includes("localhost")
+  ) {
+    posthog.init("phc_g7lrOlXPYPe1H7Ykegxq6TiEgeUPqkc9B56XblRR3oV", {
+      api_host: "https://us.i.posthog.com",
+      person_profiles: "identified_only",
+    });
+  }
+</script>

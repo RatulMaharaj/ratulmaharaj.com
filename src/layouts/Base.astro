@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import SkipLink from "@/components/SkipLink";
 import type { SiteMeta } from "@/types";
 import siteMeta from "src/site-meta.config";
+import PostHog from "@/components/PostHog";
 
 export type Props = {
   meta: SiteMeta;
@@ -83,5 +84,6 @@ const {
     </main>
     <Footer />
     <slot name="rss-writer" />
+    <PostHog />
   </body>
 </html>
