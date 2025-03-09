@@ -33,5 +33,9 @@
 	"[javascriptreact]": {
 		"editor.defaultFormatter": "esbenp.prettier-vscode"
 	},
-	"cSpell.words": ["stylelint"]
+	"cSpell.words": [
+		"Coolify",
+		"Rocicorp",
+		"stylelint"
+	]
 }
