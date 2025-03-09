@@ -51,9 +51,14 @@
 		"@mdx-js/rollup": "^3.0.1",
 		"date-fns": "^3.6.0",
 		"markdown-it": "^14.1.0",
-		"posthog-js": "^1.157.2",
+		"posthog-js": "^1.229.5",
 		"rehype-prism-plus": "^2.0.0",
 		"rollup": "^4.21.0",
 		"sanitize-html": "^2.13.0"
+	},
+	"pnpm": {
+		"onlyBuiltDependencies": [
+			"core-js"
+		]
 	}
 }
