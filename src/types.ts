@@ -1,4 +1,4 @@
-import type { MDXInstance, Page } from "astro";
+import type { MDXInstance, MarkdownInstance, Page } from "astro";
 
 type Theme = "light" | "dark";
 
@@ -33,8 +33,20 @@ interface Snippet {
 	tags?: string[];
 }
 
+
+interface Frontmatter {
+	title: string;
+	description?: string;
+	layout: string;
+	pubDate: Date;
+	tags: string[];
+	author: string;
+}
+
 export type {
 	MDXInstance,
+	MarkdownInstance,
+	Frontmatter,
 	Page,
 	Theme,
 	IElement,
@@ -43,3 +55,4 @@ export type {
 	Post,
 	Snippet
 };
+

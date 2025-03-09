@@ -1,7 +1,11 @@
 ---
 import Paginator from "@/components/Paginator";
-import type { Post } from "@/types";
-import { getLocaleTime, getPreviousAndNextPosts, sortMDByDate } from "src/util";
+import {
+  getLocaleTime,
+  getPreviousAndNextPosts,
+  sortMDByDate,
+  getPosts,
+} from "src/util";
 import BaseLayout from "./Base.astro";
 import SocialList from "@/components/SocialList";
 
@@ -15,9 +19,12 @@ const date = new Date(pubDate);
 const datetime = date.toISOString();
 const postDate = getLocaleTime(date);
 const currentPage = new URL(Astro.request.url).pathname;
-const allPosts = await Astro.glob<Post>("../pages/posts/*.md");
-const allSortedPosts = sortMDByDate(allPosts);
-const { prev, next } = getPreviousAndNextPosts(currentPage, allSortedPosts);
+
+// get all md files
+const posts = getPosts();
+
+const sortedPosts = sortMDByDate(posts);
+const { prev, next } = getPreviousAndNextPosts(currentPage, sortedPosts);
 const paginationProps = {
   ...(prev && {
     prevUrl: {

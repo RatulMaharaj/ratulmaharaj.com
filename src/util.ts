@@ -1,6 +1,6 @@
-import type { MDXInstance, Post, Snippet } from "./types";
+import type { Frontmatter, MarkdownInstance, MDXInstance, Post, Snippet } from "./types";
 
-export function sortMDByDate(posts: MDXInstance<Post>[] = []) {
+export function sortMDByDate(posts: MarkdownInstance<Frontmatter>[] = []) {
 	return posts.sort(
 		(a, b) =>
 			new Date(b.frontmatter.pubDate).valueOf() -
@@ -11,7 +11,7 @@ export function sortMDByDate(posts: MDXInstance<Post>[] = []) {
 // This function expects the @arg posts to be sorted by sortMDByDate()
 export function getPreviousAndNextPosts(
 	currentSlug: string,
-	posts: MDXInstance<Post>[] = []
+	posts: MarkdownInstance<Frontmatter>[] = []
 ) {
 	const index = posts.findIndex(({ url }) => url === currentSlug);
 	return {
@@ -20,17 +20,6 @@ export function getPreviousAndNextPosts(
 	};
 }
 
-// This function expects the @arg posts to be sorted by sortMDByDate()
-export function getPreviousAndNextSnippets(
-	currentSlug: string,
-	snippets: MDXInstance<Snippet>[] = []
-) {
-	const index = snippets.findIndex(({ url }) => url === currentSlug);
-	return {
-		prev: snippets[index + 1] ?? null,
-		next: snippets[index - 1] ?? null,
-	};
-}
 
 export function getAllTags(posts: MDXInstance<Post>[] = []) {
 	const allTags = new Set<string>();
@@ -73,3 +62,12 @@ export function getLocaleTime(
 	};
 	return new Intl.DateTimeFormat(locale, formatOptions).format(date);
 }
+
+
+export function getPosts() {
+  return Object.values(
+    import.meta.glob<MarkdownInstance<Frontmatter>>("src/pages/posts/*.md", {
+      eager: true,
+    })
+  );
+};
