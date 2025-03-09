@@ -1,6 +1,4 @@
-<p align="center">
-  <img alt="Astro Theme Cactus logo" src="./public/images/og-image.webp" width="1200" />
-</p>
+# Personal Blog of Ratul Maharaj
 
 ## Quick Start Dev Guide
 
