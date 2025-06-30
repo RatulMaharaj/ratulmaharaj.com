@@ -14,16 +14,16 @@
 		"format": "prettier -w ./src ./src/**/*.astro"
 	},
 	"devDependencies": {
-		"@astrojs/mdx": "^4.1.0",
-		"@astrojs/sitemap": "^3.2.1",
-		"@astrojs/tailwind": "^6.0.0",
+		"@astrojs/mdx": "^4.3.0",
+		"@astrojs/sitemap": "^3.4.1",
+		"@astrojs/tailwind": "^6.0.2",
 		"@tailwindcss/aspect-ratio": "^0.4.2",
 		"@tailwindcss/line-clamp": "^0.4.4",
 		"@tailwindcss/typography": "^0.5.14",
 		"@types/eslint": "^9.6.0",
 		"@typescript-eslint/eslint-plugin": "^8.2.0",
 		"@typescript-eslint/parser": "^8.2.0",
-		"astro": "5.4.2",
+		"astro": "5.10.1",
 		"astro-eslint-parser": "^1.0.2",
 		"autoprefixer": "^10.4.20",
 		"eslint": "^9.9.0",
@@ -44,8 +44,8 @@
 		"typescript": "^5.5.4"
 	},
 	"dependencies": {
-		"@astrojs/rss": "^4.0.11",
-		"@astrojs/vercel": "^8.1.1",
+		"@astrojs/rss": "^4.0.12",
+		"@astrojs/vercel": "^8.2.0",
 		"@fontsource-variable/montserrat": "^5.0.20",
 		"@fontsource/montserrat-alternates": "^5.0.14",
 		"@mdx-js/rollup": "^3.0.1",
