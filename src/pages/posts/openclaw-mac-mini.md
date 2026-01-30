@@ -3,7 +3,7 @@ layout: "@/layouts/BlogPost"
 title: OpenClaw on a Mac mini
 pubDate: 31 January 2026
 description: My always-on AI assistant that writes code whilst I sleep.
-tags: ["AI"]
+tags: ["AI", "Automation", "Developer Tools", "Mac mini", "OpenClaw"]
 author: "Ratul Maharaj"
 ---
 
