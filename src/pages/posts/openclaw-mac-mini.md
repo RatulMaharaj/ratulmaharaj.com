@@ -1,6 +1,6 @@
 ---
 layout: "@/layouts/BlogPost"
-title: Moltbot on a Mac Mini
+title: OpenClaw on a Mac mini
 pubDate: 31 January 2026
 description: My always-on AI assistant that writes code whilst I sleep.
 tags: ["AI"]
@@ -8,11 +8,11 @@ author: "Ratul Maharaj"
 ---
 
 
-I've been running [Moltbot](https://molt.bot), previously Clawdbot, on my base model M4 Mac mini for about a week now and honestly? It's been pretty wild. Here's what I've figured out so far.
+I've been running [OpenClaw](https://openclaw.ai), previously [Clawdbot](https://clawdbot.ai) (and then [moltbot](https://molt.bot)), on my base model M4 Mac mini for about a week now and honestly? It's been pretty wild. Here's what I've figured out so far.
 
 ## What is this thing?
 
-So the way I understand it: Moltbot lets you give an LLM actual control of your computer. Instead of just chatting, I can text it "create a PR for that bug fix" and it actually does it - clones the repo, makes changes, pushes, opens the PR. Like having an assistant that does work when instructed.
+So the way I understand it: OpenClaw lets you give an LLM actual control of your computer. Instead of just chatting, I can text it "create a PR for that bug fix" and it actually does it - clones the repo, makes changes, pushes, opens the PR. Like having an assistant that does work when instructed.
 
 ## Why a Mac Mini?
 
@@ -20,17 +20,17 @@ Because that's what everyone seems to be doing and I had just got an amazing Bla
 
 ## IDENTITY.md
 
-One of the first things I did was let my Moltbot choose its own name. It chose **Arlo** - which means "fortified hill", here to hold the line. It also chose 🏔️ as its emoji.
+One of the first things I did was let my OpenClaw choose its own name. It chose **Arlo** - which means "fortified hill", here to hold the line. It also chose 🏔️ as its emoji.
 
 ## My Setup
 
 My setup is actually pretty simple. I created a bot that I send a message to via discord. The bot will go do some work either interactively or by spawning background agents and then respond to my message. I chose discord because it's where I am most of the time anyway.
 
-GitHub Copilot has been great. I'm able to sign in pretty much everywhere with it and get access to all my favourite models. I'm currently reusing my subscription across Zed, OpenCode and now Moltbot.
+GitHub Copilot has been great. I'm able to sign in pretty much everywhere with it and get access to all my favourite models. I'm currently reusing my subscription across Zed, OpenCode and now OpenClaw.
 
-I'm using Claude Opus 4.5 as my primary model - it's awesome but also quite expensive and Moltbot seems to burn through premium requests extremely fast (especially if it's using it's own agents to write code).
+I'm using Claude Opus 4.5 as my primary model - it's awesome but also quite expensive and OpenClaw seems to burn through premium requests extremely fast (especially if it's using it's own agents to write code).
 
-I am also running within a tailscale network so that I can access the dashboard easily from my other devices.
+I am also running within a Tailscale network so that I can access the dashboard easily from my other devices.
 
 If you're interested in the setup, here's what's been working for me:
 
@@ -65,9 +65,9 @@ If you're interested in the setup, here's what's been working for me:
 }
 ```
 
-Setting the `"dm.policy" : "allowlist"` and putting your discord user id in the allowFrom array will ensure that only you can interact with your Moltbot. I also disabled group chats to be safe.
+Setting the `"dm.policy" : "allowlist"` and putting your discord user id in the allowFrom array will ensure that only you can interact with your OpenClaw. I also disabled group chats to be safe.
 
-I'd recommend starting with `moltbot configure` and then going from there. If you're struggling to figure out how to setup tailscale or discord, I would suggest using the built-in dashboard chat to just ask your Moltbot to do it for you.
+I'd recommend starting with `openclaw configure` and then going from there. If you're struggling to figure out how to setup tailscale or discord, I would suggest using the built-in dashboard chat to just ask your OpenClaw to do it for you.
 
 ## What it's been good for
 
@@ -123,7 +123,7 @@ I actually look forward to these now, especially now that it pulls info from var
 
 ## Where it struggles
 
-Although the experience has mostly been great, I find that it often forgets to use opencode for code related tasks. This is a bit annoying because I then get bombarded with discord progress messages, I'd much rather it go away and do its thing, then come back with questions.
+Although the experience has mostly been great, I find that it often forgets to use OpenCode for code related tasks. This is a bit annoying because I then get bombarded with discord progress messages, I'd much rather it go away and do its thing, then come back with questions.
 
 It is still early days though, and I'm sure this tech is only going to get better from here. I'm excited for it.
 
