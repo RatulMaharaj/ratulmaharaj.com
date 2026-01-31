@@ -33,7 +33,7 @@ const postDate = format(date, "MMM d, yyyy");
       </p>
     )
   }
-  <div class="flex flex-row">
+  <div class="flex flex-row flex-wrap gap-y-2">
     {
       post.frontmatter.tags.map((tag) => (
         <a href={`/tags/${tag}`} class="category-tag">

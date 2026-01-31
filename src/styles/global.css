@@ -97,7 +97,7 @@
 	}
 
 	.category-tag {
-		@apply inline-block border border-primary cursor-pointer text-primary rounded-md text-[10px] px-2 font-semibold transition-all ease-in-out uppercase hover:bg-primary hover:text-surface mr-2;
+		@apply inline-block border border-primary cursor-pointer text-primary rounded-md text-[10px] px-2 font-semibold transition-all ease-in-out uppercase hover:bg-primary hover:text-surface mr-2 whitespace-nowrap;
 	}
 
 	blockquote > p::before, blockquote > p::after {
