@@ -1,47 +1,43 @@
 ---
-import type { IElement } from "@/types";
-import { tagUrl } from "@/util";
+import { postUrl } from "@/util";
 import type { Post } from "@/util";
 import { format } from "date-fns";
-export interface Props extends IElement {
+export interface Props {
 	post: Post;
 	includeDescription?: boolean;
 }
 
 const { post, includeDescription = true } = Astro.props as Props;
-const { pubDate } = post.data;
-const date = new Date(pubDate);
-const datetime = date.toISOString();
-const postDate = format(date, "MMM d, yyyy");
+const { title, description, pubDate } = post.data;
+const datetime = pubDate.toISOString();
+const postDate = format(pubDate, "MMM d, yyyy");
 ---
 
-<div
-	class="flex w-full cursor-pointer flex-col gap-y-4 rounded-md py-4 transition-all duration-300 hover:bg-surface-content/5 hover:px-4"
+<a
+	href={postUrl(post)}
+	class="group -mx-4 block rounded-md px-4 py-4 transition-colors duration-200 hover:bg-surface-content/5"
 >
-	<div class="mb-2">
-		<time datetime={datetime} class="text-xs text-surface-content/50">
+	<div class="grid gap-y-1 sm:grid-cols-[7.5rem_1fr] sm:gap-x-6">
+		<time
+			datetime={datetime}
+			class="pt-1 text-xs text-surface-content/55 tabular-nums"
+		>
 			{postDate}
 		</time>
+		<div>
+			<h3
+				class="text-lg leading-snug font-semibold transition-colors duration-200 group-hover:text-primary"
+			>
+				{title}
+			</h3>
+			{
+				includeDescription && (
+					<p class="mt-1 line-clamp-2 text-sm leading-relaxed text-surface-content/70">
+						<span class="text-secondary/70">// </span>
+						{description}
+					</p>
+				)
+			}
+		</div>
 	</div>
-	<h4
-		class="mb-1 flex items-start justify-start text-sm font-bold text-surface-content duration-500"
-	>
-		{post.data.title}
-	</h4>
-	{
-		includeDescription && (
-			<p class="line-clamp-3 block text-xs text-surface-content/80 italic duration-500">
-				// {post.data.description}
-			</p>
-		)
-	}
-	<div class="flex flex-row flex-wrap gap-y-2">
-		{
-			post.data.tags.map((tag) => (
-				<a href={tagUrl(tag)} class="category-tag">
-					{tag}
-				</a>
-			))
-		}
-	</div>
-</div>
+</a>

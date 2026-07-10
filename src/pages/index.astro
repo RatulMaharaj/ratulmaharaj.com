@@ -4,7 +4,7 @@ import PreviewItem from "@/components/PreviewItem";
 import SocialList from "@/components/SocialList";
 import PageLayout from "@/layouts/Base";
 import { getCollection } from "astro:content";
-import { postUrl, sortPostsByDate } from "@/util";
+import { sortPostsByDate } from "@/util";
 
 const meta = {
 	title: "Home",
@@ -26,22 +26,19 @@ const allPostsByDate = sortPostsByDate(allPosts).slice(0, MAX_POSTS);
 		</div>
 	</section>
 	<section aria-label="Blog post list" class="mt-16">
-		<h2 class="mb-4 font-bold uppercase">Recent Posts</h2>
-		<ul class="space-y-4 sm:space-y-2">
+		<h2 class="section-label mb-4">Recent posts</h2>
+		<ul class="space-y-1">
 			{
 				allPostsByDate.map((p) => (
-					<li class="flex flex-wrap items-center gap-x-2 [&_q]:w-full">
-						<a href={postUrl(p)}>
-							<PreviewItem post={p} />
-						</a>
+					<li>
+						<PreviewItem post={p} />
 					</li>
 				))
 			}
 		</ul>
-		<br />
 		<a
 			href="/posts"
-			class="cursor-pointer rounded-md py-2 transition-all duration-500 hover:bg-surface-content/5 hover:px-4"
+			class="mt-6 inline-block text-sm text-surface-content/70 transition-colors duration-200 hover:text-primary"
 			>See all posts &rarr;</a
 		>
 	</section>
