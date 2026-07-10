@@ -151,16 +151,12 @@
 	/* Quiet hash-style tag link */
 	.tag {
 		@apply inline-block text-xs lowercase transition-colors duration-200;
+
 		color: oklch(var(--theme-surface-content) / 60%);
 	}
 
 	.tag:hover {
 		@apply text-primary;
-	}
-
-	/* Legacy pill, removed once all consumers migrate to .tag */
-	.category-tag {
-		@apply mr-2 inline-block cursor-pointer rounded-md border border-primary px-2 text-[10px] font-semibold whitespace-nowrap text-primary uppercase transition-all ease-in-out hover:bg-primary hover:text-surface;
 	}
 
 	/* Section label: "// recent posts" style eyebrow headings */

@@ -38,25 +38,43 @@ const paginationProps = {
 ---
 
 <BaseLayout meta={{ title, description, pubDate: postDate }}>
-	<div class="sm:grid sm:grid-cols-[3fr_1fr] sm:items-start sm:gap-x-10">
+	<div class="sm:grid sm:grid-cols-[1fr_13rem] sm:items-start sm:gap-x-10">
 		<article>
-			<div class="mb-2">
-				<time datetime={datetime} class="text-xs text-surface-content/50">
-					{postDate}
-				</time>
-			</div>
-			<h1
-				class="mb-1 flex items-start justify-start text-2xl font-bold text-surface-content"
+			<time
+				datetime={datetime}
+				class="text-xs text-surface-content/55 tabular-nums"
 			>
+				{postDate}
+			</time>
+			<h1 class="mt-2 text-3xl leading-tight font-bold text-surface-content">
 				{title}
 			</h1>
-			<p class="line-clamp-3 block text-sm text-surface-content/80 italic">
-				// {description}
+			<p class="mt-3 text-sm leading-relaxed text-surface-content/70">
+				<span class="text-secondary/70">// </span>{description}
 			</p>
-			<br />
-			<br />
+			{
+				headings.length > 0 && (
+					<details class="mt-8 rounded-md border border-border bg-surface-raised px-4 py-3 sm:hidden">
+						<summary class="section-label cursor-pointer select-none">
+							On this page
+						</summary>
+						<ul class="mt-3 space-y-2 text-xs">
+							{headings.map(({ slug, text }) => (
+								<li>
+									<a
+										href={`#${slug}`}
+										class="text-surface-content/70 transition-colors duration-200 hover:text-primary"
+									>
+										{text}
+									</a>
+								</li>
+							))}
+						</ul>
+					</details>
+				)
+			}
 			<div
-				class="prose prose-sm w-full max-w-full prose-headings:font-semibold prose-strong:text-surface-content"
+				class="prose mt-10 max-w-none prose-headings:font-semibold prose-strong:text-surface-content"
 			>
 				<slot />
 				<div class="mt-2 flex flex-col pt-2">
@@ -78,35 +96,40 @@ const paginationProps = {
 				</div>
 			</div>
 		</article>
-		<aside
-			class="invisible hidden text-right sm:visible sm:sticky sm:top-20 sm:block"
-		>
-			<h2 class="font-semibold">Table of Contents</h2>
-			<ul class="mt-4 space-y-2 text-xs">
-				{
-					headings.map(({ slug, text }) => (
-						<li class="line-clamp-2 hover:text-primary">
-							<a href={`#${slug}`} aria-label={`Scroll to section: ${text}`}>
-								{text}
-							</a>
-						</li>
-					))
-				}
-			</ul>
-		</aside>
+		{
+			headings.length > 0 && (
+				<aside class="hidden sm:sticky sm:top-16 sm:block">
+					<h2 class="section-label">On this page</h2>
+					<ul class="mt-4 space-y-2 text-xs">
+						{headings.map(({ slug, text }) => (
+							<li class="line-clamp-2">
+								<a
+									href={`#${slug}`}
+									data-toc-link={slug}
+									class="text-surface-content/60 transition-colors duration-200 hover:text-primary"
+									aria-label={`Scroll to section: ${text}`}
+								>
+									{text}
+								</a>
+							</li>
+						))}
+					</ul>
+				</aside>
+			)
+		}
 	</div>
-	<div class="mt-10">
+	<div class="mt-12">
 		{
 			tags?.length && (
-				<ul class="flex flex-wrap items-center gap-y-2 py-4">
+				<ul class="flex flex-wrap items-center gap-x-4 gap-y-2 py-4">
 					{tags.map((tag: string) => (
 						<li>
 							<a
-								class="category-tag"
+								class="tag"
 								aria-label={`View more blogs with the tag ${tag}`}
 								href={tagUrl(tag)}
 							>
-								{tag}
+								#{tag}
 							</a>
 						</li>
 					))}
@@ -116,6 +139,39 @@ const paginationProps = {
 		<Paginator {...paginationProps} />
 	</div>
 </BaseLayout>
+
+<script>
+	// TOC scroll-spy: highlight the section currently in view
+	const tocLinks =
+		document.querySelectorAll<HTMLAnchorElement>("[data-toc-link]");
+	if (tocLinks.length > 0) {
+		const setActive = (slug: string) => {
+			tocLinks.forEach((link) => {
+				const isActive = link.dataset.tocLink === slug;
+				link.classList.toggle("text-primary", isActive);
+				link.classList.toggle("text-surface-content/60", !isActive);
+				if (isActive) {
+					link.setAttribute("aria-current", "true");
+				} else {
+					link.removeAttribute("aria-current");
+				}
+			});
+		};
+		const observer = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					if (entry.isIntersecting) {
+						setActive(entry.target.id);
+					}
+				}
+			},
+			{ rootMargin: "0px 0px -70% 0px" },
+		);
+		document
+			.querySelectorAll("article :is(h1, h2)[id]")
+			.forEach((heading) => observer.observe(heading));
+	}
+</script>
 
 <style>
 	/* Hide the weird code block adding the language */

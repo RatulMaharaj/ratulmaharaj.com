@@ -5,9 +5,7 @@ import { getAllTagsWithCount, tagUrl } from "@/util";
 
 const allPosts = await getCollection("posts");
 const allPostTags = getAllTagsWithCount(allPosts);
-const sortedTags = Object.entries(allPostTags).sort(
-	([, a], [, b]) => b - a,
-);
+const sortedTags = Object.entries(allPostTags).sort(([, a], [, b]) => b - a);
 
 const meta = {
 	title: "Tags",
