@@ -1,5 +1,6 @@
 ---
 import type { IElement } from "@/types";
+import { tagUrl } from "@/util";
 import type { Post } from "@/util";
 import { format } from "date-fns";
 export interface Props extends IElement {
@@ -37,7 +38,7 @@ const postDate = format(date, "MMM d, yyyy");
 	<div class="flex flex-row flex-wrap gap-y-2">
 		{
 			post.data.tags.map((tag) => (
-				<a href={`/tags/${tag}`} class="category-tag">
+				<a href={tagUrl(tag)} class="category-tag">
 					{tag}
 				</a>
 			))

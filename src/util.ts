@@ -6,6 +6,11 @@ export function postUrl(post: Post) {
 	return `/posts/${post.id}/`;
 }
 
+// Tag routes are generated from lowercased tags; hrefs must match.
+export function tagUrl(tag: string) {
+	return `/tags/${tag.toLowerCase()}/`;
+}
+
 export function sortPostsByDate(posts: Post[] = []) {
 	return [...posts].sort(
 		(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
@@ -35,7 +40,8 @@ export function getAllTagsWithCount(posts: Post[] = []): {
 	return posts.reduce((prev, post) => {
 		const currTags: { [key: string]: number } = { ...prev };
 		post.data.tags?.forEach(function (tag) {
-			currTags[tag] = (currTags[tag] || 0) + 1;
+			const key = tag.toLowerCase();
+			currTags[key] = (currTags[key] || 0) + 1;
 		});
 		return currTags;
 	}, {});

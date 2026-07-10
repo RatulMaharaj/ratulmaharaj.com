@@ -1,7 +1,7 @@
 ---
 import type { MarkdownHeading } from "astro";
 import Paginator from "@/components/Paginator";
-import { getLocaleTime, postUrl } from "src/util";
+import { getLocaleTime, postUrl, tagUrl } from "src/util";
 import type { Post } from "src/util";
 import BaseLayout from "./Base.astro";
 import SocialList from "@/components/SocialList";
@@ -104,7 +104,7 @@ const paginationProps = {
 							<a
 								class="category-tag"
 								aria-label={`View more blogs with the tag ${tag}`}
-								href={`/tags/${tag}`}
+								href={tagUrl(tag)}
 							>
 								{tag}
 							</a>
