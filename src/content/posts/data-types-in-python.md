@@ -1,5 +1,4 @@
 ---
-layout: "@/layouts/BlogPost"
 title: Data types in Python
 pubDate: 21 April 2020
 description: An exploration of various Pythonic data types.

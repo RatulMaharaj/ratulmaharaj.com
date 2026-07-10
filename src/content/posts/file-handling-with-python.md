@@ -1,5 +1,4 @@
 ---
-layout: "@/layouts/BlogPost"
 title: File handling with Python
 pubDate: 8 November 2022
 description: Using Python to read, write and delete files.

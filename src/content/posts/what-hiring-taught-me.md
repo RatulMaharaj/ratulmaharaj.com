@@ -1,5 +1,4 @@
 ---
-layout: "@/layouts/BlogPost"
 title: What hiring taught me
 pubDate: 1 July 2025
 description: Reflections on my experience hiring a developer for the first time

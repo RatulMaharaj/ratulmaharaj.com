@@ -1,5 +1,4 @@
 ---
-layout: "@/layouts/BlogPost"
 title: Zero cache on Coolify
 pubDate: 9 March 2025
 description: Self hosting your zero cache instance

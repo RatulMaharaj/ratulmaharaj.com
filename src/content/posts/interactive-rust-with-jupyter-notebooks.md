@@ -1,5 +1,4 @@
 ---
-layout: "@/layouts/BlogPost"
 title: Interactive Rust with jupyter
 pubDate: 16 June 2023
 description: Adding a Rust kernel to jupyter notebooks.

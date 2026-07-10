@@ -1,40 +1,40 @@
-import type { Frontmatter, MarkdownInstance, MDXInstance, Post, Snippet } from "./types";
+import type { CollectionEntry } from "astro:content";
 
-export function sortMDByDate(posts: MarkdownInstance<Frontmatter>[] = []) {
-	return posts.sort(
-		(a, b) =>
-			new Date(b.frontmatter.pubDate).valueOf() -
-			new Date(a.frontmatter.pubDate).valueOf()
+export type Post = CollectionEntry<"posts">;
+
+export function postUrl(post: Post) {
+	return `/posts/${post.id}/`;
+}
+
+export function sortPostsByDate(posts: Post[] = []) {
+	return [...posts].sort(
+		(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 	);
 }
 
-// This function expects the @arg posts to be sorted by sortMDByDate()
-export function getPreviousAndNextPosts(
-	currentSlug: string,
-	posts: MarkdownInstance<Frontmatter>[] = []
-) {
-	const index = posts.findIndex(({ url }) => url === currentSlug);
+// This function expects the @arg posts to be sorted by sortPostsByDate()
+export function getPreviousAndNextPosts(currentId: string, posts: Post[] = []) {
+	const index = posts.findIndex(({ id }) => id === currentId);
 	return {
 		prev: posts[index + 1] ?? null,
 		next: posts[index - 1] ?? null,
 	};
 }
 
-
-export function getAllTags(posts: MDXInstance<Post>[] = []) {
+export function getAllTags(posts: Post[] = []) {
 	const allTags = new Set<string>();
 	posts.forEach((post) => {
-		post.frontmatter.tags?.map((tag) => allTags.add(tag.toLowerCase()));
+		post.data.tags?.map((tag) => allTags.add(tag.toLowerCase()));
 	});
 	return [...allTags];
 }
 
-export function getAllTagsWithCount(posts: MDXInstance<Post>[] = []): {
+export function getAllTagsWithCount(posts: Post[] = []): {
 	[key: string]: number;
 } {
 	return posts.reduce((prev, post) => {
-		const currTags = { ...prev };
-		post.frontmatter.tags?.forEach(function (tag) {
+		const currTags: { [key: string]: number } = { ...prev };
+		post.data.tags?.forEach(function (tag) {
 			currTags[tag] = (currTags[tag] || 0) + 1;
 		});
 		return currTags;
@@ -62,12 +62,3 @@ export function getLocaleTime(
 	};
 	return new Intl.DateTimeFormat(locale, formatOptions).format(date);
 }
-
-
-export function getPosts() {
-  return Object.values(
-    import.meta.glob<MarkdownInstance<Frontmatter>>("src/pages/posts/*.md", {
-      eager: true,
-    })
-  );
-};

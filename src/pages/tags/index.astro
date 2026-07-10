@@ -1,9 +1,9 @@
 ---
 import PageLayout from "@/layouts/Base";
-import type { Post } from "@/types";
+import { getCollection } from "astro:content";
 import { getAllTagsWithCount } from "@/util";
 
-const allPosts = await Astro.glob<Post>("../posts/*.md");
+const allPosts = await getCollection("posts");
 const allPostTags = getAllTagsWithCount(allPosts);
 const allTags = { ...allPostTags };
 

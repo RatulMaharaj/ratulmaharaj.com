@@ -1,5 +1,4 @@
 ---
-layout: "@/layouts/BlogPost"
 title: Tauri v2 custom menu items
 pubDate: 21 June 2024
 description: Adding a webview navigation shortcut to the native app menu.

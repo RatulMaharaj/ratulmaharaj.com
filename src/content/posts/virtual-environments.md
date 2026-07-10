@@ -1,5 +1,4 @@
 ---
-layout: "@/layouts/BlogPost"
 title: Python's virtual environments
 pubDate: 16 July 2020
 description: The venv module and how to use it.

@@ -1,4 +1,4 @@
-import type { MDXInstance, MarkdownInstance, Page } from "astro";
+import type { Page } from "astro";
 
 type Theme = "light" | "dark";
 
@@ -19,40 +19,4 @@ type PaginationLink = {
 	srLabel?: string;
 };
 
-interface Post {
-	title: string;
-	description: string;
-	pubDate?: Date;
-	tags?: string[];
-}
-
-interface Snippet {
-	title: string;
-	description: string;
-	pubDate?: Date;
-	tags?: string[];
-}
-
-
-interface Frontmatter {
-	title: string;
-	description?: string;
-	layout: string;
-	pubDate: Date;
-	tags: string[];
-	author: string;
-}
-
-export type {
-	MDXInstance,
-	MarkdownInstance,
-	Frontmatter,
-	Page,
-	Theme,
-	IElement,
-	SiteMeta,
-	PaginationLink,
-	Post,
-	Snippet
-};
-
+export type { Page, Theme, IElement, SiteMeta, PaginationLink };

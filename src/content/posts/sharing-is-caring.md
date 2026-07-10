@@ -1,5 +1,4 @@
 ---
-layout: "@/layouts/BlogPost"
 title: Sharing Python code
 pubDate: 14 May 2023
 description: My thoughts on sharing Python code with other users.

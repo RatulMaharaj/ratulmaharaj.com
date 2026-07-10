@@ -1,49 +1,43 @@
 ---
+import type { MarkdownHeading } from "astro";
 import Paginator from "@/components/Paginator";
-import {
-  getLocaleTime,
-  getPreviousAndNextPosts,
-  sortMDByDate,
-  getPosts,
-} from "src/util";
+import { getLocaleTime, postUrl } from "src/util";
+import type { Post } from "src/util";
 import BaseLayout from "./Base.astro";
 import SocialList from "@/components/SocialList";
 
-let {
-  url,
-  content: { title, description, pubDate, tags },
-  headings,
-} = Astro.props;
-headings = headings.filter((heading) => heading.depth < 3);
-const date = new Date(pubDate);
-const datetime = date.toISOString();
-const postDate = getLocaleTime(date);
-const currentPage = new URL(Astro.request.url).pathname;
+export interface Props {
+  post: Post;
+  headings: MarkdownHeading[];
+  prev: Post | null;
+  next: Post | null;
+}
 
-// get all md files
-const posts = getPosts();
+const { post, prev, next } = Astro.props;
+const { title, description, pubDate, tags } = post.data;
+const headings = Astro.props.headings.filter((heading) => heading.depth < 3);
+const datetime = pubDate.toISOString();
+const postDate = getLocaleTime(pubDate);
 
-const sortedPosts = sortMDByDate(posts);
-const { prev, next } = getPreviousAndNextPosts(currentPage, sortedPosts);
 const paginationProps = {
   ...(prev && {
     prevUrl: {
-      url: prev.url,
-      text: `← ${prev.frontmatter.title}`,
+      url: postUrl(prev),
+      text: `← ${prev.data.title}`,
       srLabel: "Previous Article:",
     },
   }),
   ...(next && {
     nextUrl: {
-      url: next.url,
-      text: `${next.frontmatter.title} →`,
+      url: postUrl(next),
+      text: `${next.data.title} →`,
       srLabel: "Next Article:",
     },
   }),
 };
 ---
 
-<BaseLayout meta={{ title, description, pubDate }}>
+<BaseLayout meta={{ title, description, pubDate: postDate }}>
   <div class="sm:grid sm:grid-cols-[3fr_1fr] sm:gap-x-10 sm:items-start">
     <article>
       <div class="mb-2">
@@ -78,7 +72,7 @@ const paginationProps = {
         </div>
         <div class="flex pt-10 items-center justify-end text-xs">
           <a
-            href={`https://github.com/RatulMaharaj/ratulmaharaj.com/edit/main/src/pages/${url}.md`}
+            href={`https://github.com/RatulMaharaj/ratulmaharaj.com/edit/main/src/content/posts/${post.id}.md`}
             >Edit this page</a
           >
         </div>

@@ -1,20 +1,22 @@
 ---
+import { getCollection } from "astro:content";
 import PreviewItem from "@/components/PreviewItem";
 import Pagination from "@/components/Paginator";
 import PageLayout from "@/layouts/Base";
-import type { MDXInstance, Page, Post } from "@/types";
-import { getAllTags, sortMDByDate } from "src/util";
+import type { Page } from "@/types";
+import { getAllTags, postUrl, sortPostsByDate } from "src/util";
+import type { Post } from "src/util";
 import Tags from "@/components/Tags";
 
 export async function getStaticPaths({ paginate }) {
-  const allPosts = await Astro.glob<Post>("./*.md");
-  const allPostsByDate = sortMDByDate(allPosts);
+  const allPosts = await getCollection("posts");
+  const allPostsByDate = sortPostsByDate(allPosts);
   const allTags = getAllTags(allPosts);
   return paginate(allPostsByDate, { props: { allTags }, pageSize: 10 });
 }
 
 export interface Props {
-  page: Page<MDXInstance<Post>>;
+  page: Page<Post>;
   allTags: string[];
 }
 
@@ -49,7 +51,7 @@ const paginationProps = {
         {
           page.data.map((p) => (
             <li class="[&_q]:w-full flex flex-wrap items-center gap-x-2">
-              <a href={p.url}>
+              <a href={postUrl(p)}>
                 <PreviewItem post={p} />
               </a>
             </li>

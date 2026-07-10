@@ -1,25 +1,19 @@
 ---
+import { getCollection } from "astro:content";
 import PreviewItem from "@/components/PreviewItem";
 import PageLayout from "@/layouts/Base";
-import type { MDXInstance, Page, Post, Snippet } from "@/types";
-import { getAllTags, sortMDByDate } from "@/util";
+import type { Page } from "@/types";
+import { getAllTags, postUrl, sortPostsByDate } from "@/util";
+import type { Post } from "@/util";
 
 export async function getStaticPaths({ paginate }) {
-  // get posts and snippets
-  const allPosts = await Astro.glob<Post>("../../posts/*.md");
-
-  // sort by date
-  const allPostsByDate = sortMDByDate(allPosts);
-
-  // get all tags
-  const allPostsAndSnippetsByDate = [...allPostsByDate];
-  let allTags = [...getAllTags(allPostsByDate)];
-  // remove duplicates
-  allTags = [...new Set(allTags)];
+  const allPosts = await getCollection("posts");
+  const allPostsByDate = sortPostsByDate(allPosts);
+  const allTags = getAllTags(allPostsByDate);
 
   return allTags.flatMap((tag) => {
-    const filterItems = allPostsAndSnippetsByDate.filter((item) =>
-      item.frontmatter.tags?.includes(tag)
+    const filterItems = allPostsByDate.filter((item) =>
+      item.data.tags?.includes(tag)
     );
     return paginate(filterItems, {
       params: { tag },
@@ -29,20 +23,10 @@ export async function getStaticPaths({ paginate }) {
 }
 
 export interface Props {
-  page: Page<MDXInstance<Post | Snippet>>;
+  page: Page<Post>;
 }
 
 const { page } = Astro.props as Props;
-let blogs = [];
-let snippets = [];
-
-page.data.forEach((element) => {
-  if (element.frontmatter["layout"].replace("@/layouts/", "") == "Snippet") {
-    snippets.push(element);
-  } else {
-    blogs.push(element);
-  }
-});
 
 const { tag } = Astro.params;
 const meta = {
@@ -58,12 +42,12 @@ const meta = {
     </h1>
     <br />
     {
-      blogs.length > 0 && (
+      page.data.length > 0 && (
         <>
           <ul class="space-y-8 text-left">
-            {blogs.map((p) => (
+            {page.data.map((p) => (
               <li class="[&_q]:w-full flex flex-wrap items-center gap-x-2">
-                <a href={p.url}>
+                <a href={postUrl(p)}>
                   <PreviewItem post={p} />
                 </a>
               </li>
