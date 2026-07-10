@@ -8,7 +8,7 @@ export function postUrl(post: Post) {
 
 export function sortPostsByDate(posts: Post[] = []) {
 	return [...posts].sort(
-		(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+		(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 	);
 }
 
@@ -52,7 +52,7 @@ export function elementHasClass(element: HTMLElement, className: string) {
 export function getLocaleTime(
 	date: number | Date,
 	options: Intl.DateTimeFormatOptions = {},
-	locale: string | string[] = "en-GB"
+	locale: string | string[] = "en-GB",
 ) {
 	const formatOptions: Intl.DateTimeFormatOptions = {
 		day: "numeric",

@@ -20,13 +20,12 @@ The total cost of this running this app can be as a low as $5-$10 per month.
 
 ## Prerequisites
 
-This post is going to assume you have a working knowledge of docker, docker-compose and self-hosting applications using Coolify. 
+This post is going to assume you have a working knowledge of docker, docker-compose and self-hosting applications using Coolify.
 
 You'll need:
 
 - A self hosted instance of Coolify or [Coolify cloud](https://Coolify.io/cloud/)
 - A PostgreSQL database
-
 
 ## Setup Upstream Database
 
@@ -39,8 +38,8 @@ This can be done by running the following SQL command:
 ```sql
 ALTER SYSTEM SET wal_level = 'logical';
 ```
-After running this command, restart your PostgreSQL server for the changes to take effect.
 
+After running this command, restart your PostgreSQL server for the changes to take effect.
 
 2. If your migration tool doesn't handle this for you (like with drizzle), you will need to create the upstream database for your Zero application:
 
@@ -54,7 +53,7 @@ In some guides, you might see the following additional databases being created:
 
 **CVR database**
 
-A separate Postgres database used to store CVRs (Client View Records). CVRs keep track of which clients have which data, enabling zero-cache to send the correct diff on reconnect. 
+A separate Postgres database used to store CVRs (Client View Records). CVRs keep track of which clients have which data, enabling zero-cache to send the correct diff on reconnect.
 
 This is not required for a basic setup and you can set the env var `ZERO_CVR_DB` to the same value as `ZERO_UPSTREAM_DB`.
 
@@ -68,7 +67,7 @@ This is also not required for a basic setup and you can set the env var `ZERO_CH
 
 Using Coolify, we will deploy our zero-cache server to a small Hetzner server (CAX11 - 2vCPUs 4GB RAM) which costs approximately about €4.36/month. In my experience, this is more than adequate for a small Zero application.
 
-Ensure that you have added your server to Coolify and have created a project. Once in the project, we will add a new service/resource. Select the *Docker Compose Empty* option. 
+Ensure that you have added your server to Coolify and have created a project. Once in the project, we will add a new service/resource. Select the _Docker Compose Empty_ option.
 
 ## The docker-compose file
 
@@ -77,19 +76,19 @@ Here's a minimal docker-compose file for deploying Zero cache:
 ```yaml
 services:
   zero_cache:
-    image: 'rocicorp/zero:latest'
+    image: "rocicorp/zero:latest"
     environment:
-      - 'ZERO_UPSTREAM_DB=${ZERO_UPSTREAM_DB}'
-      - 'ZERO_CVR_DB=${ZERO_CVR_DB}'
-      - 'ZERO_CHANGE_DB=${ZERO_CHANGE_DB}'
-      - 'ZERO_AUTH_JWKS_URL=${ZERO_AUTH_JWKS_URL}'
-      - 'ZERO_UPSTREAM_MAX_CONNS=${ZERO_UPSTREAM_MAX_CONNS}'
-      - 'ZERO_CVR_MAX_CONNS=${ZERO_CVR_MAX_CONNS}'
-      - 'ZERO_CHANGE_MAX_CONNS=${ZERO_CHANGE_MAX_CONNS}'
+      - "ZERO_UPSTREAM_DB=${ZERO_UPSTREAM_DB}"
+      - "ZERO_CVR_DB=${ZERO_CVR_DB}"
+      - "ZERO_CHANGE_DB=${ZERO_CHANGE_DB}"
+      - "ZERO_AUTH_JWKS_URL=${ZERO_AUTH_JWKS_URL}"
+      - "ZERO_UPSTREAM_MAX_CONNS=${ZERO_UPSTREAM_MAX_CONNS}"
+      - "ZERO_CVR_MAX_CONNS=${ZERO_CVR_MAX_CONNS}"
+      - "ZERO_CHANGE_MAX_CONNS=${ZERO_CHANGE_MAX_CONNS}"
       - ZERO_REPLICA_FILE=/zero_data/zchat_replica.db
       - ZERO_PORT=4848
     volumes:
-      - 'replica:/zero_data'
+      - "replica:/zero_data"
 volumes:
   replica:
 ```
@@ -110,7 +109,7 @@ The URL to your change database. This can be set to the same value as `ZERO_UPST
 
 **ZERO_AUTH_JWKS_URL**
 
-The URL to your auth provider's JWKS endpoint (I'm using auth0 in this example). You might want to set 
+The URL to your auth provider's JWKS endpoint (I'm using auth0 in this example). You might want to set
 `ZERO_AUTH_SECRET` instead if you're rolling your own auth.
 
 **ZERO_UPSTREAM_MAX_CONNS**

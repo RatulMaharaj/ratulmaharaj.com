@@ -6,7 +6,6 @@ tags: ["AI", "Automation", "Developer Tools", "Mac mini", "OpenClaw"]
 author: "Ratul Maharaj"
 ---
 
-
 I've been running [OpenClaw](https://openclaw.ai), previously [Clawdbot](https://clawdbot.ai) (and then [moltbot](https://molt.bot)), on my base model M4 Mac mini for about a week now and honestly? It's been pretty wild. Here's what I've figured out so far.
 
 ## What is this thing?
@@ -35,32 +34,32 @@ If you're interested in the setup, here's what's been working for me:
 
 ```json
 {
-  "channels": {
-    "discord": {
-      "enabled": true,
-      "token": "your-discord-token",
-      "groupPolicy": "disabled",
-      "dm": {
-        "enabled": true,
-        "policy": "allowlist",
-        "allowFrom": ["your-discord-id"]
-      }
-    }
-  },
-  "gateway": {
-    "port": 18789,
-    "mode": "local",
-    "bind": "loopback",
-    "auth": {
-      "allowTailscale": true,
-      "mode": "password",
-      "password": "your-password"
-    },
-    "tailscale": {
-      "mode": "serve"
-    },
-    "trustedProxies": ["127.0.0.1"]
-  }
+	"channels": {
+		"discord": {
+			"enabled": true,
+			"token": "your-discord-token",
+			"groupPolicy": "disabled",
+			"dm": {
+				"enabled": true,
+				"policy": "allowlist",
+				"allowFrom": ["your-discord-id"]
+			}
+		}
+	},
+	"gateway": {
+		"port": 18789,
+		"mode": "local",
+		"bind": "loopback",
+		"auth": {
+			"allowTailscale": true,
+			"mode": "password",
+			"password": "your-password"
+		},
+		"tailscale": {
+			"mode": "serve"
+		},
+		"trustedProxies": ["127.0.0.1"]
+	}
 }
 ```
 
@@ -91,12 +90,12 @@ Of course, I also have a mandatory morning brief setup. Here's an example of wha
 Good morning Ratul! ☀️ Happy Friday!
 
 🌡️ Weather — Cape Town
-19.6°C, mostly clear skies with light southerly breeze (6 km/h). 
+19.6°C, mostly clear skies with light southerly breeze (6 km/h).
 Nice summer morning.
 
 ---
 ✅ Todoist Tasks Due Today
-None scheduled for today! Either you've got a clean slate or 
+None scheduled for today! Either you've got a clean slate or
 tasks need due dates.
 ---
 
@@ -111,7 +110,7 @@ loopedautomation/mono (PRs)
 
 ---
 📣 Warm Outreach Reminder
-Goal: 5 people today. Ask if they know any freelancers, consultants, 
+Goal: 5 people today. Ask if they know any freelancers, consultants,
 or agencies who track billable hours.
 ---
 

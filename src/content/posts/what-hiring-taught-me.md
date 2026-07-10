@@ -8,9 +8,9 @@ author: "Ratul Maharaj"
 
 ## The sad reality
 
-I recently posted a job ad for a junior developer role. After just two days, overwhelmed by the number of applications, I closed the ad. I received **634** applications. **407** came through LinkedIn, **227** via Indeed. 
+I recently posted a job ad for a junior developer role. After just two days, overwhelmed by the number of applications, I closed the ad. I received **634** applications. **407** came through LinkedIn, **227** via Indeed.
 
-Six hundred and thirty four. That number hit me hard. On one level, I felt proud and excited that so many people wanted to work for Looped. But honestly, it was also **deeply sobering**. It’s a reflection of just how difficult the entry-level job market is right now, and how high the unemployment levels are in South Africa.  
+Six hundred and thirty four. That number hit me hard. On one level, I felt proud and excited that so many people wanted to work for Looped. But honestly, it was also **deeply sobering**. It’s a reflection of just how difficult the entry-level job market is right now, and how high the unemployment levels are in South Africa.
 
 Looking through hundreds of CVs was a bit of a reality check for me. For every person who got an interview, **over 100 didn't**. But I learned a lot from the process and hope that I can share something here that will help you in your job search.
 
@@ -19,6 +19,7 @@ Looking through hundreds of CVs was a bit of a reality check for me. For every p
 Yes, a degree from a top university helps. It gets my attention a little faster. But it’s not the only thing that matters - and it’s not the reason I selected the people I did.
 
 I cared more about:
+
 - **Curiosity** – Are you genuinely interested in coding? Do you learn because you want to, not just because someone told you to?
 - **Initiative** – Have you built something without being asked? Even small things count. A personal project, a portfolio website, or an app related to a hobby.
 - **Effort** – Did you take the time to present yourself well? That alone already sets you apart.
@@ -29,7 +30,7 @@ Some of the strongest candidates didn’t have the best degrees on their CV. But
 
 ### The Deceptively Simple Screening Questions
 
-Most people used the LinkedIn Quick Apply feature to apply. It's a great way to quickly apply for jobs. That said, what you might not know, is that recruiters are using those initial questions to screen and automatically reject applicants. 
+Most people used the LinkedIn Quick Apply feature to apply. It's a great way to quickly apply for jobs. That said, what you might not know, is that recruiters are using those initial questions to screen and automatically reject applicants.
 
 I went through all my automatically rejected and 'maybe' applications and found that many of them were potentially a really good fit. They just didn't answer the screening questions in the way LinkedIn thought they should (or maybe I didn't set the questions up correctly). Either way, most hiring managers won’t review hundreds of rejections if they already have a solid shortlist.
 
@@ -40,6 +41,7 @@ The answers you give in the screening questions might be **the most important pa
 I saw the same CV template hundreds of times - plain, text-heavy, and hard to scan.
 
 Here’s how to improve it:
+
 - Use basic design tweaks. A touch of colour and a clean font can help you stand out.
 - Put your **GitHub and portfolio links at the top**. Make them impossible to miss.
 - List your **most recent or most relevant experience first**.

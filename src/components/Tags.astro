@@ -6,30 +6,29 @@ const { allTags } = Astro.props as Props;
 ---
 
 <aside>
-    <h2 class="mb-4 flex items-center text-lg font-semibold">
-        Tags
-    </h2>
-    <ul class="text-primary flex flex-wrap gap-y-2">
-        {allTags.map((tag) => (
-            <li>
-                <a
-                    class="category-tag"
-                    href={`/tags/${tag}`}
-                    aria-label={`View all posts with the tag: ${tag}`}
-                >
-                    {tag}
-                </a>
-            </li>
-        ))}
-    </ul>
-    <span class="mt-4 block sm:text-right">
-        <a
-            class="sm:hover:text-primary"
-            href="/tags"
-            aria-label="View all blog categories"
-        >
-            View all →
-        </a>
-    </span>
+	<h2 class="mb-4 flex items-center text-lg font-semibold">Tags</h2>
+	<ul class="flex flex-wrap gap-y-2 text-primary">
+		{
+			allTags.map((tag) => (
+				<li>
+					<a
+						class="category-tag"
+						href={`/tags/${tag}`}
+						aria-label={`View all posts with the tag: ${tag}`}
+					>
+						{tag}
+					</a>
+				</li>
+			))
+		}
+	</ul>
+	<span class="mt-4 block sm:text-right">
+		<a
+			class="sm:hover:text-primary"
+			href="/tags"
+			aria-label="View all blog categories"
+		>
+			View all →
+		</a>
+	</span>
 </aside>
-

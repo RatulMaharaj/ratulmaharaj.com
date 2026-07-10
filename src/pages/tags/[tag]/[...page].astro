@@ -3,58 +3,63 @@ import { getCollection } from "astro:content";
 import PreviewItem from "@/components/PreviewItem";
 import PageLayout from "@/layouts/Base";
 import type { Page } from "@/types";
+import type { PaginateFunction } from "astro";
 import { getAllTags, postUrl, sortPostsByDate } from "@/util";
 import type { Post } from "@/util";
 
-export async function getStaticPaths({ paginate }) {
-  const allPosts = await getCollection("posts");
-  const allPostsByDate = sortPostsByDate(allPosts);
-  const allTags = getAllTags(allPostsByDate);
+export async function getStaticPaths({
+	paginate,
+}: {
+	paginate: PaginateFunction;
+}) {
+	const allPosts = await getCollection("posts");
+	const allPostsByDate = sortPostsByDate(allPosts);
+	const allTags = getAllTags(allPostsByDate);
 
-  return allTags.flatMap((tag) => {
-    const filterItems = allPostsByDate.filter((item) =>
-      item.data.tags?.includes(tag)
-    );
-    return paginate(filterItems, {
-      params: { tag },
-      pageSize: 10,
-    });
-  });
+	return allTags.flatMap((tag) => {
+		const filterItems = allPostsByDate.filter((item) =>
+			item.data.tags?.includes(tag),
+		);
+		return paginate(filterItems, {
+			params: { tag },
+			pageSize: 10,
+		});
+	});
 }
 
 export interface Props {
-  page: Page<Post>;
+	page: Page<Post>;
 }
 
 const { page } = Astro.props as Props;
 
 const { tag } = Astro.params;
 const meta = {
-  title: `Tag: ${tag}`,
-  description: `View all posts and snippets tagged with ${tag}.`,
+	title: `Tag: ${tag}`,
+	description: `View all posts and snippets tagged with ${tag}.`,
 };
 ---
 
 <PageLayout meta={meta}>
-  <section aria-label="Blog post list">
-    <h1 class="flex items-center mb-6 uppercase font-bold">
-      Posts tagged with: <span class="category-tag ml-2">{tag}</span>
-    </h1>
-    <br />
-    {
-      page.data.length > 0 && (
-        <>
-          <ul class="space-y-8 text-left">
-            {page.data.map((p) => (
-              <li class="[&_q]:w-full flex flex-wrap items-center gap-x-2">
-                <a href={postUrl(p)}>
-                  <PreviewItem post={p} />
-                </a>
-              </li>
-            ))}
-          </ul>
-        </>
-      )
-    }
-  </section>
+	<section aria-label="Blog post list">
+		<h1 class="mb-6 flex items-center font-bold uppercase">
+			Posts tagged with: <span class="category-tag ml-2">{tag}</span>
+		</h1>
+		<br />
+		{
+			page.data.length > 0 && (
+				<>
+					<ul class="space-y-8 text-left">
+						{page.data.map((p) => (
+							<li class="flex flex-wrap items-center gap-x-2 [&_q]:w-full">
+								<a href={postUrl(p)}>
+									<PreviewItem post={p} />
+								</a>
+							</li>
+						))}
+					</ul>
+				</>
+			)
+		}
+	</section>
 </PageLayout>

@@ -6,7 +6,7 @@ tags: ["tauri", "rust", "python", "javascript"]
 author: "Ratul Maharaj"
 ---
 
-As of writing this post, the beta release of Tauri v2 is available, and I'm helping build a desktop app using it. 
+As of writing this post, the beta release of Tauri v2 is available, and I'm helping build a desktop app using it.
 
 This post will outline how we implemented a basic version of the Tauri updater. Our app has a Next.js (static site) on the frontend. It's backed by an independent FastAPI server running on [render.com](https://render.com).
 
@@ -34,10 +34,9 @@ You will also need to add the corresponding plugins to the Tauri app by adding t
 
 ```bash
 cargo add tauri-plugin-updater
-cargo add tauri-plugin-dialog 
-cargo add tauri-plugin-process 
+cargo add tauri-plugin-dialog
+cargo add tauri-plugin-process
 ```
-
 
 ## Initialize plugins
 
@@ -77,7 +76,6 @@ pnpm tauri signer generate -w $HOME/.tauri/myapp.key
 You will be prompted to enter a password which will be used to sign the update. This password will be required to sign the update in the future.
 
 Once the keypair has been generated, you will find your private and public keys in `~/.tauri/myapp.key` and the `~/.tauri/myapp.key.pub` files respectively.
-
 
 Create a .env file with the following environment variables:
 
@@ -180,31 +178,31 @@ import { ask, message } from "@tauri-apps/plugin-dialog";
 import { relaunch } from "@tauri-apps/plugin-process";
 
 export async function checkForAppUpdates(onUserClick: false) {
-  const update = await check();
-  if (!update?.available) {
-    console.log("No update available");
-  } else if (update?.available) {
-    console.log("Update available!", update.version, update.body);
-    const yes = await ask(
-      `Update to ${update.version} is available!\n\nRelease notes: ${update.body}`,
-      {
-        title: "Update Available",
-        kind: "info",
-        okLabel: "Update",
-        cancelLabel: "Cancel",
-      },
-    );
-    if (yes) {
-      await update.downloadAndInstall();
-      await relaunch();
-    }
-  } else if (onUserClick) {
-    await message("You are on the latest version. Stay awesome!", {
-      title: "No Update Available",
-      kind: "info",
-      okLabel: "OK",
-    });
-  }
+	const update = await check();
+	if (!update?.available) {
+		console.log("No update available");
+	} else if (update?.available) {
+		console.log("Update available!", update.version, update.body);
+		const yes = await ask(
+			`Update to ${update.version} is available!\n\nRelease notes: ${update.body}`,
+			{
+				title: "Update Available",
+				kind: "info",
+				okLabel: "Update",
+				cancelLabel: "Cancel",
+			},
+		);
+		if (yes) {
+			await update.downloadAndInstall();
+			await relaunch();
+		}
+	} else if (onUserClick) {
+		await message("You are on the latest version. Stay awesome!", {
+			title: "No Update Available",
+			kind: "info",
+			okLabel: "OK",
+		});
+	}
 }
 ```
 
@@ -228,5 +226,4 @@ export default function Providers({ children }: {
 
 If all goes well, you should be able to push a new version of your app to GitHub and test the updater by running the app.
 
-I would love to hear your thoughts on this approach or any improvements you might have. Feel free to let me know via [X](https://x.com/ratulmaharaj) or [Mastodon](https://fosstodon.org/@ratulmaharaj). 
-
+I would love to hear your thoughts on this approach or any improvements you might have. Feel free to let me know via [X](https://x.com/ratulmaharaj) or [Mastodon](https://fosstodon.org/@ratulmaharaj).

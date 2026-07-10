@@ -6,7 +6,6 @@ tags: ["python", "functions"]
 author: "Ratul Maharaj"
 ---
 
-
 ## File handling with python
 
 Python has the ability to simplify the way in which we work with files. This is a very useful skill to have when you are working with data which is stored in a flat file.

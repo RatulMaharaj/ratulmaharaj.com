@@ -36,7 +36,7 @@ This might be a spicy take, but maybe sometimes the best solution is to not use 
 
 ## Those who know a little about code
 
-This category can be interesting to deal with, I've tried a few different things with this group. Typically with this audience, I would walk them through the installation of git and python and I would then show them how to  `pip install` any packages they may need.
+This category can be interesting to deal with, I've tried a few different things with this group. Typically with this audience, I would walk them through the installation of git and python and I would then show them how to `pip install` any packages they may need.
 
 In the corporate world, this can sometime be a major blocker especially if they're sitting behind a company firewall and need to use a proxy - this sort of complexity can turn people off pretty fast, so I try to do some hand holding here.
 

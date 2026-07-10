@@ -4,62 +4,67 @@ import PreviewItem from "@/components/PreviewItem";
 import Pagination from "@/components/Paginator";
 import PageLayout from "@/layouts/Base";
 import type { Page } from "@/types";
+import type { PaginateFunction } from "astro";
 import { getAllTags, postUrl, sortPostsByDate } from "src/util";
 import type { Post } from "src/util";
 import Tags from "@/components/Tags";
 
-export async function getStaticPaths({ paginate }) {
-  const allPosts = await getCollection("posts");
-  const allPostsByDate = sortPostsByDate(allPosts);
-  const allTags = getAllTags(allPosts);
-  return paginate(allPostsByDate, { props: { allTags }, pageSize: 10 });
+export async function getStaticPaths({
+	paginate,
+}: {
+	paginate: PaginateFunction;
+}) {
+	const allPosts = await getCollection("posts");
+	const allPostsByDate = sortPostsByDate(allPosts);
+	const allTags = getAllTags(allPosts);
+	return paginate(allPostsByDate, { props: { allTags }, pageSize: 10 });
 }
 
 export interface Props {
-  page: Page<Post>;
-  allTags: string[];
+	page: Page<Post>;
+	allTags: string[];
 }
 
 const { page, allTags } = Astro.props as Props;
 
 const meta = {
-  title: "Posts",
-  description: "A collection of blog posts I've written.",
+	title: "Posts",
+	description: "A collection of blog posts I've written.",
 };
 
 const paginationProps = {
-  ...(page.url.prev && {
-    prevUrl: {
-      url: page.url.prev,
-      text: `← Previous Posts`,
-    },
-  }),
-  ...(page.url.next && {
-    nextUrl: {
-      url: page.url.next,
-      text: `Next Posts →`,
-    },
-  }),
+	...(page.url.prev && {
+		prevUrl: {
+			url: page.url.prev,
+			text: `← Previous Posts`,
+		},
+	}),
+	...(page.url.next && {
+		nextUrl: {
+			url: page.url.next,
+			text: `Next Posts →`,
+		},
+	}),
 };
 ---
 
 <PageLayout meta={meta}>
-  <h1 class="mb-6 uppercase font-bold">Posts</h1>
-  <div class="grid gap-y-16 sm:grid-cols-[3fr_1fr] sm:gap-x-8">
-    <section aria-label="Blog post list">
-      <ul>
-        {
-          page.data.map((p) => (
-            <li class="[&_q]:w-full flex flex-wrap items-center gap-x-2">
-              <a href={postUrl(p)}>
-                <PreviewItem post={p} />
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-      <Pagination {...paginationProps} />
-    </section>
-    <Tags allTags={allTags} />
-  </div>
+	<h1 class="mb-6 font-bold uppercase">Posts</h1>
+	<div class="grid gap-y-16 sm:grid-cols-[3fr_1fr] sm:gap-x-8">
+		<section aria-label="Blog post list">
+			<ul>
+				{
+					page.data.map((p) => (
+						<li class="flex flex-wrap items-center gap-x-2 [&_q]:w-full">
+							<a href={postUrl(p)}>
+								<PreviewItem post={p} />
+							</a>
+						</li>
+					))
+				}
+			</ul>
+			<Pagination {...paginationProps} />
+		</section>
+		<Tags allTags={allTags} />
+	</div>
 </PageLayout>

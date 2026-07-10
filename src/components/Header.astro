@@ -5,12 +5,12 @@ const url = new URL(Astro.request.url);
 ---
 
 <header class="flex items-center pb-10">
-  <a
-    href="/"
-    class="flex items-center text-lg whitespace-nowrap hover:underline underline-offset-2"
-    aria-current={url.pathname === "/" ? "page" : false}
-  >
-    Ratul's Blog
-  </a>
-  <ThemeToggle />
+	<a
+		href="/"
+		class="flex items-center text-lg whitespace-nowrap underline-offset-2 hover:underline"
+		aria-current={url.pathname === "/" ? "page" : false}
+	>
+		Ratul's Blog
+	</a>
+	<ThemeToggle />
 </header>

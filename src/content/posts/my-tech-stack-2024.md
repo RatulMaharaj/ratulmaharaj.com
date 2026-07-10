@@ -1,12 +1,12 @@
 ---
-title:  My 2024 stack
+title: My 2024 stack
 pubDate: 17 April 2024
 description: The tools & tech I'm using as a full stack web developer in 2024.
 tags: ["stack", "frameworks", "javascript", "python"]
 author: "Ratul Maharaj"
 ---
 
-I've been a full stack web developer for a several years now and thought it would be fun to document the tools and technologies I'm currently using. 
+I've been a full stack web developer for a several years now and thought it would be fun to document the tools and technologies I'm currently using.
 
 Think of this as something similar to a `/uses` page, except it's for building apps and in the format of a blog post.
 
@@ -20,11 +20,11 @@ Svelte v5 is coming soon. I haven't tried it yet, but I've watched a few videos 
 
 **[Next.js](https://nextjs.org)**
 
-If I'm working on a team with other developers, I'm likely going to be using Next. React tends to be what most people already know, and that's perfectly fine. 
+If I'm working on a team with other developers, I'm likely going to be using Next. React tends to be what most people already know, and that's perfectly fine.
 
 **[Astro](https://astro.build)**
 
-At this point, (almost) all my static sites are built with Astro (Including this one). They make it really easy to build fast, modern websites and have a great plugin ecosystem. 
+At this point, (almost) all my static sites are built with Astro (Including this one). They make it really easy to build fast, modern websites and have a great plugin ecosystem.
 
 They also have their island architecture which is a really fascinating concept. I have found there to be a great overlap between Astro components and Svelte components, which tends to be my go-to for sprinkling in some interactivity.
 
@@ -40,7 +40,7 @@ The team is also working on some really cool new (rust enhanced?) features, so I
 
 **[Skeleton UI](https://www.skeleton.dev/)**
 
-I've been enjoying using Skeleton UI in SvelteKit. It has amazing theming capabilities and a really great design system. These two aspects alone have taught me a lot and have been a pleasure to work with. 
+I've been enjoying using Skeleton UI in SvelteKit. It has amazing theming capabilities and a really great design system. These two aspects alone have taught me a lot and have been a pleasure to work with.
 
 The one thing I'm not a huge fan of is their modal component. It uses the Singleton pattern which to my brain sounds like a good thing, but in practice this makes it a much more difficult concept to wrap your head around just to create a simple modal.
 
@@ -58,9 +58,9 @@ FastAPI is awesome - ask anyone who has used it. It's easy to get started, there
 
 **[PostgreSQL](https://www.postgresql.org/)**
 
-My go to relational database is PostgreSQL. I run a local postgres server for local dev and typically host staging and production instances on either Vercel or AWS RDS (depending on the size of the project). 
+My go to relational database is PostgreSQL. I run a local postgres server for local dev and typically host staging and production instances on either Vercel or AWS RDS (depending on the size of the project).
 
-Honorable mention goes out to [DuckDB](https://duckdb.org). It's intended to be a fast in-process analytics database. I have briefly tried it, but I'm not actively using it at the moment. That said, I do really like the idea of a simple portable database. 
+Honorable mention goes out to [DuckDB](https://duckdb.org). It's intended to be a fast in-process analytics database. I have briefly tried it, but I'm not actively using it at the moment. That said, I do really like the idea of a simple portable database.
 
 ### ORMs
 
@@ -80,7 +80,7 @@ Lucia is fantastic. It's a simple, secure and privacy focused authentication fra
 
 **[SendGrid](https://sendgrid.com/)**
 
-SendGrid remains my go-to email service provider. The main selling point for me is that it is incredibly affordable and they have a really simple email API. 
+SendGrid remains my go-to email service provider. The main selling point for me is that it is incredibly affordable and they have a really simple email API.
 
 I'm also now using their email marketing service which has more than sufficient functionality for creating drip campaigns and newsletters.
 
@@ -88,7 +88,7 @@ I'm also now using their email marketing service which has more than sufficient 
 
 **[Vitest](https://vitest.dev/)**
 
-I'm enjoying using vitest for my unit tests. It is compatible with Jest, and is Vite powered - so it works great with both Astro and SvelteKit. 
+I'm enjoying using vitest for my unit tests. It is compatible with Jest, and is Vite powered - so it works great with both Astro and SvelteKit.
 
 **[pytest](https://docs.pytest.org)**
 
@@ -102,7 +102,7 @@ I'm still mostly using Cypress for end-to-end tests, but I'm likely going to mov
 
 ## CI/CD
 
-**[GitHub Actions](https://github.com/features/actions)** 
+**[GitHub Actions](https://github.com/features/actions)**
 
 GitHub Actions all the way. I use it to run my tests, build my apps as well as publish packages to registries. For free!
 
@@ -114,7 +114,7 @@ I currently use vercel for most of my projects. The platform's ease of use is, i
 
 **[AWS](https://aws.amazon.com/)**
 
-I have recently spent a lot of time learning about how to deploy stuff directly to AWS. In particular, deploying docker containers to ECR and running them on ECS as well as creating managed RDS instances. 
+I have recently spent a lot of time learning about how to deploy stuff directly to AWS. In particular, deploying docker containers to ECR and running them on ECS as well as creating managed RDS instances.
 
 I can see myself moving more towards this in the future, especially given that they now also have data centres in Cape Town, South Africa.
 
@@ -129,6 +129,5 @@ PostHog is genuinely one of the most useful tools I've come across in a long tim
 **[Sentry.io](https://sentry.io/)**
 
 Sentry is a great tool for performance monitoring and error tracking. I swear this is not an ad.
-
 
 And that's it! That's (most of) my stack for 2024. I'm sure it will change as the year progresses, but for now I'm really excited to be building with it.
