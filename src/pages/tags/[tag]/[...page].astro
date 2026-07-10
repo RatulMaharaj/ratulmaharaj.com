@@ -52,21 +52,23 @@ const meta = {
 
 <PageLayout meta={meta}>
 	<section aria-label="Blog post list">
-		<h1 class="mb-6 flex items-center font-bold uppercase">
-			Posts tagged with: <span class="category-tag ml-2">{tag}</span>
+		<h1 class="mb-8 text-2xl font-bold tracking-tight">
+			<span class="text-secondary">// </span>posts tagged
+			<span class="text-primary">#{tag}</span>
 		</h1>
-		<br />
 		{
-			page.data.length > 0 && (
-				<>
-					<ul class="space-y-1">
-						{page.data.map((p) => (
-							<li>
-								<PreviewItem post={p} />
-							</li>
-						))}
-					</ul>
-				</>
+			page.data.length > 0 ? (
+				<ul class="space-y-1">
+					{page.data.map((p) => (
+						<li>
+							<PreviewItem post={p} />
+						</li>
+					))}
+				</ul>
+			) : (
+				<p class="text-sm text-surface-content/70">
+					No posts with this tag yet.
+				</p>
 			)
 		}
 		<Paginator {...paginationProps} />

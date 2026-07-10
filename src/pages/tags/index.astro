@@ -5,33 +5,32 @@ import { getAllTagsWithCount, tagUrl } from "@/util";
 
 const allPosts = await getCollection("posts");
 const allPostTags = getAllTagsWithCount(allPosts);
-const allTags = { ...allPostTags };
+const sortedTags = Object.entries(allPostTags).sort(
+	([, a], [, b]) => b - a,
+);
 
 const meta = {
 	title: "Tags",
-	description: "All tags from my blog posts and snippets.",
+	description: "All tags from my blog posts.",
 };
 ---
 
 <PageLayout meta={meta}>
-	<h1 class="mb-6 font-bold uppercase">Tags</h1>
-	<ul class="space-y-4">
+	<h1 class="mb-8 text-2xl font-bold tracking-tight">
+		<span class="text-secondary">// </span>tags
+	</h1>
+	<ul class="flex max-w-2xl flex-wrap gap-x-6 gap-y-3">
 		{
-			Object.keys(allTags).map((tag) => (
-				<li class="flex items-center gap-x-2">
+			sortedTags.map(([tag, count]) => (
+				<li>
 					<a
-						class="category-tag"
+						class="tag text-sm"
 						href={tagUrl(tag)}
-						title={`View posts or snippets with the tag: ${tag}`}
+						title={`View posts with the tag: ${tag}`}
 					>
-						{tag}
+						#{tag}
+						<span class="text-surface-content/40">({count})</span>
 					</a>
-
-					{allPostTags[tag] && (
-						<span class="inline-block">
-							{allPostTags[tag]} Post{allPostTags[tag] > 1 ? "s" : ""}
-						</span>
-					)}
 				</li>
 			))
 		}

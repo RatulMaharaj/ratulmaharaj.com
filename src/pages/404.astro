@@ -8,6 +8,20 @@ const meta = {
 ---
 
 <PageLayout meta={meta}>
-	<h1 class="title mb-6">404 | Oops something went wrong</h1>
-	<p class="mb-8">Please use the navigation to find your way back</p>
+	<h1 class="mb-8 text-2xl font-bold tracking-tight">
+		<span class="text-secondary">// </span>404 — page not found
+	</h1>
+	<p class="text-sm leading-relaxed text-surface-content/70">
+		This page doesn't exist (or it moved). Head back
+		<a
+			href="/"
+			class="text-primary underline decoration-primary/40 underline-offset-2 transition-colors duration-200 hover:decoration-primary"
+			>home</a
+		> or browse the
+		<a
+			href="/posts"
+			class="text-primary underline decoration-primary/40 underline-offset-2 transition-colors duration-200 hover:decoration-primary"
+			>posts</a
+		>.
+	</p>
 </PageLayout>
