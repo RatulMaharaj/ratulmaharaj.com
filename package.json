@@ -15,16 +15,12 @@
 		"test:urls": "node scripts/check-urls.mjs"
 	},
 	"devDependencies": {
-		"@astrojs/mdx": "^4.3.0",
-		"@astrojs/sitemap": "^3.4.1",
+		"@astrojs/sitemap": "^3.7.3",
 		"@astrojs/tailwind": "^6.0.2",
-		"@tailwindcss/aspect-ratio": "^0.4.2",
-		"@tailwindcss/line-clamp": "^0.4.4",
 		"@tailwindcss/typography": "^0.5.14",
-		"@types/eslint": "^9.6.0",
 		"@typescript-eslint/eslint-plugin": "^8.2.0",
 		"@typescript-eslint/parser": "^8.2.0",
-		"astro": "5.10.1",
+		"astro": "5.18.2",
 		"astro-eslint-parser": "^1.0.2",
 		"autoprefixer": "^10.4.20",
 		"eslint": "^9.9.0",
@@ -36,7 +32,7 @@
 		"eslint-plugin-prettier": "^5.2.1",
 		"postcss": "^8.4.41",
 		"postcss-html": "^1.7.0",
-		"prettier": "^3.3.3",
+		"prettier": "^3.9.5",
 		"prettier-plugin-astro": "0.14.1",
 		"prettier-plugin-tailwindcss": "^0.6.6",
 		"stylelint": "^16.8.2",
@@ -45,17 +41,12 @@
 		"typescript": "^5.5.4"
 	},
 	"dependencies": {
-		"@astrojs/rss": "^4.0.12",
+		"@astrojs/rss": "^4.0.19",
 		"@astrojs/vercel": "^8.2.0",
-		"@fontsource-variable/montserrat": "^5.0.20",
-		"@fontsource/montserrat-alternates": "^5.0.14",
-		"@mdx-js/rollup": "^3.0.1",
-		"date-fns": "^3.6.0",
-		"markdown-it": "^14.1.0",
-		"posthog-js": "^1.229.5",
-		"rehype-prism-plus": "^2.0.0",
-		"rollup": "^4.21.0",
-		"sanitize-html": "^2.13.0"
+		"date-fns": "^4.4.0",
+		"markdown-it": "^14.3.0",
+		"posthog-js": "^1.399.1",
+		"sanitize-html": "^2.17.5"
 	},
 	"pnpm": {
 		"onlyBuiltDependencies": [

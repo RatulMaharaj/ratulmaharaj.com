@@ -1,4 +1,3 @@
-import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 import vercel from "@astrojs/vercel";
@@ -12,7 +11,7 @@ export default defineConfig({
     syntaxHighlight: 'prism'
   },
   site: "https://ratulmaharaj.com",
-  integrations: [mdx({}), tailwind({
+  integrations: [tailwind({
     applyBaseStyles: true,
   }), sitemap()],
 });
