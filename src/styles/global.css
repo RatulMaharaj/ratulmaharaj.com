@@ -26,22 +26,21 @@
 		--theme-primary: 60% 0.23 300;
 		--theme-neutral: 90% 0 295;
 		--theme-quote: 239 84% 67%;
-		/* Code theme */
-		--prism-background: oklch(90% 0 295);
-		/* Code theme tokens */
-		--prism-token-constant: #b48ead;
-		--prism-token-string: #a855f7;
-		--prism-token-string-expression: #94a3b8;
-		--prism-token-comment: #94a3b8;
-		--prism-token-keyword: #6366f1;
-		--prism-token-operator: #818cf8;
-		--prism-token-parameter: #aa0000;
-		--prism-token-function: #a21caf;
-		--prism-token-punctuation: #818cf8;
-		--prism-token-link: #a855f7;
-		--prism-token-number: #b48ead;
-		--prism-token-important: #bf616a;
-		--prism-token-boolean: #d946ef;
+		/* Code theme (shiki css-variables), ported from the old prism.css */
+		--astro-code-foreground: oklch(var(--theme-surface-content));
+		--astro-code-background: oklch(90% 0 295);
+		--astro-code-token-constant: #b48ead;
+		--astro-code-token-string: #a855f7;
+		--astro-code-token-string-expression: #94a3b8;
+		--astro-code-token-comment: #94a3b8;
+		--astro-code-token-keyword: #6366f1;
+		--astro-code-token-parameter: #aa0000;
+		--astro-code-token-function: #a21caf;
+		--astro-code-token-punctuation: #818cf8;
+		--astro-code-token-link: #a855f7;
+		/* Older shiki variable names, kept for compatibility */
+		--astro-code-color-text: oklch(var(--theme-surface-content));
+		--astro-code-color-background: oklch(90% 0 295);
 	}
 
 	:root.dark {
@@ -51,22 +50,21 @@
 		--theme-primary: 60% 0.23 300;
 		--theme-neutral: 50% 0 295;
 		--theme-quote: 234 89% 74%;
-		/* Code theme */
-		--prism-background: oklch(20% 0.01 295);
-		/* Code theme tokens */
-		--prism-token-constant: #b48ead;
-		--prism-token-string: #a78bfa;
-		--prism-token-string-expression: #94a3b8;
-		--prism-token-comment: #94a3b8;
-		--prism-token-keyword: #a5b4fc;
-		--prism-token-operator: #a5b4fc;
-		--prism-token-parameter: #aa0000;
-		--prism-token-function: #f0abfc;
-		--prism-token-punctuation: #a5b4fc;
-		--prism-token-link: #a78bfa;
-		--prism-token-number: #93c5fd;
-		--prism-token-important: #bf616a;
-		--prism-token-boolean: #e879f9;
+		/* Code theme (shiki css-variables), ported from the old prism.css */
+		--astro-code-foreground: oklch(var(--theme-surface-content));
+		--astro-code-background: oklch(20% 0.01 295);
+		--astro-code-token-constant: #b48ead;
+		--astro-code-token-string: #a78bfa;
+		--astro-code-token-string-expression: #94a3b8;
+		--astro-code-token-comment: #94a3b8;
+		--astro-code-token-keyword: #a5b4fc;
+		--astro-code-token-parameter: #aa0000;
+		--astro-code-token-function: #f0abfc;
+		--astro-code-token-punctuation: #a5b4fc;
+		--astro-code-token-link: #a78bfa;
+		/* Older shiki variable names, kept for compatibility */
+		--astro-code-color-text: oklch(var(--theme-surface-content));
+		--astro-code-color-background: oklch(20% 0.01 295);
 	}
 
 	/* Register your custom font family and tell the browser where to find it. */
@@ -101,6 +99,19 @@
 
 	pre {
 		@apply relative;
+	}
+
+	/* Code block styling, ported from the old prism.css */
+	pre.astro-code {
+		padding: 1em;
+		margin: 0.5em 0;
+		overflow: auto;
+		border-radius: 0.3em;
+		font-family: "Monaspace Krypton", Consolas, Monaco, "Andale Mono",
+			"Ubuntu Mono", monospace;
+		line-height: 1.5;
+		tab-size: 4;
+		hyphens: none;
 	}
 
 	* {
