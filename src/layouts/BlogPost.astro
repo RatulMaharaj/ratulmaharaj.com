@@ -141,10 +141,13 @@ const paginationProps = {
 </BaseLayout>
 
 <script>
-	// TOC scroll-spy: highlight the section currently in view
+	// TOC scroll-spy: highlight the last section heading above the reading line
 	const tocLinks =
 		document.querySelectorAll<HTMLAnchorElement>("[data-toc-link]");
-	if (tocLinks.length > 0) {
+	const headings = Array.from(
+		document.querySelectorAll<HTMLElement>("article :is(h1, h2)[id]"),
+	);
+	if (tocLinks.length > 0 && headings.length > 0) {
 		const setActive = (slug: string) => {
 			tocLinks.forEach((link) => {
 				const isActive = link.dataset.tocLink === slug;
@@ -157,19 +160,26 @@ const paginationProps = {
 				}
 			});
 		};
-		const observer = new IntersectionObserver(
-			(entries) => {
-				for (const entry of entries) {
-					if (entry.isIntersecting) {
-						setActive(entry.target.id);
-					}
+		let ticking = false;
+		const update = () => {
+			ticking = false;
+			const line = window.innerHeight * 0.3;
+			const current =
+				headings.filter((h) => h.getBoundingClientRect().top <= line).pop() ??
+				headings[0];
+			setActive(current.id);
+		};
+		document.addEventListener(
+			"scroll",
+			() => {
+				if (!ticking) {
+					ticking = true;
+					requestAnimationFrame(update);
 				}
 			},
-			{ rootMargin: "0px 0px -70% 0px" },
+			{ passive: true },
 		);
-		document
-			.querySelectorAll("article :is(h1, h2)[id]")
-			.forEach((heading) => observer.observe(heading));
+		update();
 	}
 </script>
 
