@@ -18,10 +18,11 @@ const allPostsByDate = sortPostsByDate(allPosts).slice(0, MAX_POSTS);
 ---
 
 <PageLayout meta={meta}>
-	<section class="grid grid-cols-1 gap-y-8">
+	<section class="relative grid grid-cols-1 gap-y-8">
+		<div aria-hidden="true" class="hero-glow"></div>
 		<Bio />
-		<div class="flex gap-x-4">
-			<p>Find me on:</p>
+		<div class="flex items-center gap-x-4">
+			<p class="text-sm text-surface-content/70">Find me on:</p>
 			<SocialList />
 		</div>
 	</section>

@@ -167,6 +167,25 @@
 	.section-label {
 		@apply text-xs font-semibold tracking-widest text-surface-content/55 uppercase;
 	}
+
+	/* Subtle purple hero glow, dark mode only (looped convention:
+	   glows derive from primary via color-mix, not separate tokens) */
+	.hero-glow {
+		position: absolute;
+		inset: -8rem -6rem auto;
+		height: 22rem;
+		pointer-events: none;
+		display: none;
+		background: radial-gradient(
+			ellipse at 25% 25%,
+			color-mix(in oklch, oklch(var(--theme-primary)), transparent 88%),
+			transparent 70%
+		);
+	}
+
+	:root.dark .hero-glow {
+		display: block;
+	}
 }
 
 /* Typography overrides for post prose */
