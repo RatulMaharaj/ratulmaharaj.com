@@ -11,7 +11,8 @@
 		"start": "astro dev",
 		"build": "astro build",
 		"preview": "astro preview",
-		"format": "prettier -w ./src ./src/**/*.astro"
+		"format": "prettier -w ./src ./src/**/*.astro",
+		"test:urls": "node scripts/check-urls.mjs"
 	},
 	"devDependencies": {
 		"@astrojs/mdx": "^4.3.0",
