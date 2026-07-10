@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import PreviewItem from "@/components/PreviewItem";
+import Paginator from "@/components/Paginator";
 import PageLayout from "@/layouts/Base";
 import type { Page } from "@/types";
 import type { PaginateFunction } from "astro";
@@ -18,7 +19,7 @@ export async function getStaticPaths({
 
 	return allTags.flatMap((tag) => {
 		const filterItems = allPostsByDate.filter((item) =>
-			item.data.tags?.includes(tag),
+			item.data.tags?.some((t) => t.toLowerCase() === tag),
 		);
 		return paginate(filterItems, {
 			params: { tag },
@@ -34,6 +35,15 @@ export interface Props {
 const { page } = Astro.props as Props;
 
 const { tag } = Astro.params;
+
+const paginationProps = {
+	...(page.url.prev && {
+		prevUrl: { url: page.url.prev, text: `← Previous Posts` },
+	}),
+	...(page.url.next && {
+		nextUrl: { url: page.url.next, text: `Next Posts →` },
+	}),
+};
 const meta = {
 	title: `Tag: ${tag}`,
 	description: `View all posts and snippets tagged with ${tag}.`,
@@ -61,5 +71,6 @@ const meta = {
 				</>
 			)
 		}
+		<Paginator {...paginationProps} />
 	</section>
 </PageLayout>

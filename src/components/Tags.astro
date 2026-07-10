@@ -1,4 +1,5 @@
 ---
+import { tagUrl } from "@/util";
 export interface Props {
 	allTags: string[];
 }
@@ -13,7 +14,7 @@ const { allTags } = Astro.props as Props;
 				<li>
 					<a
 						class="category-tag"
-						href={`/tags/${tag}`}
+						href={tagUrl(tag)}
 						aria-label={`View all posts with the tag: ${tag}`}
 					>
 						{tag}
