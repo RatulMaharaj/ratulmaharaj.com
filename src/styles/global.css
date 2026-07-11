@@ -6,9 +6,11 @@
 
 @theme inline {
 	--color-surface: oklch(var(--theme-surface));
+	--color-surface-raised: oklch(var(--theme-surface-raised));
 	--color-surface-content: oklch(var(--theme-surface-content));
+	--color-border: oklch(var(--theme-border));
 	--color-primary: oklch(var(--theme-primary));
-	--color-neutral: oklch(var(--theme-neutral));
+	--color-secondary: oklch(var(--theme-secondary));
 	--font-sans:
 		"Monaspace Argon", ui-sans-serif, system-ui, sans-serif,
 		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -18,58 +20,61 @@
 }
 
 @layer base {
+	/* Palette shared with looped (hue 270-280 family, warm off-white text) */
 	:root {
 		color-scheme: light;
 
-		--theme-surface: 95% 0 295;
-		--theme-surface-content: 15% 0.01 295;
-		--theme-primary: 60% 0.23 300;
-		--theme-neutral: 90% 0 295;
-		--theme-quote: 239 84% 67%;
+		--theme-surface: 98.2% 0.004 91.4;
+		--theme-surface-raised: 95% 0.005 270;
+		--theme-border: 88% 0.01 270;
+		--theme-surface-content: 15% 0.01 270;
+		--theme-primary: 52% 0.22 280;
+		--theme-secondary: 48% 0.18 280;
 
-		/* Code theme (shiki css-variables), ported from the old prism.css */
+		/* Code theme (shiki css-variables) */
 		--astro-code-foreground: oklch(var(--theme-surface-content));
-		--astro-code-background: oklch(90% 0 295deg);
-		--astro-code-token-constant: #b48ead;
-		--astro-code-token-string: #a855f7;
-		--astro-code-token-string-expression: #94a3b8;
+		--astro-code-background: oklch(var(--theme-surface-raised));
+		--astro-code-token-constant: #8d6bd8;
+		--astro-code-token-string: #8b5cf6;
+		--astro-code-token-string-expression: #64748b;
 		--astro-code-token-comment: #94a3b8;
-		--astro-code-token-keyword: #6366f1;
-		--astro-code-token-parameter: #a00;
-		--astro-code-token-function: #a21caf;
-		--astro-code-token-punctuation: #818cf8;
-		--astro-code-token-link: #a855f7;
+		--astro-code-token-keyword: #685ef7;
+		--astro-code-token-parameter: #b45309;
+		--astro-code-token-function: #9333ea;
+		--astro-code-token-punctuation: #5f5bd8;
+		--astro-code-token-link: #8b5cf6;
 
 		/* Older shiki variable names, kept for compatibility */
 		--astro-code-color-text: oklch(var(--theme-surface-content));
-		--astro-code-color-background: oklch(90% 0 295deg);
+		--astro-code-color-background: oklch(var(--theme-surface-raised));
 	}
 
 	:root.dark {
 		color-scheme: dark;
 
-		--theme-surface: 15% 0.01 295;
-		--theme-surface-content: 95% 0 295;
-		--theme-primary: 60% 0.23 300;
-		--theme-neutral: 50% 0 295;
-		--theme-quote: 234 89% 74%;
+		--theme-surface: 15% 0.01 270;
+		--theme-surface-raised: 20% 0.01 270;
+		--theme-border: 32% 0.01 270;
+		--theme-surface-content: 98.2% 0.004 91.4;
+		--theme-primary: 58% 0.22 280;
+		--theme-secondary: 70% 0.18 280;
 
-		/* Code theme (shiki css-variables), ported from the old prism.css */
+		/* Code theme (shiki css-variables) */
 		--astro-code-foreground: oklch(var(--theme-surface-content));
-		--astro-code-background: oklch(20% 0.01 295deg);
-		--astro-code-token-constant: #b48ead;
-		--astro-code-token-string: #a78bfa;
+		--astro-code-background: oklch(var(--theme-surface-raised));
+		--astro-code-token-constant: #bdaaff;
+		--astro-code-token-string: #a5b4fc;
 		--astro-code-token-string-expression: #94a3b8;
 		--astro-code-token-comment: #94a3b8;
-		--astro-code-token-keyword: #a5b4fc;
-		--astro-code-token-parameter: #a00;
-		--astro-code-token-function: #f0abfc;
-		--astro-code-token-punctuation: #a5b4fc;
-		--astro-code-token-link: #a78bfa;
+		--astro-code-token-keyword: #8b8dff;
+		--astro-code-token-parameter: #fbbf24;
+		--astro-code-token-function: #c4b5fd;
+		--astro-code-token-punctuation: #7d82e8;
+		--astro-code-token-link: #a5b4fc;
 
 		/* Older shiki variable names, kept for compatibility */
 		--astro-code-color-text: oklch(var(--theme-surface-content));
-		--astro-code-color-background: oklch(20% 0.01 295deg);
+		--astro-code-color-background: oklch(var(--theme-surface-raised));
 	}
 
 	/* Register your custom font family and tell the browser where to find it. */
@@ -87,7 +92,7 @@
 	}
 
 	html {
-		@apply h-full scroll-smooth bg-surface text-surface-content transition-colors duration-500;
+		@apply h-full scroll-smooth bg-surface text-surface-content transition-colors duration-300;
 	}
 
 	/* selection */
@@ -96,23 +101,24 @@
 	}
 
 	html body {
-		@apply mx-auto flex h-full max-w-5xl flex-col px-8 pt-16 font-sans text-sm font-normal antialiased;
+		@apply mx-auto flex h-full max-w-4xl flex-col px-5 pt-12 font-sans text-sm font-normal antialiased sm:px-8 sm:pt-16;
 	}
 
 	pre {
 		@apply relative;
 	}
 
-	/* Code block styling, ported from the old prism.css */
+	/* Code block styling */
 	pre.astro-code {
 		padding: 1em;
 		margin: 0.5em 0;
 		overflow: auto;
-		border-radius: 0.3em;
+		border-radius: 0.5em;
+		border: 1px solid oklch(var(--theme-border) / 60%);
 		font-family:
 			"Monaspace Krypton", Consolas, Monaco, "Andale Mono", "Ubuntu Mono",
 			monospace;
-		line-height: 1.5;
+		line-height: 1.6;
 		tab-size: 4;
 		hyphens: none;
 	}
@@ -127,14 +133,6 @@
 		cursor: pointer;
 	}
 
-	.copy {
-		@apply invisible absolute top-2 right-2 cursor-pointer rounded px-2 py-1 text-xs sm:visible;
-	}
-
-	.category-tag {
-		@apply mr-2 inline-block cursor-pointer rounded-md border border-primary px-2 text-[10px] font-semibold whitespace-nowrap text-primary uppercase transition-all ease-in-out hover:bg-primary hover:text-surface;
-	}
-
 	blockquote > p::before,
 	blockquote > p::after {
 		content: none !important;
@@ -145,17 +143,64 @@
 	}
 }
 
-/* Typography overrides, ported from the old tailwind.config.cjs typography() */
+@layer components {
+	.copy {
+		@apply absolute top-2 right-2 cursor-pointer rounded-md border border-border bg-surface/80 px-2 py-1 text-xs text-surface-content/70 backdrop-blur-sm transition-colors duration-200 hover:text-primary;
+	}
+
+	/* Quiet hash-style tag link */
+	.tag {
+		@apply inline-block text-xs lowercase transition-colors duration-200;
+
+		color: oklch(var(--theme-surface-content) / 60%);
+	}
+
+	.tag:hover {
+		@apply text-primary;
+	}
+
+	/* Section label: "// recent posts" style eyebrow headings */
+	.section-label {
+		@apply text-xs font-semibold tracking-widest text-surface-content/55 uppercase;
+	}
+
+	/* Subtle purple hero glow, dark mode only (looped convention:
+	   glows derive from primary via color-mix, not separate tokens) */
+	.hero-glow {
+		position: absolute;
+		inset: -8rem -6rem auto;
+		height: 22rem;
+		pointer-events: none;
+		display: none;
+		background: radial-gradient(
+			ellipse at 25% 25%,
+			color-mix(in oklch, oklch(var(--theme-primary)), transparent 88%),
+			transparent 70%
+		);
+	}
+
+	:root.dark .hero-glow {
+		display: block;
+	}
+}
+
+/* Typography overrides for post prose */
 .prose {
-	color: oklch(var(--theme-surface-content));
+	color: oklch(var(--theme-surface-content) / 90%);
 }
 
 .prose a {
-	color: oklch(var(--theme-surface-content));
+	color: oklch(var(--theme-primary));
+	text-decoration-color: color-mix(
+		in oklch,
+		oklch(var(--theme-primary)),
+		transparent 60%
+	);
+	transition: text-decoration-color 0.2s;
 }
 
 .prose a:hover {
-	color: oklch(var(--theme-primary));
+	text-decoration-color: oklch(var(--theme-primary));
 }
 
 .prose h1,
@@ -170,8 +215,17 @@
 }
 
 .prose code {
-	padding: 0.1em;
-	border-radius: 3px;
+	padding: 0.1em 0.3em;
+	border-radius: 4px;
+	font-size: 0.875em;
+	font-weight: 400;
+	background: oklch(var(--theme-surface-raised));
+	color: oklch(var(--theme-surface-content));
+}
+
+.prose pre code {
+	padding: 0;
+	background: none;
 }
 
 .prose blockquote {
@@ -181,6 +235,7 @@
 
 .prose hr {
 	border-top-style: solid;
+	border-color: oklch(var(--theme-border));
 }
 
 .prose thead {
@@ -199,10 +254,4 @@
 
 .prose tfoot {
 	border-top: 1px solid oklch(var(--theme-primary));
-}
-
-.prose-sm code {
-	font-size: 0.875rem;
-	font-weight: 400;
-	color: oklch(var(--theme-surface-content));
 }

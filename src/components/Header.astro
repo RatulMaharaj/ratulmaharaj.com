@@ -2,15 +2,41 @@
 import ThemeToggle from "./ThemeToggle.astro";
 
 const url = new URL(Astro.request.url);
+const path = url.pathname;
+
+const navLinks = [
+	{ href: "/posts", label: "posts", active: path.startsWith("/posts") },
+	{ href: "/tags", label: "tags", active: path.startsWith("/tags") },
+	{ href: "/rss.xml", label: "rss", active: false },
+];
 ---
 
-<header class="flex items-center pb-10">
+<header class="flex items-center gap-x-6 pb-12">
 	<a
 		href="/"
-		class="flex items-center text-lg whitespace-nowrap underline-offset-2 hover:underline"
-		aria-current={url.pathname === "/" ? "page" : false}
+		class="text-base font-semibold whitespace-nowrap transition-colors duration-200 hover:text-primary"
+		aria-current={path === "/" ? "page" : undefined}
 	>
 		Ratul's Blog
 	</a>
+	<nav
+		aria-label="Main"
+		class="ml-auto flex items-center gap-x-4 text-sm sm:gap-x-6"
+	>
+		{
+			navLinks.map((link) => (
+				<a
+					href={link.href}
+					class:list={[
+						"transition-colors duration-200 hover:text-primary",
+						link.active ? "text-primary" : "text-surface-content/70",
+					]}
+					aria-current={link.active ? "page" : undefined}
+				>
+					{link.label}
+				</a>
+			))
+		}
+	</nav>
 	<ThemeToggle />
 </header>

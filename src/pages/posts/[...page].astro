@@ -5,7 +5,7 @@ import Pagination from "@/components/Paginator";
 import PageLayout from "@/layouts/Base";
 import type { Page } from "@/types";
 import type { PaginateFunction } from "astro";
-import { getAllTags, postUrl, sortPostsByDate } from "src/util";
+import { getAllTags, sortPostsByDate } from "src/util";
 import type { Post } from "src/util";
 import Tags from "@/components/Tags";
 
@@ -49,16 +49,16 @@ const paginationProps = {
 ---
 
 <PageLayout meta={meta}>
-	<h1 class="mb-6 font-bold uppercase">Posts</h1>
-	<div class="grid gap-y-16 sm:grid-cols-[3fr_1fr] sm:gap-x-8">
+	<h1 class="mb-8 text-2xl font-bold tracking-tight">
+		<span class="text-secondary">// </span>posts
+	</h1>
+	<div class="grid gap-y-16 sm:grid-cols-[1fr_12rem] sm:gap-x-10">
 		<section aria-label="Blog post list">
-			<ul>
+			<ul class="space-y-1">
 				{
 					page.data.map((p) => (
-						<li class="flex flex-wrap items-center gap-x-2 [&_q]:w-full">
-							<a href={postUrl(p)}>
-								<PreviewItem post={p} />
-							</a>
+						<li>
+							<PreviewItem post={p} />
 						</li>
 					))
 				}
