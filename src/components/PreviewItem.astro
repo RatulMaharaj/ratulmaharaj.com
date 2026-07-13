@@ -1,6 +1,6 @@
 ---
 import type { IElement } from "@/types";
-import { tagUrl } from "@/util";
+import { postUrl, tagUrl } from "@/util";
 import type { Post } from "@/util";
 import { format } from "date-fns";
 export interface Props extends IElement {
@@ -18,23 +18,25 @@ const postDate = format(date, "MMM d, yyyy");
 <div
 	class="flex w-full cursor-pointer flex-col gap-y-4 rounded-md py-4 transition-all duration-300 hover:bg-surface-content/5 hover:px-4"
 >
-	<div class="mb-2">
-		<time datetime={datetime} class="text-xs text-surface-content/50">
-			{postDate}
-		</time>
-	</div>
-	<h4
-		class="mb-1 flex items-start justify-start text-sm font-bold text-surface-content duration-500"
-	>
-		{post.data.title}
-	</h4>
-	{
-		includeDescription && (
-			<p class="line-clamp-3 block text-xs text-surface-content/80 italic duration-500">
-				// {post.data.description}
-			</p>
-		)
-	}
+	<a href={postUrl(post)} class="flex flex-col gap-y-4">
+		<div class="mb-2">
+			<time datetime={datetime} class="text-xs text-surface-content/50">
+				{postDate}
+			</time>
+		</div>
+		<h4
+			class="mb-1 flex items-start justify-start text-sm font-bold text-surface-content duration-500"
+		>
+			{post.data.title}
+		</h4>
+		{
+			includeDescription && (
+				<p class="line-clamp-3 block text-xs text-surface-content/80 italic duration-500">
+					// {post.data.description}
+				</p>
+			)
+		}
+	</a>
 	<div class="flex flex-row flex-wrap gap-y-2">
 		{
 			post.data.tags.map((tag) => (

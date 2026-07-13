@@ -5,7 +5,7 @@ import Paginator from "@/components/Paginator";
 import PageLayout from "@/layouts/Base";
 import type { Page } from "@/types";
 import type { PaginateFunction } from "astro";
-import { getAllTags, postUrl, sortPostsByDate } from "@/util";
+import { getAllTags, sortPostsByDate } from "@/util";
 import type { Post } from "@/util";
 
 export async function getStaticPaths({
@@ -62,9 +62,7 @@ const meta = {
 					<ul class="space-y-8 text-left">
 						{page.data.map((p) => (
 							<li class="flex flex-wrap items-center gap-x-2 [&_q]:w-full">
-								<a href={postUrl(p)}>
-									<PreviewItem post={p} />
-								</a>
+								<PreviewItem post={p} />
 							</li>
 						))}
 					</ul>
