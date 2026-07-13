@@ -2,6 +2,7 @@
 	"routes": [
 		"/",
 		"/404.html",
+		"/colophon/",
 		"/posts/",
 		"/posts/2/",
 		"/posts/basic-functional-programming-in-python/",
@@ -46,6 +47,7 @@
 	],
 	"sitemap": [
 		"https://ratulmaharaj.com/",
+		"https://ratulmaharaj.com/colophon/",
 		"https://ratulmaharaj.com/posts/",
 		"https://ratulmaharaj.com/posts/2/",
 		"https://ratulmaharaj.com/posts/basic-functional-programming-in-python/",

@@ -6,6 +6,7 @@ import SkipLink from "@/components/SkipLink";
 import type { SiteMeta } from "@/types";
 import siteMeta from "src/site-meta.config";
 import PostHog from "@/components/PostHog";
+import { asciiBanner } from "src/ascii-banner";
 
 export type Props = {
 	meta: SiteMeta;
@@ -76,6 +77,7 @@ const {
 		</script>
 	</head>
 	<body>
+		<Fragment set:html={asciiBanner} />
 		<SkipLink />
 		<Header />
 		<main id="main" class="flex-1">
