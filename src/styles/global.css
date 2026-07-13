@@ -135,6 +135,24 @@
 		@apply mr-2 inline-block cursor-pointer rounded-md border border-primary px-2 text-[10px] font-semibold whitespace-nowrap text-primary uppercase transition-all ease-in-out hover:bg-primary hover:text-surface;
 	}
 
+	/* Blinking block cursor after the header prompt */
+	.prompt-cursor {
+		margin-left: 0.15em;
+		animation: blink 1.2s steps(2, start) infinite;
+	}
+
+	@keyframes blink {
+		to {
+			visibility: hidden;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.prompt-cursor {
+			animation: none;
+		}
+	}
+
 	blockquote > p::before,
 	blockquote > p::after {
 		content: none !important;

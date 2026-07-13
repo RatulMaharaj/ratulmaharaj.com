@@ -2,12 +2,17 @@
 import PageLayout from "@/layouts/Base";
 
 const meta = {
-	title: "Oops! You found a missing page!",
-	description: "Oops! It looks like this page is lost in space!",
+	title: "404: Page not found",
+	description: "The page you are looking for does not exist.",
 };
 ---
 
 <PageLayout meta={meta}>
-	<h1 class="title mb-6">404 | Oops something went wrong</h1>
-	<p class="mb-8">Please use the navigation to find your way back</p>
+	<h1 class="mb-6 text-lg font-bold">404: no such file or directory</h1>
+	<p class="mb-8 text-surface-content/80">
+		The page you're looking for doesn't exist, was moved, or never got written.
+	</p>
+	<a href="/" class="underline-offset-2 hover:text-primary hover:underline">
+		$ cd ~
+	</a>
 </PageLayout>
