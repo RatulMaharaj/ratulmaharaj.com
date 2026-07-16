@@ -9,6 +9,7 @@
 	--color-surface-content: oklch(var(--theme-surface-content));
 	--color-primary: oklch(var(--theme-primary));
 	--color-neutral: oklch(var(--theme-neutral));
+	--color-border: oklch(var(--theme-surface-content) / 12%);
 	--font-sans:
 		"Monaspace Argon", ui-sans-serif, system-ui, sans-serif,
 		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";

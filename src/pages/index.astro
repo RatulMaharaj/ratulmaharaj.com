@@ -20,8 +20,8 @@ const allPostsByDate = sortPostsByDate(allPosts).slice(0, MAX_POSTS);
 <PageLayout meta={meta}>
 	<section class="grid grid-cols-1 gap-y-8">
 		<Bio />
-		<div class="flex gap-x-4">
-			<p>Find me on:</p>
+		<div class="flex items-baseline gap-x-4">
+			<p class="text-xs text-surface-content/45">find me on:</p>
 			<SocialList />
 		</div>
 	</section>
@@ -32,7 +32,7 @@ const allPostsByDate = sortPostsByDate(allPosts).slice(0, MAX_POSTS);
 				({String(allPostsByDate.length).padStart(3, "0")})
 			</span>
 		</h2>
-		<ul class="border-border border-b">
+		<ul class="border-b-[0.5px] border-border">
 			{
 				allPostsByDate.map((p) => (
 					<li>

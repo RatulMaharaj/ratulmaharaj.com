@@ -5,118 +5,47 @@ interface Props {
 }
 
 const { rss = true, github = true } = Astro.props;
+
+type SocialLink = { href: string; label: string; rel?: string };
+
+const links: SocialLink[] = [
+	...(github
+		? [
+				{
+					href: "https://github.com/RatulMaharaj",
+					label: "github",
+					rel: "noopener noreferrer",
+				},
+			]
+		: []),
+	{ href: "https://x.com/ratulmaharaj", label: "x", rel: "me" },
+	{
+		href: "https://linkedin.com/in/ratulmaharaj",
+		label: "linkedin",
+		rel: "noopener noreferrer",
+	},
+	...(rss ? [{ href: "/rss.xml", label: "rss" }] : []),
+	{
+		href: "https://cal.com/ratulmaharaj?redirect=false",
+		label: "cal.com",
+		rel: "noopener noreferrer",
+	},
+];
 ---
 
-<ul class="m-0 flex list-none items-center gap-x-4 p-0">
+<ul class="m-0 flex list-none flex-wrap items-center gap-x-3 p-0 text-xs">
 	{
-		github && (
-			<li class="h-5 w-5" title="GitHub">
+		links.map(({ href, label, rel }) => (
+			<li>
 				<a
-					href="https://github.com/RatulMaharaj"
-					target="_blank"
-					rel="noopener noreferrer"
+					class="text-surface-content/55 underline-offset-2 transition-colors duration-200 hover:text-primary hover:underline"
+					href={href}
+					target={href.startsWith("/") ? undefined : "_blank"}
+					rel={rel}
 				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="h-5 w-5 fill-surface-content transition-all duration-200 hover:fill-primary"
-						viewBox="0 0 256 256"
-					>
-						<path d="M216,104v8a56.06,56.06,0,0,1-48.44,55.47A39.8,39.8,0,0,1,176,192v40a8,8,0,0,1-8,8H104a8,8,0,0,1-8-8V216H72a40,40,0,0,1-40-40A24,24,0,0,0,8,152a8,8,0,0,1,0-16,40,40,0,0,1,40,40,24,24,0,0,0,24,24H96v-8a39.8,39.8,0,0,1,8.44-24.53A56.06,56.06,0,0,1,56,112v-8a58.14,58.14,0,0,1,7.69-28.32A59.78,59.78,0,0,1,69.07,28,8,8,0,0,1,76,24a59.75,59.75,0,0,1,48,24h24a59.75,59.75,0,0,1,48-24,8,8,0,0,1,6.93,4,59.74,59.74,0,0,1,5.37,47.68A58,58,0,0,1,216,104Z" />
-					</svg>
-					<span class="sr-only">Github</span>
+					{label}
 				</a>
 			</li>
-		)
+		))
 	}
-	<!-- <li class="w-5 h-5" title="Threads">
-    <a href="https://www.threads.net/@ratulmaharaj" target="_blank" rel="me">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="w-5 h-5 fill-surface-content hover:fill-primary transition-all duration-200"
-        viewBox="0 0 256 256"
-        ><path
-          d="M188.84,120.46a68.14,68.14,0,0,0-10-6.23c-3.72-21.68-16.41-37.41-35.52-43.2C121.94,64.55,97.29,72.42,86,89.34a12,12,0,0,0,20,13.32c5.47-8.2,19.11-12.08,30.41-8.66a24.72,24.72,0,0,1,14.88,12.24,86.73,86.73,0,0,0-8.86-.45C108.56,105.79,84,125.22,84,152c0,22.9,17.54,39.52,41.71,39.52a52,52,0,0,0,37.23-16c6-6.23,12.88-16.46,15.72-32.07,6.2,6.42,9.34,14.67,9.34,24.59,0,17.74-19.07,44-60,44-45.76,0-68-27.48-68-84s22.24-84,68-84c31.08,0,51,12.42,60.8,38a12,12,0,0,0,22.4-8.62C197.77,38.44,169,20,128,20,68.67,20,36,58.35,36,128s32.67,108,92,108c31.36,0,51.08-12.05,62.11-22.15C203.81,201.28,212,184.14,212,168,212,148.36,204,131.92,188.84,120.46Zm-43.2,38.39a27.9,27.9,0,0,1-19.93,8.67c-8.17,0-17.71-4.06-17.71-15.52,0-15.26,17.84-22.21,34.41-22.21a60.23,60.23,0,0,1,13.51,1.52C155.36,142.93,151.84,152.41,145.64,158.85Z"
-        ></path></svg
-      >
-      <span class="sr-only">Threads</span>
-    </a>
-  </li> -->
-	<!-- <li class="w-5 h-5" title="Mastodon">
-    <a href="https://fosstodon.org/@RatulMaharaj" target="_blank" rel="me">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="w-5 h-5 fill-surface-content hover:fill-primary transition-all duration-200"
-        viewBox="0 0 256 256"
-        ><path
-          d="M184,32H72A40,40,0,0,0,32,72V192a40,40,0,0,0,40,40h88a8,8,0,0,0,0-16H72a24,24,0,0,1-24-24v-8H184a40,40,0,0,0,40-40V72A40,40,0,0,0,184,32Zm0,104a8,8,0,0,1-16,0V104a16,16,0,0,0-32,0v32a8,8,0,0,1-16,0V104a16,16,0,0,0-32,0v32a8,8,0,0,1-16,0V104a32,32,0,0,1,56-21.13A32,32,0,0,1,184,104Z"
-        ></path></svg
-      >
-      <span class="sr-only">Mastodon</span>
-    </a>
-  </li> -->
-	<li class="h-5 w-5" title="X (formerly Twitter)">
-		<a href="https://x.com/ratulmaharaj" target="_blank" rel="me">
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				class="h-5 w-5 fill-surface-content transition-all duration-200 hover:fill-primary"
-				viewBox="0 0 256 256"
-				><path
-					d="M215,219.85a8,8,0,0,1-7,4.15H160a8,8,0,0,1-6.75-3.71l-40.49-63.63L53.92,221.38a8,8,0,0,1-11.84-10.76l61.77-68L41.25,44.3A8,8,0,0,1,48,32H96a8,8,0,0,1,6.75,3.71l40.49,63.63,58.84-64.72a8,8,0,0,1,11.84,10.76l-61.77,67.95,62.6,98.38A8,8,0,0,1,215,219.85Z"
-				></path></svg
-			>
-			<span class="sr-only">X</span>
-		</a>
-	</li>
-	<li class="h-5 w-5" title="LinkedIn">
-		<a
-			href="https://linkedin.com/in/ratulmaharaj"
-			target="_blank"
-			rel="noopener noreferrer"
-		>
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				class="h-5 w-5 fill-surface-content transition-all duration-200 hover:fill-primary"
-				viewBox="0 0 256 256"
-				><path
-					d="M216,24H40A16,16,0,0,0,24,40V216a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V40A16,16,0,0,0,216,24ZM96,176a8,8,0,0,1-16,0V112a8,8,0,0,1,16,0ZM88,96a12,12,0,1,1,12-12A12,12,0,0,1,88,96Zm96,80a8,8,0,0,1-16,0V140a20,20,0,0,0-40,0v36a8,8,0,0,1-16,0V112a8,8,0,0,1,15.79-1.78A36,36,0,0,1,184,140Z"
-				></path></svg
-			>
-			<span class="sr-only">LinkedIn</span>
-		</a>
-	</li>
-	{
-		rss && (
-			<li class="h-5 w-5" title="RSS Feed">
-				<a href="/rss.xml" target="_blank" rel="noopener noreferrer">
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="h-5 w-5 fill-surface-content transition-all duration-200 hover:fill-primary"
-						viewBox="0 0 256 256"
-					>
-						<path d="M208,32H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM76,192a12,12,0,1,1,12-12A12,12,0,0,1,76,192Zm44,0a8,8,0,0,1-8-8,40,40,0,0,0-40-40,8,8,0,0,1,0-16,56.06,56.06,0,0,1,56,56A8,8,0,0,1,120,192Zm32,0a8,8,0,0,1-8-8,72.08,72.08,0,0,0-72-72,8,8,0,0,1,0-16,88.1,88.1,0,0,1,88,88A8,8,0,0,1,152,192Zm32,0a8,8,0,0,1-8-8A104.11,104.11,0,0,0,72,80a8,8,0,0,1,0-16A120.13,120.13,0,0,1,192,184,8,8,0,0,1,184,192Z" />
-					</svg>
-					<span class="sr-only">RSS</span>
-				</a>
-			</li>
-		)
-	}
-	<li class="h-5 w-5" title="Cal.com">
-		<a
-			href="https://cal.com/ratulmaharaj?redirect=false"
-			target="_blank"
-			rel="noopener noreferrer"
-		>
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				width="32"
-				height="32"
-				class="h-5 w-5 fill-surface-content transition-all duration-200 hover:fill-primary"
-				viewBox="0 0 256 256"
-				><path
-					d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32Zm0,48H48V48H72v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24Z"
-				></path></svg
-			>
-			<span class="sr-only">Cal.com</span>
-		</a>
-	</li>
 </ul>
