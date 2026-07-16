@@ -11,12 +11,22 @@
   ],
   "redirects": [
     {
-      "source": "/tags/developer tools{/}?",
+      "source": "/tags/developer tools",
       "destination": "/tags/developer-tools/",
       "permanent": true
     },
     {
-      "source": "/tags/mac mini{/}?",
+      "source": "/tags/developer tools/",
+      "destination": "/tags/developer-tools/",
+      "permanent": true
+    },
+    {
+      "source": "/tags/mac mini",
+      "destination": "/tags/mac-mini/",
+      "permanent": true
+    },
+    {
+      "source": "/tags/mac mini/",
       "destination": "/tags/mac-mini/",
       "permanent": true
     }
