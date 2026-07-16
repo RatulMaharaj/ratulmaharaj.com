@@ -131,8 +131,12 @@
 		@apply invisible absolute top-2 right-2 cursor-pointer rounded px-2 py-1 text-xs sm:visible;
 	}
 
-	.category-tag {
-		@apply mr-2 inline-block cursor-pointer rounded-md border border-primary px-2 text-[10px] font-semibold whitespace-nowrap text-primary uppercase transition-all ease-in-out hover:bg-primary hover:text-surface;
+	.section-label {
+		@apply text-xs font-semibold tracking-[0.2em] text-surface-content/45 uppercase;
+	}
+
+	.tag {
+		@apply text-xs whitespace-nowrap text-surface-content/40 transition-colors duration-200 hover:text-primary;
 	}
 
 	/* Blinking block cursor after the header prompt */

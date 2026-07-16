@@ -26,21 +26,25 @@ const allPostsByDate = sortPostsByDate(allPosts).slice(0, MAX_POSTS);
 		</div>
 	</section>
 	<section aria-label="Blog post list" class="mt-16">
-		<h2 class="mb-4 font-bold uppercase">Recent Posts</h2>
-		<ul class="space-y-4 sm:space-y-2">
+		<h2 class="section-label pb-3">
+			Recent Posts{" "}
+			<span class="text-surface-content/30">
+				({String(allPostsByDate.length).padStart(3, "0")})
+			</span>
+		</h2>
+		<ul class="border-border border-b">
 			{
-				allPostsByDate.map((p) => (
-					<li class="flex flex-wrap items-center gap-x-2 [&_q]:w-full">
-						<PreviewItem post={p} />
+				allPostsByDate.map((p, i) => (
+					<li>
+						<PreviewItem post={p} index={i + 1} />
 					</li>
 				))
 			}
 		</ul>
-		<br />
 		<a
 			href="/posts"
-			class="cursor-pointer rounded-md py-2 transition-all duration-500 hover:bg-surface-content/5 hover:px-4"
-			>See all posts &rarr;</a
+			class="mt-5 inline-block text-xs text-surface-content/55 transition-colors duration-200 hover:text-primary"
+			>see all posts &rarr;</a
 		>
 	</section>
 </PageLayout>

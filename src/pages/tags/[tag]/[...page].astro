@@ -52,21 +52,21 @@ const meta = {
 
 <PageLayout meta={meta}>
 	<section aria-label="Blog post list">
-		<h1 class="mb-6 flex items-center font-bold uppercase">
-			Posts tagged with: <span class="category-tag ml-2">{tag}</span>
+		<h1 class="section-label pb-3">
+			Posts tagged <span class="normal-case">#{tag}</span>{" "}
+			<span class="text-surface-content/30">
+				({String(page.total).padStart(3, "0")})
+			</span>
 		</h1>
-		<br />
 		{
 			page.data.length > 0 && (
-				<>
-					<ul class="space-y-8 text-left">
-						{page.data.map((p) => (
-							<li class="flex flex-wrap items-center gap-x-2 [&_q]:w-full">
-								<PreviewItem post={p} />
-							</li>
-						))}
-					</ul>
-				</>
+				<ul class="border-border border-b">
+					{page.data.map((p, i) => (
+						<li>
+							<PreviewItem post={p} index={page.start + i + 1} />
+						</li>
+					))}
+				</ul>
 			)
 		}
 		<Paginator {...paginationProps} />

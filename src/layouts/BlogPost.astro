@@ -76,17 +76,14 @@ const paginationProps = {
 					</div>
 				</div>
 				<div class="flex items-center justify-end pt-10 text-xs">
-					<a
-						href={editUrl}
-						>Edit this page</a
-					>
+					<a href={editUrl}>Edit this page</a>
 				</div>
 			</div>
 		</article>
 		<aside
 			class="invisible hidden text-right sm:visible sm:sticky sm:top-20 sm:block"
 		>
-			<h2 class="font-semibold">Table of Contents</h2>
+			<h2 class="section-label">On this page</h2>
 			<ul class="mt-4 space-y-2 text-xs">
 				{
 					headings.map(({ slug, text }) => (
@@ -103,15 +100,15 @@ const paginationProps = {
 	<div class="mt-10">
 		{
 			tags?.length && (
-				<ul class="flex flex-wrap items-center gap-y-2 py-4">
+				<ul class="flex flex-wrap items-center gap-x-3 gap-y-2 py-4">
 					{tags.map((tag: string) => (
 						<li>
 							<a
-								class="category-tag"
+								class="tag"
 								aria-label={`View more blogs with the tag ${tag}`}
 								href={tagUrl(tag)}
 							>
-								{tag}
+								#{tag}
 							</a>
 						</li>
 					))}
