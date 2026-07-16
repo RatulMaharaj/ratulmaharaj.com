@@ -11,13 +11,16 @@ const navLinks = [
 ---
 
 <header class="flex items-center gap-x-4 pb-10">
-	<a
-		href="/"
-		class="text-sm font-bold whitespace-nowrap text-surface-content underline-offset-2 hover:underline"
-		aria-current={path === "/" ? "page" : false}
-	>
-		ratulmaharaj.com
-	</a>
+	{
+		path !== "/" && (
+			<a
+				href="/"
+				class="text-sm font-bold whitespace-nowrap text-surface-content underline-offset-2 hover:underline"
+			>
+				ratulmaharaj.com
+			</a>
+		)
+	}
 	<nav class="ml-auto flex items-center gap-x-4 text-sm" aria-label="Main">
 		{
 			navLinks.map(({ href, label, active }) => (
