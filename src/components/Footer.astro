@@ -25,26 +25,16 @@ if (!commitHash) {
 			<SocialList />
 		</div>
 	</div>
-	<div class="mt-4 text-xs text-surface-content/50">
-		built by hand &middot;{" "}
-		{
-			commitHash && (
-				<>
-					<a
-						class="underline-offset-2 hover:text-primary hover:underline"
-						href={`https://github.com/RatulMaharaj/ratulmaharaj.com/commit/${commitHash}`}
-					>
-						{commitHash}
-					</a>{" "}
-					&middot;{" "}
-				</>
-			)
-		}
-		<a
-			class="underline-offset-2 hover:text-primary hover:underline"
-			href="/colophon"
-		>
-			colophon
-		</a>
-	</div>
+	{
+		commitHash && (
+			<div class="mt-4 text-xs text-surface-content/50">
+				<a
+					class="underline-offset-2 hover:text-primary hover:underline"
+					href={`https://github.com/RatulMaharaj/ratulmaharaj.com/commit/${commitHash}`}
+				>
+					{commitHash}
+				</a>
+			</div>
+		)
+	}
 </footer>

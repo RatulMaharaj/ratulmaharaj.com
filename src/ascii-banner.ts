@@ -8,7 +8,6 @@ export const asciiBanner = String.raw`<!--
  | | | (_| | |_| |_| | |
  |_|  \__,_|\__|\__,_|_|
 
- hand-built since 2022 - no page builders, no templates
  source: https://github.com/RatulMaharaj/ratulmaharaj.com
  humans: https://ratulmaharaj.com/humans.txt
 -->`;

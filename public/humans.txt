@@ -5,12 +5,7 @@
 	Location: South Africa
 
 /* SITE */
-	Hand-built since: May 2022
 	Components: Astro, Tailwind CSS, Shiki
 	Fonts: Monaspace Argon & Monaspace Krypton
 	Hosting: Vercel
 	Source: https://github.com/RatulMaharaj/ratulmaharaj.com
-
-/* NOTE */
-	Typed on a real keyboard by a real person.
-	More at https://ratulmaharaj.com/colophon
