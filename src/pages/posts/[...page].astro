@@ -59,9 +59,9 @@ const paginationProps = {
 			</h1>
 			<ul class="border-border border-b">
 				{
-					page.data.map((p, i) => (
+					page.data.map((p) => (
 						<li>
-							<PreviewItem post={p} index={page.start + i + 1} />
+							<PreviewItem post={p} />
 						</li>
 					))
 				}

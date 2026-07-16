@@ -34,9 +34,9 @@ const allPostsByDate = sortPostsByDate(allPosts).slice(0, MAX_POSTS);
 		</h2>
 		<ul class="border-border border-b">
 			{
-				allPostsByDate.map((p, i) => (
+				allPostsByDate.map((p) => (
 					<li>
-						<PreviewItem post={p} index={i + 1} />
+						<PreviewItem post={p} />
 					</li>
 				))
 			}
