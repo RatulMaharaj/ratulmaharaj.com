@@ -1,6 +1,5 @@
 ---
 import type { IElement } from "@/types";
-import CaretRight from "@/components/CaretRight.astro";
 import { postUrl } from "@/util";
 import type { Post } from "@/util";
 import { format } from "date-fns";
@@ -35,7 +34,7 @@ const postDate = format(date, "MMM d, yyyy");
 		{
 			includeDescription && (
 				<p class="mt-1 text-[12.5px] text-surface-content/55">
-					<CaretRight />
+					<span class="text-primary/70">// </span>
 					{post.data.description}
 				</p>
 			)
