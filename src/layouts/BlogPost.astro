@@ -4,6 +4,7 @@ import Paginator from "@/components/Paginator";
 import { getLocaleTime, postUrl, tagUrl } from "src/util";
 import type { Post } from "src/util";
 import BaseLayout from "./Base.astro";
+import CaretRight from "@/components/CaretRight.astro";
 import SocialList from "@/components/SocialList";
 
 export interface Props {
@@ -56,7 +57,8 @@ const paginationProps = {
 				{title}
 			</h1>
 			<p class="line-clamp-3 block text-sm text-surface-content/80 italic">
-				// {description}
+				<CaretRight />
+				{description}
 			</p>
 			<br />
 			<br />
