@@ -280,18 +280,25 @@
 	}
 	body[data-v="c"] .hero {
 		margin-top: 1rem;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
 	}
 	body[data-v="c"] .name {
 		margin: 0;
-		display: inline;
+		order: 1;
 		font-size: 1rem;
 		font-weight: 700;
 	}
 	body[data-v="c"] .kicker {
 		margin: 0;
-		display: inline;
+		order: 2;
 		font-size: 1rem;
 		color: color-mix(in oklab, var(--ink) 55%, transparent);
+	}
+	body[data-v="c"] .intro {
+		order: 3;
+		width: 100%;
 	}
 	body[data-v="c"] .kicker::before {
 		content: " — ";
