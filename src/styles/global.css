@@ -22,7 +22,7 @@
 	:root {
 		color-scheme: light;
 
-		--theme-surface: 95% 0 295;
+		--theme-surface: 100% 0 0;
 		--theme-surface-content: 15% 0.01 295;
 
 		/* #685ef7, darkened slightly for small-text contrast on light */
