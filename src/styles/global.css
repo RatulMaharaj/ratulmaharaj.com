@@ -51,7 +51,8 @@
 	:root.dark {
 		color-scheme: dark;
 
-		--theme-surface: 15% 0.01 295;
+		/* #0a0b0f */
+		--theme-surface: 15.04% 0.0088 274.3;
 		--theme-surface-content: 95% 0 295;
 
 		/* #685ef7 */
@@ -61,7 +62,7 @@
 
 		/* Code theme (shiki css-variables), ported from the old prism.css */
 		--astro-code-foreground: oklch(var(--theme-surface-content));
-		--astro-code-background: oklch(20% 0.01 295deg);
+		--astro-code-background: #14161a;
 		--astro-code-token-constant: #b48ead;
 		--astro-code-token-string: #a78bfa;
 		--astro-code-token-string-expression: #94a3b8;
@@ -74,7 +75,7 @@
 
 		/* Older shiki variable names, kept for compatibility */
 		--astro-code-color-text: oklch(var(--theme-surface-content));
-		--astro-code-color-background: oklch(20% 0.01 295deg);
+		--astro-code-color-background: #14161a;
 	}
 
 	/* Register your custom font family and tell the browser where to find it. */
