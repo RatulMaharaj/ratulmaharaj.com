@@ -32,7 +32,7 @@
 
 		/* Code theme (shiki css-variables), ported from the old prism.css */
 		--astro-code-foreground: oklch(var(--theme-surface-content));
-		--astro-code-background: oklch(90% 0 295deg);
+		--astro-code-background: #f7f7f7;
 		--astro-code-token-constant: #b48ead;
 		--astro-code-token-string: #a855f7;
 		--astro-code-token-string-expression: #94a3b8;
@@ -45,7 +45,7 @@
 
 		/* Older shiki variable names, kept for compatibility */
 		--astro-code-color-text: oklch(var(--theme-surface-content));
-		--astro-code-color-background: oklch(90% 0 295deg);
+		--astro-code-color-background: #f7f7f7;
 	}
 
 	:root.dark {
@@ -114,6 +114,7 @@
 		padding: 1em;
 		margin: 0.5em 0;
 		overflow: auto;
+		border: 0.5px solid oklch(var(--theme-surface-content) / 12%);
 		border-radius: 0.3em;
 		font-family:
 			"Monaspace Krypton", Consolas, Monaco, "Andale Mono", "Ubuntu Mono",
