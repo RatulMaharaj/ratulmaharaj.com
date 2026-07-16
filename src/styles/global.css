@@ -135,7 +135,13 @@
 	}
 
 	.copy {
-		@apply invisible absolute top-2 right-2 cursor-pointer rounded px-2 py-1 text-xs sm:visible;
+		@apply absolute top-2 right-2 rounded border-[0.5px] border-border bg-surface/80 px-2 py-0.5 text-[11px] text-surface-content/55 backdrop-blur-sm transition-all duration-200 hover:text-surface-content sm:opacity-0;
+	}
+
+	/* Fades in with the pointer on desktop; always visible on touch */
+	pre:hover .copy,
+	pre:focus-within .copy {
+		opacity: 1;
 	}
 
 	.section-label {

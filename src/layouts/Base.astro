@@ -61,15 +61,16 @@ const {
 				// Add copy to clipboard button
 				const button = document.createElement("button");
 				button.className = "copy";
-				button.innerText = "Copy";
+				button.innerText = "copy";
+				button.setAttribute("aria-label", "Copy code to clipboard");
 				block.parentNode?.appendChild(button);
 
 				// Add copy to clipboard functionality using navigator.clipboard
 				button.addEventListener("click", () => {
 					navigator.clipboard.writeText(block.innerText).then(() => {
-						button.innerText = "Copied!";
+						button.innerText = "copied";
 						setTimeout(() => {
-							button.innerText = "Copy";
+							button.innerText = "copy";
 						}, 2000);
 					});
 				});
