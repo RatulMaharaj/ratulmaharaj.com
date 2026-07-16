@@ -24,7 +24,8 @@
 
 		--theme-surface: 95% 0 295;
 		--theme-surface-content: 15% 0.01 295;
-		--theme-primary: 60% 0.23 300;
+		/* #685ef7, darkened slightly for small-text contrast on light */
+		--theme-primary: 52% 0.22 280;
 		--theme-neutral: 90% 0 295;
 		--theme-quote: 239 84% 67%;
 
@@ -51,7 +52,8 @@
 
 		--theme-surface: 15% 0.01 295;
 		--theme-surface-content: 95% 0 295;
-		--theme-primary: 60% 0.23 300;
+		/* #685ef7 */
+		--theme-primary: 58% 0.22 280;
 		--theme-neutral: 50% 0 295;
 		--theme-quote: 234 89% 74%;
 
@@ -138,24 +140,6 @@
 
 	.tag {
 		@apply text-xs whitespace-nowrap text-surface-content/40 transition-colors duration-200 hover:text-primary;
-	}
-
-	/* Blinking block cursor after the header prompt */
-	.prompt-cursor {
-		margin-left: 0.15em;
-		animation: blink 1.2s steps(2, start) infinite;
-	}
-
-	@keyframes blink {
-		to {
-			visibility: hidden;
-		}
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.prompt-cursor {
-			animation: none;
-		}
 	}
 
 	blockquote > p::before,
