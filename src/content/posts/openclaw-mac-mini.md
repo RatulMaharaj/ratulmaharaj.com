@@ -2,7 +2,7 @@
 title: OpenClaw on a Mac mini
 pubDate: 31 January 2026
 description: My always-on AI assistant that writes code whilst I sleep.
-tags: ["AI", "Automation", "Developer Tools", "Mac mini", "OpenClaw"]
+tags: ["ai", "automation", "developer-tools", "mac-mini", "openclaw"]
 author: "Ratul Maharaj"
 ---
 

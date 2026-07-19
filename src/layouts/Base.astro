@@ -6,6 +6,7 @@ import SkipLink from "@/components/SkipLink";
 import type { SiteMeta } from "@/types";
 import siteMeta from "src/site-meta.config";
 import PostHog from "@/components/PostHog";
+import { asciiBanner } from "src/ascii-banner";
 
 export type Props = {
 	meta: SiteMeta;
@@ -60,15 +61,16 @@ const {
 				// Add copy to clipboard button
 				const button = document.createElement("button");
 				button.className = "copy";
-				button.innerText = "Copy";
+				button.innerText = "copy";
+				button.setAttribute("aria-label", "Copy code to clipboard");
 				block.parentNode?.appendChild(button);
 
 				// Add copy to clipboard functionality using navigator.clipboard
 				button.addEventListener("click", () => {
 					navigator.clipboard.writeText(block.innerText).then(() => {
-						button.innerText = "Copied!";
+						button.innerText = "copied";
 						setTimeout(() => {
-							button.innerText = "Copy";
+							button.innerText = "copy";
 						}, 2000);
 					});
 				});
@@ -76,6 +78,7 @@ const {
 		</script>
 	</head>
 	<body>
+		<Fragment set:html={asciiBanner} />
 		<SkipLink />
 		<Header />
 		<main id="main" class="flex-1">

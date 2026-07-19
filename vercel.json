@@ -8,5 +8,27 @@
       "source": "/ph/:path(.*)",
       "destination": "https://us.i.posthog.com/:path"
     }
+  ],
+  "redirects": [
+    {
+      "source": "/tags/developer%20tools",
+      "destination": "/tags/developer-tools/",
+      "permanent": true
+    },
+    {
+      "source": "/tags/developer%20tools/",
+      "destination": "/tags/developer-tools/",
+      "permanent": true
+    },
+    {
+      "source": "/tags/mac%20mini",
+      "destination": "/tags/mac-mini/",
+      "permanent": true
+    },
+    {
+      "source": "/tags/mac%20mini/",
+      "destination": "/tags/mac-mini/",
+      "permanent": true
+    }
   ]
 }

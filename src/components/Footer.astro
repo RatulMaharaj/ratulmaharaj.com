@@ -1,13 +1,40 @@
 ---
-const year = new Date().getFullYear();
+import { execSync } from "node:child_process";
 import SocialList from "./SocialList.astro";
+
+const year = new Date().getFullYear();
+
+// Resolved once at build time (static output). Vercel exposes the SHA as
+// an env var; local builds fall back to git.
+let commitHash = process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7);
+if (!commitHash) {
+	try {
+		commitHash = execSync("git rev-parse --short HEAD").toString().trim();
+	} catch {
+		commitHash = undefined;
+	}
+}
 ---
 
-<footer class="mt-20 grid grid-cols-2 place-content-center py-10">
-	<div class="flex items-center justify-start text-sm">
-		&copy; Ratul Maharaj {year}
+<footer class="mt-20 py-10">
+	<div class="grid grid-cols-2 place-content-center">
+		<div class="flex items-center justify-start text-sm">
+			&copy; Ratul Maharaj {year}
+		</div>
+		<div class="flex items-center justify-end">
+			<SocialList />
+		</div>
 	</div>
-	<div class="flex items-center justify-end">
-		<SocialList />
-	</div>
+	{
+		commitHash && (
+			<div class="mt-4 text-xs text-surface-content/50">
+				<a
+					class="underline-offset-2 hover:text-primary hover:underline"
+					href={`https://github.com/RatulMaharaj/ratulmaharaj.com/commit/${commitHash}`}
+				>
+					{commitHash}
+				</a>
+			</div>
+		)
+	}
 </footer>

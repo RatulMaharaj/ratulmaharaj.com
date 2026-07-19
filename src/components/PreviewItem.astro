@@ -1,5 +1,6 @@
 ---
 import type { IElement } from "@/types";
+import { postUrl } from "@/util";
 import type { Post } from "@/util";
 import { format } from "date-fns";
 export interface Props extends IElement {
@@ -14,33 +15,36 @@ const datetime = date.toISOString();
 const postDate = format(date, "MMM d, yyyy");
 ---
 
-<div
-	class="flex w-full cursor-pointer flex-col gap-y-4 rounded-md py-4 transition-all duration-300 hover:bg-surface-content/5 hover:px-4"
+<a
+	href={postUrl(post)}
+	class="group relative -mt-[0.5px] grid gap-x-5 border-y-[0.5px] border-border py-3.5 transition-colors duration-200 hover:z-10 hover:border-surface-content/30 hover:bg-[#f7f7f7] sm:grid-cols-[6.5rem_1fr] dark:hover:bg-black/20"
 >
-	<div class="mb-2">
-		<time datetime={datetime} class="text-xs text-surface-content/50">
-			{postDate}
-		</time>
-	</div>
-	<h4
-		class="mb-1 flex items-start justify-start text-sm font-bold text-surface-content duration-500"
+	<time
+		datetime={datetime}
+		class="pt-px text-xs text-surface-content/45 tabular-nums"
 	>
-		{post.data.title}
-	</h4>
-	{
-		includeDescription && (
-			<p class="line-clamp-3 block text-xs text-surface-content/80 italic duration-500">
-				// {post.data.description}
-			</p>
-		)
-	}
-	<div class="flex flex-row flex-wrap gap-y-2">
+		{postDate}
+	</time>
+	<div>
+		<h3 class="mt-1 text-sm font-bold text-surface-content sm:mt-0">
+			{post.data.title}
+		</h3>
 		{
-			post.data.tags.map((tag) => (
-				<a href={`/tags/${tag}`} class="category-tag">
-					{tag}
-				</a>
-			))
+			includeDescription && (
+				<p class="mt-1 text-[12.5px] text-surface-content/55">
+					<span class="text-primary/70">// </span>
+					{post.data.description}
+				</p>
+			)
+		}
+		{
+			post.data.tags.length > 0 && (
+				<div class="mt-1.5 flex flex-wrap gap-x-3 text-[11px] text-surface-content/35">
+					{post.data.tags.map((tag) => (
+						<span class="whitespace-nowrap">#{tag}</span>
+					))}
+				</div>
+			)
 		}
 	</div>
-</div>
+</a>

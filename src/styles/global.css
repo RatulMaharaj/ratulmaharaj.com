@@ -9,6 +9,7 @@
 	--color-surface-content: oklch(var(--theme-surface-content));
 	--color-primary: oklch(var(--theme-primary));
 	--color-neutral: oklch(var(--theme-neutral));
+	--color-border: oklch(var(--theme-surface-content) / 12%);
 	--font-sans:
 		"Monaspace Argon", ui-sans-serif, system-ui, sans-serif,
 		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -21,15 +22,17 @@
 	:root {
 		color-scheme: light;
 
-		--theme-surface: 95% 0 295;
+		--theme-surface: 100% 0 0;
 		--theme-surface-content: 15% 0.01 295;
-		--theme-primary: 60% 0.23 300;
+
+		/* #685ef7, darkened slightly for small-text contrast on light */
+		--theme-primary: 52% 0.22 280;
 		--theme-neutral: 90% 0 295;
 		--theme-quote: 239 84% 67%;
 
 		/* Code theme (shiki css-variables), ported from the old prism.css */
 		--astro-code-foreground: oklch(var(--theme-surface-content));
-		--astro-code-background: oklch(90% 0 295deg);
+		--astro-code-background: #f7f7f7;
 		--astro-code-token-constant: #b48ead;
 		--astro-code-token-string: #a855f7;
 		--astro-code-token-string-expression: #94a3b8;
@@ -42,21 +45,24 @@
 
 		/* Older shiki variable names, kept for compatibility */
 		--astro-code-color-text: oklch(var(--theme-surface-content));
-		--astro-code-color-background: oklch(90% 0 295deg);
+		--astro-code-color-background: #f7f7f7;
 	}
 
 	:root.dark {
 		color-scheme: dark;
 
-		--theme-surface: 15% 0.01 295;
+		/* #0a0b0f */
+		--theme-surface: 15.04% 0.0088 274.3;
 		--theme-surface-content: 95% 0 295;
-		--theme-primary: 60% 0.23 300;
+
+		/* #685ef7 */
+		--theme-primary: 58% 0.22 280;
 		--theme-neutral: 50% 0 295;
 		--theme-quote: 234 89% 74%;
 
 		/* Code theme (shiki css-variables), ported from the old prism.css */
 		--astro-code-foreground: oklch(var(--theme-surface-content));
-		--astro-code-background: oklch(20% 0.01 295deg);
+		--astro-code-background: #14161a;
 		--astro-code-token-constant: #b48ead;
 		--astro-code-token-string: #a78bfa;
 		--astro-code-token-string-expression: #94a3b8;
@@ -69,7 +75,7 @@
 
 		/* Older shiki variable names, kept for compatibility */
 		--astro-code-color-text: oklch(var(--theme-surface-content));
-		--astro-code-color-background: oklch(20% 0.01 295deg);
+		--astro-code-color-background: #14161a;
 	}
 
 	/* Register your custom font family and tell the browser where to find it. */
@@ -108,6 +114,7 @@
 		padding: 1em;
 		margin: 0.5em 0;
 		overflow: auto;
+		border: 0.5px solid oklch(var(--theme-surface-content) / 12%);
 		border-radius: 0.3em;
 		font-family:
 			"Monaspace Krypton", Consolas, Monaco, "Andale Mono", "Ubuntu Mono",
@@ -128,11 +135,21 @@
 	}
 
 	.copy {
-		@apply invisible absolute top-2 right-2 cursor-pointer rounded px-2 py-1 text-xs sm:visible;
+		@apply absolute top-2 right-2 rounded border-[0.5px] border-border bg-surface/80 px-2 py-0.5 text-[11px] text-surface-content/55 backdrop-blur-sm transition-all duration-200 hover:text-surface-content sm:opacity-0;
 	}
 
-	.category-tag {
-		@apply mr-2 inline-block cursor-pointer rounded-md border border-primary px-2 text-[10px] font-semibold whitespace-nowrap text-primary uppercase transition-all ease-in-out hover:bg-primary hover:text-surface;
+	/* Fades in with the pointer on desktop; always visible on touch */
+	pre:hover .copy,
+	pre:focus-within .copy {
+		opacity: 1;
+	}
+
+	.section-label {
+		@apply text-xs font-semibold tracking-[0.2em] text-surface-content/45 uppercase;
+	}
+
+	.tag {
+		@apply text-xs whitespace-nowrap text-surface-content/40 transition-colors duration-200 hover:text-primary;
 	}
 
 	blockquote > p::before,
@@ -201,8 +218,13 @@
 	border-top: 1px solid oklch(var(--theme-primary));
 }
 
+/* 13px body to match the rest of the site's type scale */
+.prose-sm {
+	font-size: 0.8125rem;
+}
+
 .prose-sm code {
-	font-size: 0.875rem;
+	font-size: 1em;
 	font-weight: 400;
 	color: oklch(var(--theme-surface-content));
 }

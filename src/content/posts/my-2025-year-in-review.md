@@ -2,7 +2,7 @@
 title: My 2025 Year in Review
 pubDate: 14 January 2026
 description: A house, a wedding, a team and a dream.
-tags: ["Reflections", "substack"]
+tags: ["reflections", "substack"]
 author: "Ratul Maharaj"
 ---
 
