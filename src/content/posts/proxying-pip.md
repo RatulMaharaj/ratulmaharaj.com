@@ -1,5 +1,4 @@
 ---
-layout: "@/layouts/BlogPost"
 title: Proxying pip
 pubDate: 15 May 2023
 description: How to install Python packages with pip when you're behind a company firewall.
@@ -31,18 +30,18 @@ http://<username>:<uri_encoded_password>@proxy.company.net:8080
 
 The `<username>` and `<uri_encoded_password>` are your windows credentials.
 
-The `<uri_encoded_password>` is the URI encoded version of your password where any special characters are replaced with their % encoded counterparts  e.g. `password!` becomes `password%21`. Here are the commonly used characters and their encoded counterparts:
+The `<uri_encoded_password>` is the URI encoded version of your password where any special characters are replaced with their % encoded counterparts e.g. `password!` becomes `password%21`. Here are the commonly used characters and their encoded counterparts:
 
 | Character | Encoded Character |
-| :---------: | :-------: |
-| !         | %21     |
-| @         | %40     |
-| #         | %23     |
-| $         | %24     |
-| %         | %25     |
-| ^         | %5E     |
-| &         | %26     |
-| *         | %2A     |
+| :-------: | :---------------: |
+|     !     |        %21        |
+|     @     |        %40        |
+|     #     |        %23        |
+|     $     |        %24        |
+|     %     |        %25        |
+|     ^     |        %5E        |
+|     &     |        %26        |
+|     *     |        %2A        |
 
 You can find a more comprehensive list of characters [here](https://www.w3schools.com/tags/ref_urlencode.ASP).
 

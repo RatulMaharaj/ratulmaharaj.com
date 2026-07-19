@@ -24,10 +24,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 <!-- Global Metadata -->
 <link rel="icon" href="https://github.com/ratulmaharaj.png?size=32" />
 <link
-  rel="apple-touch-icon"
-  href="https://github.com/ratulmaharaj.png?size=192"
+	rel="apple-touch-icon"
+	href="https://github.com/ratulmaharaj.png?size=192"
 />
 <link rel="manifest" href="/manifest.webmanifest" />
+<link rel="author" href="/humans.txt" />
 <meta name="theme-color" content={siteMeta.themeColorLight} />
 
 <!-- Open Graph / Facebook -->
@@ -41,17 +42,17 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 <meta property="og:image:alt" content="Open graph image for Ratul's blog." />
 
 {
-  pubDate ? (
-    <meta
-      property="og:image"
-      content={`https://og.ratulmaharaj.com/api/blogpost?title=${encodeURI(title)}&description=${encodeURI(description)}&date=${encodeURI(pubDate)}`}
-    />
-  ) : (
-    <meta
-      property="og:image"
-      content={`https://og.ratulmaharaj.com/api/blog`}
-    />
-  )
+	pubDate ? (
+		<meta
+			property="og:image"
+			content={`https://og.ratulmaharaj.com/api/blogpost?title=${encodeURI(title)}&description=${encodeURI(description ?? "")}&date=${encodeURI(pubDate)}`}
+		/>
+	) : (
+		<meta
+			property="og:image"
+			content={`https://og.ratulmaharaj.com/api/blog`}
+		/>
+	)
 }
 
 <!-- Twitter -->
@@ -59,15 +60,15 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 {
-  pubDate ? (
-    <meta
-      property="twitter:image"
-      content={`https://og.ratulmaharaj.com/api/blogpost?title=${encodeURI(title)}&description=${encodeURI(description)}&date=${encodeURI(pubDate)}`}
-    />
-  ) : (
-    <meta
-      property="twitter:image"
-      content={`https://og.ratulmaharaj.com/api/blog`}
-    />
-  )
+	pubDate ? (
+		<meta
+			property="twitter:image"
+			content={`https://og.ratulmaharaj.com/api/blogpost?title=${encodeURI(title)}&description=${encodeURI(description ?? "")}&date=${encodeURI(pubDate)}`}
+		/>
+	) : (
+		<meta
+			property="twitter:image"
+			content={`https://og.ratulmaharaj.com/api/blog`}
+		/>
+	)
 }

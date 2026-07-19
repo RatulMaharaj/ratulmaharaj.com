@@ -1,5 +1,4 @@
 ---
-layout: "@/layouts/BlogPost"
 title: Tauri v2 custom menu items
 pubDate: 21 June 2024
 description: Adding a webview navigation shortcut to the native app menu.
@@ -15,7 +14,7 @@ After a few days of struggling with this, I've finally got it working! Here's ho
 
 In order to achieve this, we need to implement a custom menu via the Rust backend. This will allow us to add a custom menu item to our app menu with a specified `id`.
 
-Once added, we can listen for menu click events on the backend and `emit` a window event to the frontend. 
+Once added, we can listen for menu click events on the backend and `emit` a window event to the frontend.
 
 On the frontend, we can listen for this custom event and trigger the desired action which, in my case, will be navigating to the `/settings` page.
 
@@ -39,7 +38,7 @@ fn main() {
     tauri::Builder::default()
         .setup(|app| {
             let handle = app.handle();
-            
+
             // my custom settings menu item
             let settings = MenuItemBuilder::new("Settings...")
                 .id("settings")
@@ -76,7 +75,7 @@ fn main() {
             // listen for menu item click events
             app.on_menu_event(move |app, event| {
                 if event.id() == settings.id() {
-                    // emit a window event to the frontend 
+                    // emit a window event to the frontend
                     let _event = app.emit("custom-event", "/settings");
                 }
             });
@@ -90,7 +89,7 @@ fn main() {
 
 ## Listening for the custom event
 
-On the frontend, we can listen for the `custom-event` event using `listen` function from the `@tauri-apps/api/event` library. 
+On the frontend, we can listen for the `custom-event` event using `listen` function from the `@tauri-apps/api/event` library.
 
 I'm using `Next.js` so here's how I implemented this in my `providers.tsx` component:
 
@@ -100,20 +99,20 @@ import { listen } from "@tauri-apps/api/event";
 import { useRouter } from "next/navigation";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
-  const router = useRouter();
+	const router = useRouter();
 
-  useEffect(() => {
-    // listen for Tauri events
-    const unlisten = listen("go-to", (e: { payload: string }) => {
-      console.log("An event occurred: ", e);
-      router.push(e.payload);
-    });
+	useEffect(() => {
+		// listen for Tauri events
+		const unlisten = listen("go-to", (e: { payload: string }) => {
+			console.log("An event occurred: ", e);
+			router.push(e.payload);
+		});
 
-    return () => {
-      if (unlisten === undefined) return;
-      unlisten.catch(console.error);
-    };
-  }, [router]);
+		return () => {
+			if (unlisten === undefined) return;
+			unlisten.catch(console.error);
+		};
+	}, [router]);
 }
 ```
 

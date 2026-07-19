@@ -1,76 +1,74 @@
 ---
+import { getCollection } from "astro:content";
 import PreviewItem from "@/components/PreviewItem";
+import Paginator from "@/components/Paginator";
 import PageLayout from "@/layouts/Base";
-import type { MDXInstance, Page, Post, Snippet } from "@/types";
-import { getAllTags, sortMDByDate } from "@/util";
+import type { Page } from "@/types";
+import type { PaginateFunction } from "astro";
+import { getAllTags, sortPostsByDate } from "@/util";
+import type { Post } from "@/util";
 
-export async function getStaticPaths({ paginate }) {
-  // get posts and snippets
-  const allPosts = await Astro.glob<Post>("../../posts/*.md");
+export async function getStaticPaths({
+	paginate,
+}: {
+	paginate: PaginateFunction;
+}) {
+	const allPosts = await getCollection("posts");
+	const allPostsByDate = sortPostsByDate(allPosts);
+	const allTags = getAllTags(allPostsByDate);
 
-  // sort by date
-  const allPostsByDate = sortMDByDate(allPosts);
-
-  // get all tags
-  const allPostsAndSnippetsByDate = [...allPostsByDate];
-  let allTags = [...getAllTags(allPostsByDate)];
-  // remove duplicates
-  allTags = [...new Set(allTags)];
-
-  return allTags.flatMap((tag) => {
-    const filterItems = allPostsAndSnippetsByDate.filter((item) =>
-      item.frontmatter.tags?.includes(tag)
-    );
-    return paginate(filterItems, {
-      params: { tag },
-      pageSize: 10,
-    });
-  });
+	return allTags.flatMap((tag) => {
+		const filterItems = allPostsByDate.filter((item) =>
+			item.data.tags?.some((t) => t.toLowerCase() === tag),
+		);
+		return paginate(filterItems, {
+			params: { tag },
+			pageSize: 10,
+		});
+	});
 }
 
 export interface Props {
-  page: Page<MDXInstance<Post | Snippet>>;
+	page: Page<Post>;
 }
 
 const { page } = Astro.props as Props;
-let blogs = [];
-let snippets = [];
-
-page.data.forEach((element) => {
-  if (element.frontmatter["layout"].replace("@/layouts/", "") == "Snippet") {
-    snippets.push(element);
-  } else {
-    blogs.push(element);
-  }
-});
 
 const { tag } = Astro.params;
+
+const paginationProps = {
+	...(page.url.prev && {
+		prevUrl: { url: page.url.prev, text: `← Previous Posts` },
+	}),
+	...(page.url.next && {
+		nextUrl: { url: page.url.next, text: `Next Posts →` },
+	}),
+};
 const meta = {
-  title: `Tag: ${tag}`,
-  description: `View all posts and snippets tagged with ${tag}.`,
+	title: `Tag: ${tag}`,
+	description: `View all posts and snippets tagged with ${tag}.`,
 };
 ---
 
 <PageLayout meta={meta}>
-  <section aria-label="Blog post list">
-    <h1 class="flex items-center mb-6 uppercase font-bold">
-      Posts tagged with: <span class="category-tag ml-2">{tag}</span>
-    </h1>
-    <br />
-    {
-      blogs.length > 0 && (
-        <>
-          <ul class="space-y-8 text-left">
-            {blogs.map((p) => (
-              <li class="[&_q]:w-full flex flex-wrap items-center gap-x-2">
-                <a href={p.url}>
-                  <PreviewItem post={p} />
-                </a>
-              </li>
-            ))}
-          </ul>
-        </>
-      )
-    }
-  </section>
+	<section aria-label="Blog post list">
+		<h1 class="section-label pb-3">
+			Posts tagged <span class="normal-case">#{tag}</span>{" "}
+			<span class="text-surface-content/30">
+				({String(page.total).padStart(3, "0")})
+			</span>
+		</h1>
+		{
+			page.data.length > 0 && (
+				<ul>
+					{page.data.map((p) => (
+						<li>
+							<PreviewItem post={p} />
+						</li>
+					))}
+				</ul>
+			)
+		}
+		<Paginator {...paginationProps} />
+	</section>
 </PageLayout>

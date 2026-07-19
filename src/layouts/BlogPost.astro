@@ -1,131 +1,137 @@
 ---
+import type { MarkdownHeading } from "astro";
 import Paginator from "@/components/Paginator";
-import {
-  getLocaleTime,
-  getPreviousAndNextPosts,
-  sortMDByDate,
-  getPosts,
-} from "src/util";
+import { getLocaleTime, postUrl, tagUrl } from "src/util";
+import type { Post } from "src/util";
 import BaseLayout from "./Base.astro";
 import SocialList from "@/components/SocialList";
 
-let {
-  url,
-  content: { title, description, pubDate, tags },
-  headings,
-} = Astro.props;
-headings = headings.filter((heading) => heading.depth < 3);
-const date = new Date(pubDate);
-const datetime = date.toISOString();
-const postDate = getLocaleTime(date);
-const currentPage = new URL(Astro.request.url).pathname;
+export interface Props {
+	post: Post;
+	headings: MarkdownHeading[];
+	prev: Post | null;
+	next: Post | null;
+}
 
-// get all md files
-const posts = getPosts();
+const { post, prev, next } = Astro.props;
+const { title, description, pubDate, tags } = post.data;
+const headings = Astro.props.headings.filter((heading) => heading.depth < 3);
+const datetime = pubDate.toISOString();
+const postDate = getLocaleTime(pubDate);
 
-const sortedPosts = sortMDByDate(posts);
-const { prev, next } = getPreviousAndNextPosts(currentPage, sortedPosts);
+// Point edit links at the branch this deploy was built from, so they
+// resolve on previews too (posts moved paths in the collections migration).
+const editBranch = process.env.VERCEL_GIT_COMMIT_REF ?? "main";
+const editUrl = `https://github.com/RatulMaharaj/ratulmaharaj.com/edit/${editBranch}/src/content/posts/${post.id}.md`;
+
 const paginationProps = {
-  ...(prev && {
-    prevUrl: {
-      url: prev.url,
-      text: `← ${prev.frontmatter.title}`,
-      srLabel: "Previous Article:",
-    },
-  }),
-  ...(next && {
-    nextUrl: {
-      url: next.url,
-      text: `${next.frontmatter.title} →`,
-      srLabel: "Next Article:",
-    },
-  }),
+	...(prev && {
+		prevUrl: {
+			url: postUrl(prev),
+			text: `← ${prev.data.title}`,
+			srLabel: "Previous Article:",
+		},
+	}),
+	...(next && {
+		nextUrl: {
+			url: postUrl(next),
+			text: `${next.data.title} →`,
+			srLabel: "Next Article:",
+		},
+	}),
 };
 ---
 
-<BaseLayout meta={{ title, description, pubDate }}>
-  <div class="sm:grid sm:grid-cols-[3fr_1fr] sm:gap-x-10 sm:items-start">
-    <article>
-      <div class="mb-2">
-        <time datetime={datetime} class="text-surface-content/50 text-xs">
-          {postDate}
-        </time>
-      </div>
-      <h1
-        class="flex items-start mb-1 justify-start text-surface-content font-bold text-2xl"
-      >
-        {title}
-      </h1>
-      <p class="line-clamp-3 text-sm block text-surface-content/80 italic">
-        // {description}
-      </p>
-      <br />
-      <br />
-      <div
-        class="prose prose-sm prose-strong:text-surface-content prose-headings:font-semibold w-full max-w-full"
-      >
-        <slot />
-        <div class="mt-2 pt-2 flex flex-col">
-          <h3>Thanks for reading! 🫶</h3>
-          <p>
-            I would love to hear your thoughts on this. If you have any
-            questions or comments, please feel free to reach out on any of the
-            platforms below. I look forward to connecting with you!
-          </p>
-          <div class="flex items-center gap-x-2">
-            Reach out on: <SocialList rss={false} github={false} />
-          </div>
-        </div>
-        <div class="flex pt-10 items-center justify-end text-xs">
-          <a
-            href={`https://github.com/RatulMaharaj/ratulmaharaj.com/edit/main/src/pages/${url}.md`}
-            >Edit this page</a
-          >
-        </div>
-      </div>
-    </article>
-    <aside
-      class="invisible hidden text-right sm:sticky sm:top-20 sm:block sm:visible"
-    >
-      <h2 class="font-semibold">Table of Contents</h2>
-      <ul class="mt-4 text-xs space-y-2">
-        {
-          headings.map(({ slug, text }) => (
-            <li class="line-clamp-2 hover:text-primary">
-              <a href={`#${slug}`} aria-label={`Scroll to section: ${text}`}>
-                {text}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </aside>
-  </div>
-  <div class="mt-10">
-    {
-      tags?.length && (
-        <ul class="flex flex-wrap items-center gap-y-2 py-4">
-          {tags.map((tag: string) => (
-            <li>
-              <a
-                class="category-tag"
-                aria-label={`View more blogs with the tag ${tag}`}
-                href={`/tags/${tag}`}
-              >
-                {tag}
-              </a>
-            </li>
-          ))}
-        </ul>
-      )
-    }
-    <Paginator {...paginationProps} />
-  </div>
+<BaseLayout meta={{ title, description, pubDate: postDate }}>
+	<div class="sm:grid sm:grid-cols-[3fr_1fr] sm:items-start sm:gap-x-10">
+		<article>
+			<time
+				datetime={datetime}
+				class="text-xs text-surface-content/45 tabular-nums"
+			>
+				{postDate}
+			</time>
+			<h1
+				class="mt-2 text-2xl leading-tight font-bold tracking-tight text-surface-content"
+			>
+				{title}
+			</h1>
+			<p class="mt-2 text-[13px] text-surface-content/55">
+				<span class="text-primary/70">// </span>
+				{description}
+			</p>
+			{
+				tags?.length && (
+					<ul class="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1">
+						{tags.map((tag: string) => (
+							<li>
+								<a
+									class="tag"
+									aria-label={`View more blogs with the tag ${tag}`}
+									href={tagUrl(tag)}
+								>
+									#{tag}
+								</a>
+							</li>
+						))}
+					</ul>
+				)
+			}
+			<div
+				class="prose prose-sm mt-10 w-full max-w-full prose-headings:font-semibold prose-strong:text-surface-content"
+			>
+				<slot />
+			</div>
+			<footer
+				class="mt-14 border-t-[0.5px] border-border pt-5 text-[12.5px] text-surface-content/55"
+			>
+				<p class="font-bold text-surface-content">Thanks for reading! 🫶</p>
+				<p class="mt-2 max-w-xl">
+					I would love to hear your thoughts on this. If you have any questions
+					or comments, please feel free to reach out on any of the platforms
+					below. I look forward to connecting with you!
+				</p>
+				<div class="mt-3 flex items-center gap-x-3">
+					<span class="text-surface-content/45">reach out on:</span>
+					<SocialList rss={false} github={false} />
+				</div>
+				<div class="mt-6 flex justify-end">
+					<a
+						class="text-xs text-surface-content/40 transition-colors duration-200 hover:text-primary"
+						href={editUrl}
+					>
+						edit this page &rarr;
+					</a>
+				</div>
+			</footer>
+		</article>
+		<aside class="hidden text-right sm:sticky sm:top-20 sm:block">
+			<h2 class="section-label">On this page</h2>
+			<ul class="mt-4 space-y-2 text-xs">
+				{
+					headings.map(({ slug, text }) => (
+						<li class="line-clamp-2">
+							<a
+								class="text-surface-content/55 transition-colors duration-200 hover:text-primary"
+								href={`#${slug}`}
+								aria-label={`Scroll to section: ${text}`}
+							>
+								{text}
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</aside>
+	</div>
+	<div class="mt-10">
+		<Paginator {...paginationProps} />
+	</div>
 </BaseLayout>
 
 <style>
-  /* Hide the weird code block adding the language */
-  :global(article pre .language-id) {
-    @apply hidden;
-  }
+	/* Hide the weird code block adding the language */
+	:global(article pre .language-id) {
+		display: none;
+	}
 </style>

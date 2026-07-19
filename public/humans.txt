@@ -1,0 +1,11 @@
+/* TEAM */
+	Developer: Ratul Maharaj
+	Site: https://ratulmaharaj.com
+	GitHub: @RatulMaharaj
+	Location: South Africa
+
+/* SITE */
+	Components: Astro, Tailwind CSS, Shiki
+	Fonts: Monaspace Argon & Monaspace Krypton
+	Hosting: Vercel
+	Source: https://github.com/RatulMaharaj/ratulmaharaj.com

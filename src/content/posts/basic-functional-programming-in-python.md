@@ -1,5 +1,4 @@
 ---
-layout: "@/layouts/BlogPost"
 title: Basic functional programming in Python
 pubDate: 31 October 2022
 description: And why the func should you care?!
@@ -19,10 +18,10 @@ Functions are useful for creating reusable code. They can be used to perform a s
 
 Python has a number of built-in functions. These are functions that are already defined in the Python language. They can be used without having to define them. Some of the most common built-in functions are:
 
-* `print()` which prints it's arguments to the screen,
-* `input()` which takes input from the user,
-* `len()` which returns the length of an object,
-* `type()` which returns the type of an object, and many others.
+- `print()` which prints it's arguments to the screen,
+- `input()` which takes input from the user,
+- `len()` which returns the length of an object,
+- `type()` which returns the type of an object, and many others.
 
 ## User-defined functions
 
@@ -141,7 +140,7 @@ Lambda functions are anonymous functions (no named identifier) that can be used 
 # Example of a lambda function
 
 # a,b are the arguments, a + b is the expression to return
-add = lambda a, b: a + b 
+add = lambda a, b: a + b
 
 add(1, 2) # returns 3
 ```
@@ -156,7 +155,7 @@ Lamda functions are useful when used with pandas. They can be used to create new
 # Import pandas
 import pandas as pd
 
-# Create a dataframe 
+# Create a dataframe
 df = pd.DataFrame({
     "a": [1, 2, 3],
     "b": [4, 5, 6]

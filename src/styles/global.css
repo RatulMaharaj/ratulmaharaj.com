@@ -1,68 +1,94 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+	--color-surface: oklch(var(--theme-surface));
+	--color-surface-content: oklch(var(--theme-surface-content));
+	--color-primary: oklch(var(--theme-primary));
+	--color-neutral: oklch(var(--theme-neutral));
+	--color-border: oklch(var(--theme-surface-content) / 12%);
+	--font-sans:
+		"Monaspace Argon", ui-sans-serif, system-ui, sans-serif,
+		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+	--font-mono:
+		"Monaspace Krypton", ui-monospace, sfmono-regular, menlo, monaco, consolas,
+		"Liberation Mono", "Courier New", monospace;
+}
 
 @layer base {
 	:root {
 		color-scheme: light;
-		--theme-surface: 95% 0 295;
+
+		--theme-surface: 100% 0 0;
 		--theme-surface-content: 15% 0.01 295;
-		--theme-primary: 60% 0.23 300;
-		--theme-neutral: 90% 0 295
+
+		/* #685ef7, darkened slightly for small-text contrast on light */
+		--theme-primary: 52% 0.22 280;
+		--theme-neutral: 90% 0 295;
 		--theme-quote: 239 84% 67%;
-		/* Code theme */
-		--prism-background: oklch(90% 0 295);
-		/* Code theme tokens */
-		--prism-token-constant: #b48ead;
-		--prism-token-string: #a855f7;
-		--prism-token-string-expression: #94a3b8;
-		--prism-token-comment: #94a3b8 ;
-		--prism-token-keyword: #6366f1;
-		--prism-token-operator: #818cf8;
-		--prism-token-parameter: #aa0000;
-		--prism-token-function: #a21caf;
-		--prism-token-punctuation: #818cf8;
-		--prism-token-link: #a855f7;
-		--prism-token-number: #b48ead;
-		--prism-token-important: #bf616a;
-		--prism-token-boolean: #d946ef;
+
+		/* Code theme (shiki css-variables), ported from the old prism.css */
+		--astro-code-foreground: oklch(var(--theme-surface-content));
+		--astro-code-background: #f7f7f7;
+		--astro-code-token-constant: #b48ead;
+		--astro-code-token-string: #a855f7;
+		--astro-code-token-string-expression: #94a3b8;
+		--astro-code-token-comment: #94a3b8;
+		--astro-code-token-keyword: #6366f1;
+		--astro-code-token-parameter: #a00;
+		--astro-code-token-function: #a21caf;
+		--astro-code-token-punctuation: #818cf8;
+		--astro-code-token-link: #a855f7;
+
+		/* Older shiki variable names, kept for compatibility */
+		--astro-code-color-text: oklch(var(--theme-surface-content));
+		--astro-code-color-background: #f7f7f7;
 	}
 
 	:root.dark {
 		color-scheme: dark;
-		--theme-surface: 15% 0.01 295;
+
+		/* #0a0b0f */
+		--theme-surface: 15.04% 0.0088 274.3;
 		--theme-surface-content: 95% 0 295;
-		--theme-primary: 60% 0.23 300;
-		--theme-neutral: 50% 0 295
+
+		/* #685ef7 */
+		--theme-primary: 58% 0.22 280;
+		--theme-neutral: 50% 0 295;
 		--theme-quote: 234 89% 74%;
-		/* Code theme */
-		--prism-background: oklch(20% 0.01 295);
-		/* Code theme tokens */
-		--prism-token-constant: #b48ead;
-		--prism-token-string:#a78bfa;
-		--prism-token-string-expression: #94a3b8;
-		--prism-token-comment: #94a3b8;
-		--prism-token-keyword: #a5b4fc;
-		--prism-token-operator: #a5b4fc;
-		--prism-token-parameter: #aa0000;
-		--prism-token-function: #f0abfc;
-		--prism-token-punctuation: #a5b4fc;
-		--prism-token-link: #a78bfa;
-		--prism-token-number: #93c5fd;
-		--prism-token-important: #bf616a;
-		--prism-token-boolean: #e879f9;
+
+		/* Code theme (shiki css-variables), ported from the old prism.css */
+		--astro-code-foreground: oklch(var(--theme-surface-content));
+		--astro-code-background: #14161a;
+		--astro-code-token-constant: #b48ead;
+		--astro-code-token-string: #a78bfa;
+		--astro-code-token-string-expression: #94a3b8;
+		--astro-code-token-comment: #94a3b8;
+		--astro-code-token-keyword: #a5b4fc;
+		--astro-code-token-parameter: #a00;
+		--astro-code-token-function: #f0abfc;
+		--astro-code-token-punctuation: #a5b4fc;
+		--astro-code-token-link: #a78bfa;
+
+		/* Older shiki variable names, kept for compatibility */
+		--astro-code-color-text: oklch(var(--theme-surface-content));
+		--astro-code-color-background: #14161a;
 	}
 
 	/* Register your custom font family and tell the browser where to find it. */
 	@font-face {
-		font-family: 'Monaspace Argon';
-		src: url('/fonts/MonaspaceArgonVarVF[wght,wdth,slnt].woff2') format('woff2');
+		font-family: "Monaspace Argon";
+		src: url("/fonts/MonaspaceArgonVarVF[wght,wdth,slnt].woff2") format("woff2");
 		font-display: swap;
 	}
 
 	@font-face {
-		font-family: 'Monaspace Krypton';
-		src: url('/fonts/MonaspaceKryptonVarVF[wght,wdth,slnt].woff2') format('woff2');
+		font-family: "Monaspace Krypton";
+		src: url("/fonts/MonaspaceKryptonVarVF[wght,wdth,slnt].woff2")
+			format("woff2");
 		font-display: swap;
 	}
 
@@ -71,7 +97,7 @@
 	}
 
 	/* selection */
-	::selection{
+	::selection {
 		@apply bg-primary/20 text-surface-content;
 	}
 
@@ -79,34 +105,126 @@
 		@apply mx-auto flex h-full max-w-5xl flex-col px-8 pt-16 font-sans text-sm font-normal antialiased;
 	}
 
-	#snippet_container pre {
-		@apply mb-12 md:w-full md:max-w-full;
-	}
-
 	pre {
 		@apply relative;
+	}
+
+	/* Code block styling, ported from the old prism.css */
+	pre.astro-code {
+		padding: 1em;
+		margin: 0.5em 0;
+		overflow: auto;
+		border: 0.5px solid oklch(var(--theme-surface-content) / 12%);
+		border-radius: 0.3em;
+		font-family:
+			"Monaspace Krypton", Consolas, Monaco, "Andale Mono", "Ubuntu Mono",
+			monospace;
+		line-height: 1.5;
+		tab-size: 4;
+		hyphens: none;
 	}
 
 	* {
 		font-variant-ligatures: discretionary-ligatures;
 	}
 
+	/* Tailwind v4 preflight no longer sets pointer cursors on buttons */
+	button:not(:disabled),
+	[role="button"]:not(:disabled) {
+		cursor: pointer;
+	}
 
 	.copy {
-		@apply invisible sm:visible absolute top-2 right-2 px-2 py-1 rounded text-xs cursor-pointer;
+		@apply absolute top-2 right-2 rounded border-[0.5px] border-border bg-surface/80 px-2 py-0.5 text-[11px] text-surface-content/55 backdrop-blur-sm transition-all duration-200 hover:text-surface-content sm:opacity-0;
 	}
 
-	.category-tag {
-		@apply inline-block border border-primary cursor-pointer text-primary rounded-md text-[10px] px-2 font-semibold transition-all ease-in-out uppercase hover:bg-primary hover:text-surface mr-2 whitespace-nowrap;
+	/* Fades in with the pointer on desktop; always visible on touch */
+	pre:hover .copy,
+	pre:focus-within .copy {
+		opacity: 1;
 	}
 
-	blockquote > p::before, blockquote > p::after {
+	.section-label {
+		@apply text-xs font-semibold tracking-[0.2em] text-surface-content/45 uppercase;
+	}
+
+	.tag {
+		@apply text-xs whitespace-nowrap text-surface-content/40 transition-colors duration-200 hover:text-primary;
+	}
+
+	blockquote > p::before,
+	blockquote > p::after {
 		content: none !important;
 	}
 
 	blockquote {
-		@apply bg-primary bg-opacity-5 py-0.5 rounded-sm
+		@apply rounded-xs bg-primary/5 py-0.5;
 	}
 }
 
+/* Typography overrides, ported from the old tailwind.config.cjs typography() */
+.prose {
+	color: oklch(var(--theme-surface-content));
+}
 
+.prose a {
+	color: oklch(var(--theme-surface-content));
+}
+
+.prose a:hover {
+	color: oklch(var(--theme-primary));
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+	color: oklch(var(--theme-surface-content));
+}
+
+.prose strong {
+	font-weight: 700;
+}
+
+.prose code {
+	padding: 0.1em;
+	border-radius: 3px;
+}
+
+.prose blockquote {
+	color: oklch(var(--theme-surface-content));
+	border-color: oklch(var(--theme-primary));
+}
+
+.prose hr {
+	border-top-style: solid;
+}
+
+.prose thead {
+	border-bottom-width: 0;
+}
+
+.prose thead th {
+	color: oklch(var(--theme-primary));
+	font-weight: 700;
+	border-bottom: 1px solid oklch(var(--theme-primary));
+}
+
+.prose tbody tr {
+	border-bottom-width: 0;
+}
+
+.prose tfoot {
+	border-top: 1px solid oklch(var(--theme-primary));
+}
+
+/* 13px body to match the rest of the site's type scale */
+.prose-sm {
+	font-size: 0.8125rem;
+}
+
+.prose-sm code {
+	font-size: 1em;
+	font-weight: 400;
+	color: oklch(var(--theme-surface-content));
+}

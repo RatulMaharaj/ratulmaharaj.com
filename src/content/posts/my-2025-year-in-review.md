@@ -1,9 +1,8 @@
 ---
-layout: "@/layouts/BlogPost"
 title: My 2025 Year in Review
 pubDate: 14 January 2026
 description: A house, a wedding, a team and a dream.
-tags: ["Reflections", "substack"]
+tags: ["reflections", "substack"]
 author: "Ratul Maharaj"
 ---
 
@@ -33,7 +32,7 @@ And so with that, I put out an ad for Junior software developer on both LinkedIn
 
 That number hit me hard. On one level, I felt proud and excited that so many people wanted to work for Looped. But at the same time, it made me realise how tough it is to land even an entry level job for a startup that no one has heard of. The odds of getting this job were less than 1% (0.15% to be precise).
 
-I had a lot of fun hiring. For the first time ever, I had collected a ton of real world data and so I started building a process. I was determined to sort through the hundreds of CVs on my desk(top) as efficiently as possible. I created a dev challenge in notion and wrote a script to automate sending personalised emails to each candidate. I came up with a ranking system to evaluate the challenge and scored each build accordingly.  I also collected salary expectations and notice periods by asking candidates to submit a google form which helped to further narrow the search.
+I had a lot of fun hiring. For the first time ever, I had collected a ton of real world data and so I started building a process. I was determined to sort through the hundreds of CVs on my desk(top) as efficiently as possible. I created a dev challenge in notion and wrote a script to automate sending personalised emails to each candidate. I came up with a ranking system to evaluate the challenge and scored each build accordingly. I also collected salary expectations and notice periods by asking candidates to submit a google form which helped to further narrow the search.
 
 I ended up interviewing 7 candidates and had a really tough time deciding between my top two. Ultimately, on the 26th of June, I hired my first employee and just like that - I was running a real company (I knew it was real because I had to start using payroll software).
 
