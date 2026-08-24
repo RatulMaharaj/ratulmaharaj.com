@@ -30,3 +30,6 @@ pnpm-debug.log*
 .cache
 .vercel
 .astro/
+
+# agent-comments store
+.agent-comments/
