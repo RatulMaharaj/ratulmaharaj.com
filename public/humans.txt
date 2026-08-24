@@ -6,6 +6,6 @@
 
 /* SITE */
 	Components: Astro, Tailwind CSS, Shiki
-	Fonts: Monaspace Argon & Monaspace Krypton
+	Fonts: Work Sans & Space Mono
 	Hosting: Vercel
 	Source: https://github.com/RatulMaharaj/ratulmaharaj.com
