@@ -52,15 +52,27 @@ const meta = {
 
 <PageLayout meta={meta}>
 	<section aria-label="Blog post list">
+		<p
+			class="mb-8 font-sans text-[15px]"
+			style="color: var(--ink-2); max-width: 60ch"
+		>
+			Everything filed under <span style="color: var(--ink)">{tag}</span>,
+			newest first. All the topics live on the{" "}
+			<a
+				class="underline-offset-2 hover:underline"
+				style="text-decoration-color: var(--ink-3)"
+				href="/tags">tags</a
+			> page.
+		</p>
 		<h1 class="section-label pb-3">
 			Posts tagged <span class="normal-case">#{tag}</span>{" "}
-			<span class="text-surface-content/30">
+			<span style="color: var(--ink-3); opacity: 0.6">
 				({String(page.total).padStart(3, "0")})
 			</span>
 		</h1>
 		{
 			page.data.length > 0 && (
-				<ul>
+				<ul class="border-t" style="border-color: var(--rule)">
 					{page.data.map((p) => (
 						<li>
 							<PreviewItem post={p} />

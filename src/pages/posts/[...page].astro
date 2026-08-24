@@ -1,14 +1,15 @@
 ---
 import { getCollection } from "astro:content";
 import PreviewItem from "@/components/PreviewItem";
-import Pagination from "@/components/Paginator";
 import PageLayout from "@/layouts/Base";
 import type { Page } from "@/types";
 import type { PaginateFunction } from "astro";
-import { getAllTags, sortPostsByDate } from "src/util";
+import { sortPostsByDate } from "src/util";
 import type { Post } from "src/util";
-import Tags from "@/components/Tags";
 
+// Still paginated under the hood: /posts/2/ has been a URL since the paged
+// days and URLs never change, so the route keeps resolving — every page just
+// shows the full list now. At ~15 posts, pagination was ceremony.
 export async function getStaticPaths({
 	paginate,
 }: {
@@ -16,58 +17,82 @@ export async function getStaticPaths({
 }) {
 	const allPosts = await getCollection("posts");
 	const allPostsByDate = sortPostsByDate(allPosts);
-	const allTags = getAllTags(allPosts);
-	return paginate(allPostsByDate, { props: { allTags }, pageSize: 10 });
+	return paginate(allPostsByDate, { pageSize: 10 });
 }
 
 export interface Props {
 	page: Page<Post>;
-	allTags: string[];
 }
 
-const { page, allTags } = Astro.props as Props;
+const { page } = Astro.props as Props;
+
+const allPosts = sortPostsByDate(await getCollection("posts"));
 
 const meta = {
 	title: "Posts",
 	description: "A collection of blog posts I've written.",
 };
-
-const paginationProps = {
-	...(page.url.prev && {
-		prevUrl: {
-			url: page.url.prev,
-			text: `← Previous Posts`,
-		},
-	}),
-	...(page.url.next && {
-		nextUrl: {
-			url: page.url.next,
-			text: `Next Posts →`,
-		},
-	}),
-};
 ---
 
 <PageLayout meta={meta}>
-	<div class="grid gap-y-16 sm:grid-cols-[3fr_1fr] sm:gap-x-8">
-		<section aria-label="Blog post list">
-			<h1 class="section-label pb-3">
+	<section aria-label="Blog post list">
+		<p
+			class="mb-8 font-sans text-[15px]"
+			style="color: var(--ink-2); max-width: 60ch"
+		>
+			Everything I've written, newest first. If you're after a topic, the{" "}
+			<a
+				class="underline-offset-2 hover:underline"
+				style="text-decoration-color: var(--ink-3)"
+				href="/tags">tags</a
+			> cut it up more usefully.
+		</p>
+		<div class="flex items-baseline justify-between pb-3">
+			<h1 class="section-label">
 				Posts{" "}
-				<span class="text-surface-content/30">
+				<span style="color: var(--ink-3); opacity: 0.6">
 					({String(page.total).padStart(3, "0")})
 				</span>
 			</h1>
-			<ul>
-				{
-					page.data.map((p) => (
-						<li>
-							<PreviewItem post={p} />
-						</li>
-					))
-				}
-			</ul>
-			<Pagination {...paginationProps} />
-		</section>
-		<Tags allTags={allTags} />
-	</div>
+			<!-- Sorting, in the rail's voice. -->
+			<div class="flex items-center gap-x-1" aria-label="Sort posts">
+				<button type="button" class="rail-btn sort-btn on" data-sort="newest">
+					newest
+				</button>
+				<button type="button" class="rail-btn sort-btn" data-sort="oldest">
+					oldest
+				</button>
+			</div>
+		</div>
+		<ul id="post-list" class="border-t" style="border-color: var(--rule)">
+			{
+				allPosts.map((p) => (
+					<li data-date={p.data.pubDate.toISOString()}>
+						<PreviewItem post={p} />
+					</li>
+				))
+			}
+		</ul>
+	</section>
 </PageLayout>
+
+<script>
+	const list = document.getElementById("post-list");
+	const buttons = Array.from(
+		document.querySelectorAll<HTMLButtonElement>(".sort-btn"),
+	);
+	const items = Array.from(list?.querySelectorAll("li") ?? []);
+
+	const apply = (sort: string) => {
+		buttons.forEach((b) => b.classList.toggle("on", b.dataset.sort === sort));
+		const sorted = [...items].sort((a, b) => {
+			const cmp = (a.dataset.date ?? "").localeCompare(b.dataset.date ?? "");
+			return sort === "oldest" ? cmp : -cmp;
+		});
+		sorted.forEach((li) => list?.append(li));
+	};
+
+	buttons.forEach((b) =>
+		b.addEventListener("click", () => apply(b.dataset.sort ?? "newest")),
+	);
+</script>

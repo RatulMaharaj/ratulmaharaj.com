@@ -5,6 +5,18 @@ import { getAllTagsWithCount, tagUrl } from "@/util";
 
 const allPosts = await getCollection("posts");
 const allPostTags = getAllTagsWithCount(allPosts);
+
+// The date of each tag's most recent post, for the right column of the ledger.
+const latestByTag = new Map<string, Date>();
+for (const post of allPosts) {
+	for (const tag of post.data.tags) {
+		const key = tag.toLowerCase();
+		const seen = latestByTag.get(key);
+		if (!seen || post.data.pubDate > seen)
+			latestByTag.set(key, post.data.pubDate);
+	}
+}
+
 const sortedTags = Object.entries(allPostTags).sort(
 	([a, countA], [b, countB]) => countB - countA || a.localeCompare(b),
 );
@@ -16,27 +28,60 @@ const meta = {
 ---
 
 <PageLayout meta={meta}>
+	<p
+		class="mb-8 font-sans text-[15px]"
+		style="color: var(--ink-2); max-width: 60ch"
+	>
+		Every topic I've written about, starting with the ones I cover most. Each
+		shows how many posts it has and when it last came up.
+	</p>
 	<h1 class="section-label pb-3">
 		Tags{" "}
-		<span class="text-surface-content/30">
+		<span style="color: var(--ink-3); opacity: 0.6">
 			({String(sortedTags.length).padStart(3, "0")})
 		</span>
 	</h1>
-	<ul
-		class="flex max-w-2xl flex-wrap gap-x-4 gap-y-2 border-t-[0.5px] border-border pt-4"
-	>
+	<!-- A ledger, not a cloud: one quiet row per tag, count and last-written
+	     date right-aligned, in the manner of the app's tree. -->
+	<ul class="border-t" style="border-color: var(--rule)">
 		{
 			sortedTags.map(([tag, count]) => (
 				<li>
 					<a
-						class="tag"
+						class="tag-row group grid grid-cols-[1fr_auto_5.5rem] items-baseline gap-x-4 border-b py-2.5 font-mono"
+						style="border-color: var(--rule)"
 						href={tagUrl(tag)}
 						title={`View posts with the tag: ${tag}`}
 					>
-						#{tag} <span class="text-surface-content/25">({count})</span>
+						<span class="tag-name truncate text-[12.5px] tracking-[0.02em]">
+							{tag}
+						</span>
+						<span
+							class="text-right text-[10.5px] tracking-[0.04em] tabular-nums"
+							style="color: var(--ink-3)"
+						>
+							{String(count).padStart(2, "0")}
+						</span>
+						<span
+							class="text-right text-[10.5px] tracking-[0.04em] tabular-nums"
+							style="color: var(--ink-3)"
+						>
+							{latestByTag.get(tag.toLowerCase())?.toISOString().slice(0, 10)}
+						</span>
 					</a>
 				</li>
 			))
 		}
 	</ul>
 </PageLayout>
+
+<style>
+	.tag-name {
+		color: var(--ink-2);
+		transition: color 120ms ease;
+	}
+
+	.tag-row:hover .tag-name {
+		color: var(--ink);
+	}
+</style>

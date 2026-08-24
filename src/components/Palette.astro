@@ -1,0 +1,335 @@
+---
+// The command palette, in the manner of the Plans app: posts by default,
+// commands behind ">". Rendered server-side (the site is static, so the whole
+// index ships with the page); the script only filters and navigates.
+import { getCollection } from "astro:content";
+import { postUrl, sortPostsByDate } from "@/util";
+
+const posts = sortPostsByDate(await getCollection("posts"));
+
+const commands = [
+	{ cmd: "theme:day", label: "theme: day" },
+	{ cmd: "theme:sepia", label: "theme: sepia" },
+	{ cmd: "theme:night", label: "theme: night" },
+	{ cmd: "go:/", label: "go: home" },
+	{ cmd: "go:/posts", label: "go: posts" },
+	{ cmd: "go:/tags", label: "go: tags" },
+	{ cmd: "go:/rss.xml", label: "go: rss" },
+];
+---
+
+<div id="palette-scrim" class="palette-scrim" hidden>
+	<div
+		class="palette"
+		role="dialog"
+		aria-modal="true"
+		aria-label="Command palette"
+	>
+		<input
+			id="palette-input"
+			class="palette-input"
+			type="text"
+			placeholder="search posts — > for commands"
+			autocomplete="off"
+			spellcheck="false"
+		/>
+		<div id="palette-list" class="palette-list">
+			{
+				posts.map((p) => (
+					<a
+						class="palette-row"
+						data-kind="post"
+						data-search={`${p.data.title} ${p.data.tags.join(" ")}`.toLowerCase()}
+						href={postUrl(p)}
+					>
+						<span class="palette-label">{p.data.title}</span>
+						<span class="palette-group" />
+						<span class="palette-value">
+							{p.data.pubDate.toISOString().slice(0, 10)}
+						</span>
+					</a>
+				))
+			}
+			{
+				commands.map((c) => (
+					<button
+						type="button"
+						class="palette-row"
+						data-kind="cmd"
+						data-cmd={c.cmd}
+						data-search={c.label.toLowerCase()}
+					>
+						<span class="palette-label">{c.label}</span>
+						<span class="palette-group" />
+					</button>
+				))
+			}
+		</div>
+		<div id="palette-empty" class="palette-empty" hidden>nothing found</div>
+		<div class="palette-foot">
+			<span>↑↓ · ↵ open · &gt; commands</span>
+			<span>esc to close</span>
+		</div>
+	</div>
+</div>
+
+<script>
+	declare global {
+		interface Window {
+			__applyTheme?: (theme: string, persist?: boolean) => void;
+		}
+	}
+
+	const scrim = document.getElementById("palette-scrim")!;
+	const input = document.getElementById("palette-input") as HTMLInputElement;
+	const empty = document.getElementById("palette-empty")!;
+	const list = document.getElementById("palette-list")!;
+
+	// The current post's headings, in place of a TOC: "# heading" rows at the
+	// top of the list, jumping within the page.
+	const headings = Array.from(
+		document.querySelectorAll<HTMLElement>("article .prose :is(h2, h3)[id]"),
+	);
+	headings.reverse().forEach((h) => {
+		const row = document.createElement("a");
+		row.className = "palette-row";
+		row.dataset.kind = "post";
+		row.dataset.search = `# ${h.textContent ?? ""}`.toLowerCase();
+		(row as HTMLAnchorElement).href = `#${h.id}`;
+		const label = document.createElement("span");
+		label.className = "palette-label";
+		label.textContent = `# ${h.textContent ?? ""}`;
+		const group = document.createElement("span");
+		group.className = "palette-group";
+		const value = document.createElement("span");
+		value.className = "palette-value";
+		value.textContent = "on this page";
+		row.append(label, group, value);
+		list.prepend(row);
+	});
+
+	const rows = Array.from(
+		document.querySelectorAll<HTMLElement>("#palette-list .palette-row"),
+	);
+	let active = 0;
+
+	const visible = () => rows.filter((r) => !r.hidden);
+
+	const paint = () => {
+		const v = visible();
+		if (active >= v.length) active = Math.max(0, v.length - 1);
+		rows.forEach((r) => r.classList.remove("on"));
+		v[active]?.classList.add("on");
+		v[active]?.scrollIntoView({ block: "nearest" });
+		empty.hidden = v.length > 0;
+	};
+
+	const filter = () => {
+		const raw = input.value.trim().toLowerCase();
+		const cmdMode = raw.startsWith(">");
+		const q = (cmdMode ? raw.slice(1) : raw).trim();
+		const terms = q.split(/\s+/).filter(Boolean);
+		rows.forEach((r) => {
+			const isCmd = r.dataset.kind === "cmd";
+			const inMode = cmdMode ? isCmd : !isCmd;
+			const hay = r.dataset.search ?? "";
+			r.hidden = !inMode || !terms.every((t) => hay.includes(t));
+		});
+		active = 0;
+		paint();
+	};
+
+	const open = (prefill = "") => {
+		scrim.hidden = false;
+		input.value = prefill;
+		filter();
+		input.focus();
+	};
+	const close = () => {
+		scrim.hidden = true;
+		input.blur();
+	};
+
+	const run = (row: HTMLElement) => {
+		close();
+		if (row.dataset.kind === "cmd") {
+			const [verb, arg] = (row.dataset.cmd ?? "").split(/:(.*)/s);
+			if (verb === "theme") window.__applyTheme?.(arg);
+			if (verb === "go") window.location.href = arg;
+			return;
+		}
+		window.location.href = (row as HTMLAnchorElement).href;
+	};
+
+	document.addEventListener("keydown", (e) => {
+		if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+			e.preventDefault();
+			if (scrim.hidden) open();
+			else close();
+			return;
+		}
+		// ⌘⇧P opens straight into command mode; delete the ">" to search
+		// posts instead, in the manner of VS Code.
+		if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key.toLowerCase() === "p") {
+			e.preventDefault();
+			open(">");
+			return;
+		}
+		if (scrim.hidden) return;
+		if (e.key === "Escape") return close();
+		if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+			e.preventDefault();
+			const v = visible();
+			if (!v.length) return;
+			active = (active + (e.key === "ArrowDown" ? 1 : v.length - 1)) % v.length;
+			paint();
+		}
+		if (e.key === "Enter") {
+			e.preventDefault();
+			const v = visible();
+			if (v[active]) run(v[active]);
+		}
+	});
+
+	input.addEventListener("input", filter);
+	scrim.addEventListener("mousedown", (e) => {
+		if (e.target === scrim) close();
+	});
+	rows.forEach((r, _i) => {
+		r.addEventListener("click", (e) => {
+			e.preventDefault();
+			run(r);
+		});
+		r.addEventListener("mousemove", () => {
+			const v = visible();
+			const idx = v.indexOf(r);
+			if (idx >= 0 && idx !== active) {
+				active = idx;
+				paint();
+			}
+		});
+	});
+
+	document
+		.getElementById("open-palette")
+		?.addEventListener("click", () => open());
+</script>
+
+<style is:global>
+	/* Straight from the Plans app's palette. Global rather than scoped: the
+	   heading rows are created client-side and would miss Astro's scoping
+	   attribute. */
+	.palette-scrim {
+		position: fixed;
+		inset: 0;
+		z-index: 60;
+		display: flex;
+		justify-content: center;
+		align-items: flex-start;
+		padding-top: 12vh;
+		background: rgb(0 0 0 / 18%);
+	}
+
+	.palette-scrim[hidden] {
+		display: none;
+	}
+
+	.palette {
+		width: min(620px, calc(100vw - 64px));
+		display: flex;
+		flex-direction: column;
+		background: var(--raised);
+		border: 1px solid var(--rule-strong);
+		border-radius: 6px;
+		box-shadow: var(--shadow);
+		overflow: hidden;
+	}
+
+	.palette-input {
+		border: 0;
+		border-bottom: 1px solid var(--rule);
+		background: transparent;
+		padding: 13px 16px;
+		font-family: var(--font-mono);
+		font-size: 13px;
+		letter-spacing: 0.02em;
+		color: var(--ink);
+		outline: none;
+	}
+
+	.palette-input::placeholder {
+		color: var(--ink-3);
+	}
+
+	.palette-list {
+		max-height: 46vh;
+		overflow: auto;
+		padding: 4px 0;
+	}
+
+	.palette-empty {
+		padding: 18px 16px;
+		font-family: var(--font-mono);
+		font-size: 11px;
+		letter-spacing: 0.08em;
+		color: var(--ink-3);
+	}
+
+	.palette-row {
+		width: 100%;
+		display: flex;
+		align-items: baseline;
+		gap: 10px;
+		padding: 7px 16px;
+		border: 0;
+		background: transparent;
+		text-align: left;
+		cursor: pointer;
+		text-decoration: none;
+		font-family: var(--font-mono);
+		font-size: 12px;
+		color: var(--ink-2);
+	}
+
+	.palette-row.on {
+		background: var(--shade);
+		color: var(--ink);
+	}
+
+	.palette-row[hidden] {
+		display: none;
+	}
+
+	.palette-label {
+		flex: 0 1 auto;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.palette-group {
+		flex: 1 1 auto;
+	}
+
+	.palette-value {
+		flex: 0 0 auto;
+		font-size: 10px;
+		letter-spacing: 0.08em;
+		text-transform: lowercase;
+		color: var(--ink-3);
+		font-variant-numeric: tabular-nums;
+	}
+
+	.palette-foot {
+		display: flex;
+		justify-content: space-between;
+		gap: 12px;
+		border-top: 1px solid var(--rule);
+		padding: 7px 16px;
+		font-family: var(--font-mono);
+		font-size: 9px;
+		letter-spacing: 0.11em;
+		text-transform: uppercase;
+		color: var(--ink-3);
+	}
+</style>

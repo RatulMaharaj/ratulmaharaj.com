@@ -5,31 +5,45 @@ const url = new URL(Astro.request.url);
 const path = url.pathname;
 
 const navLinks = [
-	{ href: "/posts", label: "/posts", active: path.startsWith("/posts") },
-	{ href: "/tags", label: "/tags", active: path.startsWith("/tags") },
+	{ href: "/posts", label: "posts", active: path.startsWith("/posts") },
+	{ href: "/tags", label: "tags", active: path.startsWith("/tags") },
 ];
 ---
 
-<header class="flex items-center gap-x-4 pb-10">
+<header
+	class="flex items-center border-b pb-3.5"
+	style="border-color: var(--rule)"
+>
 	<a
 		href="/"
-		class="text-sm font-bold whitespace-nowrap text-surface-content underline-offset-2 hover:underline"
+		class="wordmark whitespace-nowrap"
 		aria-current={path === "/" ? "page" : false}
 	>
-		Ratul Maharaj
+		Ratul&nbsp;Maharaj
 	</a>
-	<nav class="ml-auto flex items-center gap-x-4 text-sm" aria-label="Main">
-		{
-			navLinks.map(({ href, label, active }) => (
-				<a
-					href={href}
-					class="text-surface-content/70 underline-offset-2 hover:underline"
-					aria-current={active ? "page" : false}
-				>
-					{label}
-				</a>
-			))
-		}
-	</nav>
-	<ThemeToggle />
+	<!-- One cluster, one gap — the rail buttons space evenly. -->
+	<div class="ml-auto flex items-center gap-x-1">
+		<nav class="flex items-center gap-x-1" aria-label="Main">
+			{
+				navLinks.map(({ href, label, active }) => (
+					<a
+						href={href}
+						class:list={["rail-btn", { on: active }]}
+						aria-current={active ? "page" : false}
+					>
+						{label}
+					</a>
+				))
+			}
+		</nav>
+		<button
+			type="button"
+			id="open-palette"
+			class="rail-btn"
+			aria-label="Open command palette"
+		>
+			⌘k
+		</button>
+		<ThemeToggle />
+	</div>
 </header>

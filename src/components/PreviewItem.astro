@@ -12,39 +12,57 @@ const { post, includeDescription = true } = Astro.props as Props;
 const { pubDate } = post.data;
 const date = new Date(pubDate);
 const datetime = date.toISOString();
-const postDate = format(date, "MMM d, yyyy");
+const postDate = format(date, "yyyy-MM-dd");
 ---
 
+<!-- A ledger row: the date in the machine voice, the title in the reading
+     face. Hover lifts the ink; nothing else moves. -->
 <a
 	href={postUrl(post)}
-	class="group relative -mt-[0.5px] grid gap-x-5 border-y-[0.5px] border-border py-3.5 transition-colors duration-200 hover:z-10 hover:border-surface-content/30 hover:bg-[#f7f7f7] sm:grid-cols-[6.5rem_1fr] dark:hover:bg-black/20"
+	class="preview-row group grid gap-x-5 border-b py-3.5 sm:grid-cols-[6.5rem_1fr]"
+	style="border-color: var(--rule)"
 >
 	<time
 		datetime={datetime}
-		class="pt-px text-xs text-surface-content/45 tabular-nums"
+		class="pt-1 font-mono text-[10.5px] tracking-[0.04em] tabular-nums"
+		style="color: var(--ink-3)"
 	>
 		{postDate}
 	</time>
 	<div>
-		<h3 class="mt-1 text-sm font-bold text-surface-content sm:mt-0">
+		<h3
+			class="preview-title mt-1 font-sans text-[15px] leading-snug font-semibold sm:mt-0"
+		>
 			{post.data.title}
 		</h3>
 		{
 			includeDescription && (
-				<p class="mt-1 text-[12.5px] text-surface-content/55">
-					<span class="text-primary/70">// </span>
+				<p class="mt-0.5 font-sans text-[13px]" style="color: var(--ink-2)">
 					{post.data.description}
 				</p>
 			)
 		}
 		{
 			post.data.tags.length > 0 && (
-				<div class="mt-1.5 flex flex-wrap gap-x-3 text-[11px] text-surface-content/35">
+				<div class="mt-1.5 flex flex-wrap gap-x-3">
 					{post.data.tags.map((tag) => (
-						<span class="whitespace-nowrap">#{tag}</span>
+						<span class="tag">{tag}</span>
 					))}
 				</div>
 			)
 		}
 	</div>
 </a>
+
+<style>
+	.preview-title {
+		color: var(--ink);
+		transition: color 120ms ease;
+	}
+
+	.preview-row:hover .preview-title {
+		text-decoration: underline;
+		text-decoration-color: var(--ink-3);
+		text-underline-offset: 2px;
+	}
+</style>

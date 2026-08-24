@@ -38,12 +38,12 @@ const links: SocialLink[] = [
 ];
 ---
 
-<ul class="m-0 flex list-none flex-wrap items-center gap-x-3 p-0 text-xs">
+<ul class="m-0 flex list-none flex-wrap items-center gap-x-4 gap-y-2 p-0">
 	{
 		links.map(({ href, label, rel }) => (
 			<li>
 				<a
-					class="text-surface-content/55 underline-offset-2 transition-colors duration-200 hover:text-primary hover:underline"
+					class="ledger-link"
 					href={href}
 					target={href.startsWith("/") ? undefined : "_blank"}
 					rel={rel}

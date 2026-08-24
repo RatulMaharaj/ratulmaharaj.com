@@ -16,25 +16,34 @@ if (!commitHash) {
 }
 ---
 
-<footer class="mt-20 py-10">
-	<div class="grid grid-cols-2 place-content-center">
-		<div class="flex items-center justify-start text-sm">
+<!-- The status bar: ledger voice above a hairline rule. -->
+<footer class="mt-20 border-t pt-5 pb-10" style="border-color: var(--rule)">
+	<div class="grid grid-cols-1 gap-y-4 sm:grid-cols-2 sm:place-content-center">
+		<div
+			class="flex items-center justify-start font-mono text-[10px] tracking-[0.13em] uppercase"
+			style="color: var(--ink-3)"
+		>
 			&copy; Ratul Maharaj {year}
 		</div>
-		<div class="flex items-center justify-end">
+		<div class="flex items-center justify-start sm:justify-end">
 			<SocialList />
 		</div>
 	</div>
-	{
-		commitHash && (
-			<div class="mt-4 text-xs text-surface-content/50">
-				<a
-					class="underline-offset-2 hover:text-primary hover:underline"
-					href={`https://github.com/RatulMaharaj/ratulmaharaj.com/commit/${commitHash}`}
-				>
-					{commitHash}
-				</a>
-			</div>
-		)
-	}
+	<div
+		class="mt-4 font-mono text-[10px] tracking-[0.13em] uppercase"
+		style="color: var(--ink-3)"
+	>
+		{
+			commitHash && (
+				<>
+					<a
+						class="ledger-link"
+						href={`https://github.com/RatulMaharaj/ratulmaharaj.com/commit/${commitHash}`}
+					>
+						{commitHash}
+					</a>
+				</>
+			)
+		}
+	</div>
 </footer>

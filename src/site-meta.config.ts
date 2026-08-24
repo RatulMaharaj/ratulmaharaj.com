@@ -5,8 +5,9 @@ const siteMeta = {
 	lang: "en-ZA",
 	ogLocale: "en_ZA",
 	githubUrl: "https://github.com/ratulmaharaj/ratulmaharaj.com",
-	themeColorLight: "#ffffff",
-	themeColorDark: "#0a0b0f",
+	themeColorLight: "#fbfbf9",
+	themeColorSepia: "#e9dfcb",
+	themeColorDark: "#0f1013",
 };
 
 export default siteMeta;

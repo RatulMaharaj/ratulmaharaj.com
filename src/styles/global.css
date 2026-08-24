@@ -1,131 +1,302 @@
 @import "tailwindcss";
 
-@plugin "@tailwindcss/typography";
-
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* ===========================================================================
+   "The ledger and the page" — the design system of the Plans app, on the web.
+
+   Two typographic registers held in tension. The page is the document: warm,
+   generous, set in a reading face at a reading size. The ledger is everything
+   around it — header, footer, lists, tags — set small in Space Mono,
+   uppercase, tracked out. Machine voice around human prose.
+
+   Colour discipline: chrome is ink at varying opacity and nothing else. The
+   only chromatic values on the whole site are the code inks, where colour is
+   doing real work — telling a string from a keyword.
+   =========================================================================== */
+
 @theme inline {
-	--color-surface: oklch(var(--theme-surface));
-	--color-surface-content: oklch(var(--theme-surface-content));
-	--color-primary: oklch(var(--theme-primary));
-	--color-neutral: oklch(var(--theme-neutral));
-	--color-border: oklch(var(--theme-surface-content) / 12%);
-	--font-sans:
-		"Monaspace Argon", ui-sans-serif, system-ui, sans-serif,
-		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-	--font-mono:
-		"Monaspace Krypton", ui-monospace, sfmono-regular, menlo, monaco, consolas,
-		"Liberation Mono", "Courier New", monospace;
+	--color-surface: var(--paper);
+	--color-surface-content: var(--ink);
+	--color-primary: var(--ink);
+	--color-border: var(--rule);
+	--font-sans: "Work Sans", system-ui, sans-serif;
+	--font-mono: "Space Mono", ui-monospace, sfmono-regular, monospace;
 }
 
 @layer base {
+	/* Day paper. */
 	:root {
 		color-scheme: light;
 
-		--theme-surface: 100% 0 0;
-		--theme-surface-content: 15% 0.01 295;
+		--paper: #fbfbf9;
+		--raised: #fff;
+		--shade: #f0f0ec;
+		--ink: #17181b;
+		--ink-2: #5b5f66;
+		--ink-3: #9aa0a8;
+		--rule: #e3e3de;
+		--rule-strong: #cfcfc8;
+		--shadow: 0 1px 2px rgb(23 24 27 / 6%), 0 8px 28px rgb(23 24 27 / 10%);
 
-		/* #685ef7, darkened slightly for small-text contrast on light */
-		--theme-primary: 52% 0.22 280;
-		--theme-neutral: 90% 0 295;
-		--theme-quote: 239 84% 67%;
+		/* Code, and only code, gets hue. Day: printer's inks on warm white —
+		   mulberry, indigo, umber, moss, ochre. */
+		--code-keyword: #8a3a62;
+		--code-fn: #2f5d8c;
+		--code-type: #7a5230;
+		--code-string: #4b7a3f;
+		--code-number: #9a6b12;
+		--code-name: #2c2e33;
+		--code-punct: #8d939b;
+		--code-comment: #a0a6ad;
+		--code-bg: #f4f4f0;
 
-		/* Code theme (shiki css-variables), ported from the old prism.css */
-		--astro-code-foreground: oklch(var(--theme-surface-content));
-		--astro-code-background: #f7f7f7;
-		--astro-code-token-constant: #b48ead;
-		--astro-code-token-string: #a855f7;
-		--astro-code-token-string-expression: #94a3b8;
-		--astro-code-token-comment: #94a3b8;
-		--astro-code-token-keyword: #6366f1;
-		--astro-code-token-parameter: #a00;
-		--astro-code-token-function: #a21caf;
-		--astro-code-token-punctuation: #818cf8;
-		--astro-code-token-link: #a855f7;
+		/* Shiki (css-variables theme) wired to the code inks. */
+		--astro-code-foreground: var(--code-name);
+		--astro-code-background: var(--code-bg);
+		--astro-code-token-constant: var(--code-number);
+		--astro-code-token-string: var(--code-string);
+		--astro-code-token-string-expression: var(--code-string);
+		--astro-code-token-comment: var(--code-comment);
+		--astro-code-token-keyword: var(--code-keyword);
+		--astro-code-token-parameter: var(--code-name);
+		--astro-code-token-function: var(--code-fn);
+		--astro-code-token-punctuation: var(--code-punct);
+		--astro-code-token-link: var(--code-fn);
 
 		/* Older shiki variable names, kept for compatibility */
-		--astro-code-color-text: oklch(var(--theme-surface-content));
-		--astro-code-color-background: #f7f7f7;
+		--astro-code-color-text: var(--code-name);
+		--astro-code-color-background: var(--code-bg);
 	}
 
+	/* Sepia paper: the same five inks, warmed and darkened to sit on aged
+	   paper. */
+	:root[data-theme="sepia"] {
+		color-scheme: light;
+
+		--paper: #e9dfcb;
+		--raised: #f1e9d8;
+		--shade: #dfd3bb;
+		--ink: #33291f;
+		--ink-2: #6b5c47;
+		--ink-3: #9c8b72;
+		--rule: #d6c9af;
+		--rule-strong: #c2b294;
+		--shadow: 0 1px 2px rgb(51 41 31 / 8%), 0 8px 28px rgb(51 41 31 / 14%);
+		--code-keyword: #7b3b57;
+		--code-fn: #2f5570;
+		--code-type: #6b4a22;
+		--code-string: #4e6e33;
+		--code-number: #8c5a0f;
+		--code-name: #403427;
+		--code-punct: #8c7d67;
+		--code-comment: #9c8b72;
+		--code-bg: #e0d6c1;
+	}
+
+	/* Night paper. Ink is deliberately not white — pure white on near-black
+	   halates. */
 	:root.dark {
 		color-scheme: dark;
 
-		/* #0a0b0f */
-		--theme-surface: 15.04% 0.0088 274.3;
-		--theme-surface-content: 95% 0 295;
+		--paper: #0f1013;
+		--raised: #191a1e;
+		--shade: #24252b;
+		--ink: #e6e3dc;
+		--ink-2: #a5a29a;
+		--ink-3: #74716b;
+		--rule: #2c2d32;
+		--rule-strong: #41424a;
+		--shadow: 0 1px 2px rgb(0 0 0 / 40%), 0 8px 28px rgb(0 0 0 / 50%);
 
-		/* #685ef7 */
-		--theme-primary: 58% 0.22 280;
-		--theme-neutral: 50% 0 295;
-		--theme-quote: 234 89% 74%;
-
-		/* Code theme (shiki css-variables), ported from the old prism.css */
-		--astro-code-foreground: oklch(var(--theme-surface-content));
-		--astro-code-background: #14161a;
-		--astro-code-token-constant: #b48ead;
-		--astro-code-token-string: #a78bfa;
-		--astro-code-token-string-expression: #94a3b8;
-		--astro-code-token-comment: #94a3b8;
-		--astro-code-token-keyword: #a5b4fc;
-		--astro-code-token-parameter: #a00;
-		--astro-code-token-function: #f0abfc;
-		--astro-code-token-punctuation: #a5b4fc;
-		--astro-code-token-link: #a78bfa;
-
-		/* Older shiki variable names, kept for compatibility */
-		--astro-code-color-text: oklch(var(--theme-surface-content));
-		--astro-code-color-background: #14161a;
+		/* Night: the same five inks, lifted to pastels. Nothing reaches white. */
+		--code-keyword: #e2a3c4;
+		--code-fn: #a2c6ee;
+		--code-type: #e6c090;
+		--code-string: #accf96;
+		--code-number: #eecb86;
+		--code-name: #e6e3dc;
+		--code-punct: #918e87;
+		--code-comment: #7a7770;
+		--code-bg: #191a1f;
 	}
 
-	/* Register your custom font family and tell the browser where to find it. */
+	/* Reading face and ledger face, vendored from the Plans app
+	   (open-source families from open-foundry.com). */
 	@font-face {
-		font-family: "Monaspace Argon";
-		src: url("/fonts/MonaspaceArgonVarVF[wght,wdth,slnt].woff2") format("woff2");
+		font-family: "Work Sans";
+		font-style: italic;
+		font-weight: 300 700;
 		font-display: swap;
+		src: url("/fonts/work-sans-latin-ext-0.woff2") format("woff2");
+		unicode-range:
+			U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
+			U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+			U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 	}
 
 	@font-face {
-		font-family: "Monaspace Krypton";
-		src: url("/fonts/MonaspaceKryptonVarVF[wght,wdth,slnt].woff2")
-			format("woff2");
+		font-family: "Work Sans";
+		font-style: italic;
+		font-weight: 300 700;
 		font-display: swap;
+		src: url("/fonts/work-sans-latin-1.woff2") format("woff2");
+		unicode-range:
+			U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+			U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+			U+2212, U+2215, U+FEFF, U+FFFD;
+	}
+
+	@font-face {
+		font-family: "Work Sans";
+		font-style: normal;
+		font-weight: 300 700;
+		font-display: swap;
+		src: url("/fonts/work-sans-latin-ext-2.woff2") format("woff2");
+		unicode-range:
+			U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
+			U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+			U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+	}
+
+	@font-face {
+		font-family: "Work Sans";
+		font-style: normal;
+		font-weight: 300 700;
+		font-display: swap;
+		src: url("/fonts/work-sans-latin-3.woff2") format("woff2");
+		unicode-range:
+			U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+			U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+			U+2212, U+2215, U+FEFF, U+FFFD;
+	}
+
+	@font-face {
+		font-family: "Space Mono";
+		font-style: italic;
+		font-weight: 400;
+		font-display: swap;
+		src: url("/fonts/space-mono-latin-ext-0.woff2") format("woff2");
+		unicode-range:
+			U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
+			U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+			U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+	}
+
+	@font-face {
+		font-family: "Space Mono";
+		font-style: italic;
+		font-weight: 400;
+		font-display: swap;
+		src: url("/fonts/space-mono-latin-1.woff2") format("woff2");
+		unicode-range:
+			U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+			U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+			U+2212, U+2215, U+FEFF, U+FFFD;
+	}
+
+	@font-face {
+		font-family: "Space Mono";
+		font-style: italic;
+		font-weight: 700;
+		font-display: swap;
+		src: url("/fonts/space-mono-latin-ext-2.woff2") format("woff2");
+		unicode-range:
+			U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
+			U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+			U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+	}
+
+	@font-face {
+		font-family: "Space Mono";
+		font-style: italic;
+		font-weight: 700;
+		font-display: swap;
+		src: url("/fonts/space-mono-latin-3.woff2") format("woff2");
+		unicode-range:
+			U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+			U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+			U+2212, U+2215, U+FEFF, U+FFFD;
+	}
+
+	@font-face {
+		font-family: "Space Mono";
+		font-style: normal;
+		font-weight: 400;
+		font-display: swap;
+		src: url("/fonts/space-mono-latin-ext-4.woff2") format("woff2");
+		unicode-range:
+			U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
+			U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+			U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+	}
+
+	@font-face {
+		font-family: "Space Mono";
+		font-style: normal;
+		font-weight: 400;
+		font-display: swap;
+		src: url("/fonts/space-mono-latin-5.woff2") format("woff2");
+		unicode-range:
+			U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+			U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+			U+2212, U+2215, U+FEFF, U+FFFD;
+	}
+
+	@font-face {
+		font-family: "Space Mono";
+		font-style: normal;
+		font-weight: 700;
+		font-display: swap;
+		src: url("/fonts/space-mono-latin-ext-6.woff2") format("woff2");
+		unicode-range:
+			U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
+			U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+			U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+	}
+
+	@font-face {
+		font-family: "Space Mono";
+		font-style: normal;
+		font-weight: 700;
+		font-display: swap;
+		src: url("/fonts/space-mono-latin-7.woff2") format("woff2");
+		unicode-range:
+			U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+			U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+			U+2212, U+2215, U+FEFF, U+FFFD;
 	}
 
 	html {
-		@apply h-full scroll-smooth bg-surface text-surface-content transition-colors duration-500;
+		@apply h-full scroll-smooth;
+
+		background: var(--paper);
+		color: var(--ink);
+		transition:
+			background-color 140ms ease,
+			color 140ms ease;
 	}
 
-	/* selection */
+	/* Selection is ours, not the system accent colour. */
 	::selection {
-		@apply bg-primary/20 text-surface-content;
+		background: var(--shade);
+		color: var(--ink);
 	}
 
+	:focus-visible {
+		outline: 1.5px solid var(--ink);
+		outline-offset: 2px;
+		border-radius: 2px;
+	}
+
+	/* The ledger is the site's default register; the page opts into the
+	   reading face via .page / .prose. */
 	html body {
-		@apply mx-auto flex h-full max-w-5xl flex-col px-8 pt-16 font-sans text-sm font-normal antialiased;
-	}
+		@apply mx-auto flex h-full max-w-5xl flex-col px-8 pt-14 font-mono antialiased;
 
-	pre {
-		@apply relative;
-	}
-
-	/* Code block styling, ported from the old prism.css */
-	pre.astro-code {
-		padding: 1em;
-		margin: 0.5em 0;
-		overflow: auto;
-		border: 0.5px solid oklch(var(--theme-surface-content) / 12%);
-		border-radius: 0.3em;
-		font-family:
-			"Monaspace Krypton", Consolas, Monaco, "Andale Mono", "Ubuntu Mono",
-			monospace;
+		font-size: 12.5px;
 		line-height: 1.5;
-		tab-size: 4;
-		hyphens: none;
-	}
-
-	* {
-		font-variant-ligatures: discretionary-ligatures;
+		letter-spacing: 0.02em;
 	}
 
 	/* Tailwind v4 preflight no longer sets pointer cursors on buttons */
@@ -134,8 +305,141 @@
 		cursor: pointer;
 	}
 
+	/* --- the ledger voice --------------------------------------------------- */
+
+	/* Every piece of chrome text uses this. It is the site's utility register. */
+	.tag,
+	.section-label {
+		font-family: var(--font-mono);
+		font-size: 10px;
+		font-weight: 400;
+		letter-spacing: 0.13em;
+		text-transform: uppercase;
+		color: var(--ink-3);
+	}
+
+	.tag {
+		white-space: nowrap;
+		transition: color 120ms ease;
+	}
+
+	.tag:hover {
+		color: var(--ink);
+	}
+
+	/* The wordmark, straight from the Plans rail. */
+	.wordmark {
+		font-family: var(--font-mono);
+		font-size: 11px;
+		font-weight: 700;
+		letter-spacing: 0.3em;
+		text-transform: uppercase;
+		color: var(--ink);
+		padding-right: 2px;
+	}
+
+	/* Rail buttons are letterforms, not icons. */
+	.rail-btn {
+		border: 1px solid transparent;
+		border-radius: 3px;
+		padding: 4px 9px;
+		font-family: var(--font-mono);
+		font-size: 10px;
+		letter-spacing: 0.13em;
+		text-transform: uppercase;
+		color: var(--ink-3);
+		transition:
+			color 120ms ease,
+			border-color 120ms ease;
+	}
+
+	.rail-btn:hover {
+		color: var(--ink);
+		border-color: var(--rule);
+	}
+
+	.rail-btn.on {
+		color: var(--ink);
+		border-color: var(--rule-strong);
+	}
+
+	/* The badge, straight from the app's frontmatter sheet: a hairline pill in
+	   the ledger voice. Tags carry no state, so they stay in ink — colour
+	   would mean something here, and they mean nothing. */
+	.badge {
+		display: inline-block;
+		padding: 1px 7px;
+		border: 1px solid currentcolor;
+		border-radius: 999px;
+		font-family: var(--font-mono);
+		font-size: 9px;
+		letter-spacing: 0.11em;
+		text-transform: uppercase;
+		color: var(--ink-3);
+		white-space: nowrap;
+		transition: color 120ms ease;
+	}
+
+	a.badge:hover {
+		color: var(--ink);
+	}
+
+	/* A quiet chrome link: ledger voice that inks up on hover. */
+	.ledger-link {
+		font-family: var(--font-mono);
+		font-size: 10px;
+		letter-spacing: 0.13em;
+		text-transform: uppercase;
+		color: var(--ink-3);
+		transition: color 120ms ease;
+	}
+
+	.ledger-link:hover {
+		color: var(--ink);
+	}
+
+	/* --- code blocks -------------------------------------------------------- */
+	pre {
+		@apply relative;
+	}
+
+	/* The frame is drawn to match a blockquote rather than a floating card. */
+	pre.astro-code {
+		margin: 0.5em 0 1.2em;
+		padding: 6px 8px;
+		overflow: auto;
+		border: 1px solid var(--rule);
+		border-radius: 3px;
+		background: var(--code-bg) !important;
+		font-family: var(--font-mono);
+		font-size: 12px;
+		line-height: 1.7;
+		tab-size: 4;
+		hyphens: none;
+	}
+
+	/* The copy chip reads as chrome, so it takes the ledger voice. */
 	.copy {
-		@apply absolute top-2 right-2 rounded border-[0.5px] border-border bg-surface/80 px-2 py-0.5 text-[11px] text-surface-content/55 backdrop-blur-sm transition-all duration-200 hover:text-surface-content sm:opacity-0;
+		position: absolute;
+		top: 6px;
+		right: 6px;
+		padding: 2px 5px;
+		border: 1px solid var(--rule);
+		border-radius: 3px;
+		background: var(--raised);
+		font-family: var(--font-mono);
+		font-size: 9px;
+		line-height: 1.4;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--ink-3);
+		transition: opacity 0.12s ease;
+
+		@apply sm:opacity-0;
+	}
+
+	.copy:hover {
+		color: var(--ink);
 	}
 
 	/* Fades in with the pointer on desktop; always visible on touch */
@@ -144,87 +448,195 @@
 		opacity: 1;
 	}
 
-	.section-label {
-		@apply text-xs font-semibold tracking-[0.2em] text-surface-content/45 uppercase;
-	}
-
-	.tag {
-		@apply text-xs whitespace-nowrap text-surface-content/40 transition-colors duration-200 hover:text-primary;
-	}
-
 	blockquote > p::before,
 	blockquote > p::after {
 		content: none !important;
 	}
-
-	blockquote {
-		@apply rounded-xs bg-primary/5 py-0.5;
-	}
 }
 
-/* Typography overrides, ported from the old tailwind.config.cjs typography() */
+/* The ledger's last row: the list ends where the content ends, not with a
+   trailing rule. Applies to post rows and tag rows alike. */
+li:last-child > .preview-row,
+li:last-child > .tag-row {
+	border-bottom: 0;
+}
+
+/* ===========================================================================
+   The page — prose set exactly as the Plans editor sets it.
+   =========================================================================== */
 .prose {
-	color: oklch(var(--theme-surface-content));
+	max-width: 70ch;
+	font-family: var(--font-sans);
+	font-size: 16px;
+	line-height: 1.5;
+	letter-spacing: normal;
+	color: var(--ink);
 }
 
-.prose a {
-	color: oklch(var(--theme-surface-content));
-}
-
-.prose a:hover {
-	color: oklch(var(--theme-primary));
-}
-
+/* Headings sit in the same face but earn their rank through weight and space,
+   not size alone. */
 .prose h1,
 .prose h2,
 .prose h3,
 .prose h4 {
-	color: oklch(var(--theme-surface-content));
+	font-family: var(--font-sans);
+	line-height: 1.22;
+	letter-spacing: -0.005em;
+	font-weight: 600;
+	color: var(--ink);
+}
+
+.prose h1 {
+	font-size: 1.72em;
+	margin: 0 0 0.5em;
+}
+
+.prose h2 {
+	font-size: 1.26em;
+	margin: 1.9em 0 0.45em;
+}
+
+.prose h3 {
+	font-size: 1.06em;
+	margin: 1.6em 0 0.4em;
+}
+
+.prose h4 {
+	font-size: 1em;
+	margin: 1.5em 0 0.4em;
+}
+
+.prose p {
+	margin: 0 0 0.9em;
+}
+
+/* Lists as the Plans editor draws them: no browser markers. The bullet is a
+   small dot and the number a right-aligned label, both in rule-strong — the
+   marks belong to the chrome, not the prose. Scoped to classless lists so
+   only markdown output is styled — components inside the prose (the social
+   list, say) keep their own classes and stay untouched. */
+.prose ul:not([class]),
+.prose ol:not([class]) {
+	margin: 0 0 0.9em;
+	padding-left: 34px;
+	list-style: none;
+}
+
+.prose :is(ul, ol):not([class]) > li {
+	position: relative;
+	margin: 0.15em 0;
+}
+
+.prose ul:not([class]) > li::before {
+	content: "";
+	position: absolute;
+	left: -22px;
+	top: calc(0.81em - 3px);
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background: var(--rule-strong);
+}
+
+.prose ol:not([class]) {
+	counter-reset: li;
+}
+
+.prose ol:not([class]) > li {
+	counter-increment: li;
+}
+
+.prose ol:not([class]) > li::before {
+	content: counter(li) ".";
+	position: absolute;
+	left: -34px;
+	width: 24px;
+	text-align: right;
+	color: var(--rule-strong);
+	font-variant-numeric: tabular-nums;
+}
+
+.prose a {
+	color: var(--ink);
+	text-decoration: underline;
+	text-decoration-color: var(--ink-3);
+	text-underline-offset: 2px;
+}
+
+.prose a:hover {
+	text-decoration-color: var(--ink);
 }
 
 .prose strong {
 	font-weight: 700;
-}
-
-.prose code {
-	padding: 0.1em;
-	border-radius: 3px;
+	color: var(--ink);
 }
 
 .prose blockquote {
-	color: oklch(var(--theme-surface-content));
-	border-color: oklch(var(--theme-primary));
+	border-left: 2px solid var(--rule-strong);
+	padding-left: 1.1em;
+	margin: 0 0 0.9em;
+	color: var(--ink-2);
+	font-style: italic;
 }
 
 .prose hr {
-	border-top-style: solid;
+	border: 0;
+	border-top: 1px solid var(--rule);
+	margin: 2.4em 0;
 }
 
-.prose thead {
-	border-bottom-width: 0;
+/* Inline code sits in the prose, so it stays quiet: no box, just the face. */
+.prose code {
+	font-family: var(--font-mono);
+	font-size: 12px;
+	color: var(--ink-2);
+	background: var(--code-bg);
+	border-radius: 2px;
+	padding: 0.1em 0.3em;
+}
+
+.prose pre code {
+	background: transparent;
+	border-radius: 0;
+	padding: 0;
+	color: inherit;
+	font-size: inherit;
+}
+
+.prose img,
+.prose video {
+	max-width: 100%;
+	height: auto;
+	border: 1px solid var(--rule);
+	border-radius: 3px;
+}
+
+.prose table {
+	width: 100%;
+	border-collapse: collapse;
+	margin: 0 0 0.9em;
+	font-size: 0.88em;
 }
 
 .prose thead th {
-	color: oklch(var(--theme-primary));
-	font-weight: 700;
-	border-bottom: 1px solid oklch(var(--theme-primary));
+	font-weight: 600;
+	text-align: left;
+	color: var(--ink);
+	border-bottom: 1px solid var(--rule-strong);
+	padding: 0.3em 0.9em 0.3em 0;
 }
 
-.prose tbody tr {
-	border-bottom-width: 0;
+.prose tbody td {
+	border-bottom: 1px solid var(--rule);
+	padding: 0.3em 0.9em 0.3em 0;
+	color: var(--ink);
 }
 
-.prose tfoot {
-	border-top: 1px solid oklch(var(--theme-primary));
-}
-
-/* 13px body to match the rest of the site's type scale */
-.prose-sm {
-	font-size: 0.8125rem;
-}
-
-.prose-sm code {
-	font-size: 1em;
-	font-weight: 400;
-	color: oklch(var(--theme-surface-content));
+.prose kbd {
+	font-family: var(--font-mono);
+	font-size: 0.8em;
+	border: 1px solid var(--rule-strong);
+	border-radius: 3px;
+	padding: 1px 4px;
 }

@@ -1,42 +1,45 @@
 <script>
-	import siteMeta from "../site-meta.config";
-
-	const root = document.documentElement;
-	const colorThemeMetaTag = document.querySelector("meta[name='theme-color']");
-	const toggleThemeButton = document.getElementById("toggle-theme");
-
-	const applyTheme = (isDark: boolean) => {
-		root.classList.toggle("dark", isDark);
-		colorThemeMetaTag?.setAttribute(
-			"content",
-			isDark ? siteMeta.themeColorDark : siteMeta.themeColorLight,
-		);
-		if (localStorage.getItem("theme") !== (isDark ? "dark" : "light")) {
-			localStorage.setItem("theme", isDark ? "dark" : "light");
+	declare global {
+		interface Window {
+			__applyTheme?: (theme: string, persist?: boolean) => void;
 		}
+	}
+
+	// Cycles the three papers: day → sepia → night. The heavy lifting
+	// (classes, meta tag, storage, the themechange event) lives in the inline
+	// script in Base.astro as window.__applyTheme.
+	const order = ["day", "sepia", "night"] as const;
+	const root = document.documentElement;
+	const button = document.getElementById("toggle-theme");
+	const label = document.getElementById("toggle-theme-label");
+
+	const current = () => (root.dataset.theme as (typeof order)[number]) ?? "day";
+
+	const render = () => {
+		if (label) label.textContent = current();
 	};
+	render();
+	document.addEventListener("themechange", render);
 
-	// Initial state comes from the inline script in Base.astro
-	applyTheme(root.classList.contains("dark"));
-
-	// Follow OS changes
+	// Follow OS changes only until the reader has chosen a paper themselves.
 	window
 		.matchMedia("(prefers-color-scheme: dark)")
 		.addEventListener("change", (event) => {
-			applyTheme(event.matches);
+			if (localStorage.getItem("theme")) return;
+			window.__applyTheme?.(event.matches ? "night" : "day", false);
 		});
 
-	toggleThemeButton?.addEventListener("click", () => {
-		applyTheme(!root.classList.contains("dark"));
+	button?.addEventListener("click", () => {
+		const next = order[(order.indexOf(current()) + 1) % order.length];
+		window.__applyTheme?.(next);
 	});
 </script>
 
 <button
 	type="button"
 	id="toggle-theme"
-	aria-label="Toggle dark mode"
-	class="text-xs text-surface-content/55 transition-colors duration-200 hover:text-primary"
+	aria-label="Switch theme"
+	class="rail-btn"
 >
-	<span class="hidden dark:inline">[dark]</span>
-	<span class="inline dark:hidden">[light]</span>
+	<span id="toggle-theme-label">day</span>
 </button>

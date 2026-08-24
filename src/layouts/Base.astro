@@ -6,6 +6,7 @@ import SkipLink from "@/components/SkipLink";
 import type { SiteMeta } from "@/types";
 import siteMeta from "src/site-meta.config";
 import PostHog from "@/components/PostHog";
+import Palette from "@/components/Palette";
 import { asciiBanner } from "src/ascii-banner";
 
 export type Props = {
@@ -32,24 +33,40 @@ const {
 			href={`${Astro.site}rss.xml`}
 		/>
 		<script define:vars={{ siteMeta }}>
+			// Three papers, in the manner of an e-reader's Aa menu: day, sepia,
+			// night. Night doubles as Tailwind's `.dark`; the others are light
+			// schemes told apart by data-theme.
 			const root = document.documentElement;
 			const colorThemeMetaTag = document.querySelector(
 				"meta[name='theme-color']",
 			);
-			const theme =
+			const metaColors = {
+				day: siteMeta.themeColorLight,
+				sepia: siteMeta.themeColorSepia,
+				night: siteMeta.themeColorDark,
+			};
+			window.__applyTheme = (theme, persist = true) => {
+				root.dataset.theme = theme;
+				root.classList.toggle("dark", theme === "night");
+				colorThemeMetaTag.setAttribute("content", metaColors[theme]);
+				if (persist) localStorage.setItem("theme", theme);
+				document.dispatchEvent(
+					new CustomEvent("themechange", { detail: theme }),
+				);
+			};
+			let theme =
 				typeof localStorage !== "undefined"
 					? localStorage.getItem("theme")
 					: null;
-			if (
-				theme === "dark" ||
-				(!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)
-			) {
-				root.classList.add("dark");
-				colorThemeMetaTag.setAttribute("content", siteMeta.themeColorDark);
-			} else {
-				root.classList.remove("dark");
-				colorThemeMetaTag.setAttribute("content", siteMeta.themeColorLight);
-			}
+			// Legacy values from the two-theme days.
+			if (theme === "light") theme = "day";
+			if (theme === "dark") theme = "night";
+			const stored = ["day", "sepia", "night"].includes(theme);
+			if (!stored)
+				theme = window.matchMedia("(prefers-color-scheme: dark)").matches
+					? "night"
+					: "day";
+			window.__applyTheme(theme, stored);
 		</script>
 
 		<script>
@@ -81,11 +98,17 @@ const {
 		<Fragment set:html={asciiBanner} />
 		<SkipLink />
 		<Header />
-		<main id="main" class="flex-1">
+		<main id="main" class="flex-1 pt-10">
 			<slot />
 		</main>
 		<Footer />
+		<Palette />
 		<slot name="rss-writer" />
 		<PostHog />
+		{/* agent-comments: ⌘+right-click any element to leave feedback for the AI agent (dev only) */}
+		{import.meta.env.DEV && <agent-comments collapsed />}
+		<script>
+			if (import.meta.env.DEV) import("agent-comments");
+		</script>
 	</body>
 </html>
