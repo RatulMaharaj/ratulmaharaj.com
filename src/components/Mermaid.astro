@@ -1,0 +1,216 @@
+{
+	/*
+  Mermaid diagrams, drawn under their source — as the Plans editor draws them.
+
+  The fence is left alone by the build (Shiki excludes `mermaid`), so it
+  reaches the page as a plain <pre><code class="language-mermaid">. This
+  script folds the source away and puts the picture after it, in a figure
+  with the editor's frame, coloured from the paper's own tokens. Nothing loads
+  on a page without a diagram: mermaid is imported only once one is found.
+*/
+}
+<script>
+	import type { Mermaid } from "mermaid";
+
+	const MONO = '"Space Mono", ui-monospace, SFMono-Regular, monospace';
+
+	/** Rendered SVG by paper and source, so a theme change redraws once. */
+	const cache = new Map<string, string>();
+	let seq = 0;
+	let themed = "";
+	let lib: Promise<Mermaid> | null = null;
+
+	const load = () => (lib ??= import("mermaid").then((m) => m.default));
+
+	function paper(): string {
+		return document.documentElement.dataset.theme ?? "day";
+	}
+
+	/** Mermaid takes concrete colours, so the tokens are resolved at render time. */
+	function applyTheme(mermaid: Mermaid) {
+		const s = getComputedStyle(document.documentElement);
+		const v = (n: string) => s.getPropertyValue(n).trim();
+		const signature = `${v("--paper")}${v("--ink")}`;
+		if (signature === themed) return;
+		themed = signature;
+		const series = [1, 2, 3, 4, 5, 6]
+			.map((i) => v(`--chart-${i}`))
+			.filter(Boolean);
+		mermaid.initialize({
+			startOnLoad: false,
+			securityLevel: "strict",
+			suppressErrorRendering: true,
+			fontFamily: MONO,
+			theme: "base",
+			// A sankey link multiplies its gradient into the paper, which on a dark
+			// paper is black. Drawn plainly, the half-opacity gradient shows instead.
+			themeCSS: [
+				".link { mix-blend-mode: normal !important; }",
+				// The timeline draws its axis and drop lines in the section *label*
+				// colour, which is the paper here; they take the line ink instead.
+				`.lineWrapper line { stroke: ${v("--ink-3")} !important; }`,
+			].join(" "),
+			themeVariables: {
+				background: v("--paper"),
+				primaryColor: v("--shade"),
+				primaryTextColor: v("--ink"),
+				primaryBorderColor: v("--rule-strong"),
+				secondaryColor: v("--raised"),
+				tertiaryColor: v("--paper"),
+				lineColor: v("--ink-3"),
+				textColor: v("--ink-2"),
+				mainBkg: v("--shade"),
+				nodeBorder: v("--rule-strong"),
+				clusterBkg: v("--paper"),
+				clusterBorder: v("--rule"),
+				// An entity's attribute rows alternate paper and shade, as the
+				// tables do — mermaid's own lightening lands on white on every paper.
+				rowOdd: v("--paper"),
+				rowEven: v("--shade"),
+				titleColor: v("--ink"),
+				edgeLabelBackground: v("--paper"),
+				// Series colours: the paper's chart tokens, in order, so the first
+				// bar is the same blue on every diagram.
+				...Object.fromEntries(series.map((c, i) => [`pie${i + 1}`, c])),
+				/*
+				 * The section scale — timeline, mindmap, and anything else that colours
+				 * by index. Left unset, mermaid derives twelve steps by rotating the
+				 * hue of `primaryColor`, and a grey has no hue to rotate: every section
+				 * came out black. Each step is a chart token, its label the paper.
+				 */
+				...Object.fromEntries(
+					Array.from({ length: 12 }, (_, i) => i).flatMap((i) => [
+						[`cScale${i}`, series[i % series.length]],
+						[`cScaleInv${i}`, v("--ink-3")],
+						[`cScaleLabel${i}`, v("--paper")],
+						[`cScalePeer${i}`, v("--rule-strong")],
+					]),
+				),
+				/* Git graph: a branch per chart token, in order; labels on paper. */
+				...Object.fromEntries(
+					Array.from({ length: 8 }, (_, i) => i).flatMap((i) => [
+						[`git${i}`, series[i % series.length]],
+						[`gitInv${i}`, v("--paper")],
+						[`gitBranchLabel${i}`, v("--paper")],
+					]),
+				),
+				commitLabelColor: v("--ink"),
+				commitLabelBackground: v("--paper"),
+				tagLabelColor: v("--ink"),
+				tagLabelBackground: v("--shade"),
+				tagLabelBorder: v("--rule-strong"),
+				pieStrokeColor: v("--paper"),
+				pieOuterStrokeColor: v("--rule-strong"),
+				pieTitleTextColor: v("--ink"),
+				pieSectionTextColor: v("--paper"),
+				pieLegendTextColor: v("--ink-2"),
+				xyChart: {
+					backgroundColor: v("--paper"),
+					titleColor: v("--ink"),
+					xAxisLabelColor: v("--ink-2"),
+					xAxisTitleColor: v("--ink-2"),
+					xAxisTickColor: v("--rule-strong"),
+					xAxisLineColor: v("--rule-strong"),
+					yAxisLabelColor: v("--ink-2"),
+					yAxisTitleColor: v("--ink-2"),
+					yAxisTickColor: v("--rule-strong"),
+					yAxisLineColor: v("--rule-strong"),
+					plotColorPalette: series.join(","),
+				},
+			},
+		});
+	}
+
+	/**
+	 * Mermaid stamps a fixed width/height and an inline max-width on its SVG,
+	 * sized for the viewport it rendered in. The intrinsic size is dropped and
+	 * the viewBox left to scale it.
+	 */
+	function fit(stage: HTMLElement) {
+		const svg = stage.querySelector("svg");
+		if (!svg) return;
+		svg.removeAttribute("width");
+		svg.removeAttribute("height");
+		svg.style.removeProperty("max-width");
+		svg.style.width = "100%";
+		svg.style.height = "auto";
+		svg.style.maxWidth = "100%";
+		svg.style.display = "block";
+		svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+	}
+
+	/** Draw into an existing figure; failures show the message, not a blank box. */
+	async function draw(figure: HTMLElement, stage: HTMLElement, source: string) {
+		const at = `${paper()}:${source}`;
+		const hit = cache.get(at);
+		if (hit) {
+			stage.innerHTML = hit;
+			figure.classList.remove("bad");
+			fit(stage);
+			return;
+		}
+		const mermaid = await load();
+		applyTheme(mermaid);
+		try {
+			const { svg } = await mermaid.render(`blog-mermaid-${seq++}`, source);
+			cache.set(at, svg);
+			stage.innerHTML = svg;
+			figure.classList.remove("bad");
+			fit(stage);
+		} catch (e) {
+			figure.classList.add("bad");
+			stage.textContent = String(e instanceof Error ? e.message : e).split(
+				"\n",
+			)[0];
+		}
+	}
+
+	const diagrams: {
+		figure: HTMLElement;
+		stage: HTMLElement;
+		source: string;
+	}[] = [];
+
+	for (const code of document.querySelectorAll<HTMLElement>(
+		".prose pre > code.language-mermaid",
+	)) {
+		const pre = code.parentElement as HTMLElement;
+		const source = code.textContent?.replace(/\n$/, "") ?? "";
+
+		const figure = document.createElement("div");
+		figure.className = "mermaid-figure";
+		const stage = document.createElement("div");
+		stage.className = "mermaid-stage";
+		figure.append(stage);
+
+		// The source is folded under its picture; a chip in the corner shows it.
+		const tools = document.createElement("div");
+		tools.className = "mermaid-tools";
+		const toggle = document.createElement("button");
+		toggle.type = "button";
+		toggle.className = "mermaid-tool";
+		toggle.textContent = "source";
+		toggle.setAttribute("aria-expanded", "false");
+		toggle.addEventListener("click", () => {
+			const shown = pre.classList.toggle("mermaid-source-shown");
+			toggle.setAttribute("aria-expanded", String(shown));
+		});
+		tools.append(toggle);
+		figure.append(tools);
+
+		pre.classList.add("mermaid-source");
+		pre.after(figure);
+		diagrams.push({ figure, stage, source });
+	}
+
+	if (diagrams.length) {
+		const drawAll = () => {
+			// The theme signature is what applyTheme compares; a paper change
+			// resolves new tokens, so it must not be short-circuited.
+			themed = "";
+			for (const d of diagrams) void draw(d.figure, d.stage, d.source);
+		};
+		drawAll();
+		document.addEventListener("themechange", drawAll);
+	}
+</script>

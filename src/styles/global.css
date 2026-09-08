@@ -51,6 +51,22 @@
 		--code-comment: #a0a6ad;
 		--code-bg: #f4f4f0;
 
+		/* Callouts: the code inks again, one per kind. */
+		--alert-note: #3d5ba9;
+		--alert-tip: #4b7a3f;
+		--alert-important: #8a3a62;
+		--alert-warning: #9a6b12;
+		--alert-caution: #a8322c;
+
+		/* Chart series, in the order mermaid draws them: blue, green, plum,
+		   amber, red, slate. */
+		--chart-1: #3d5ba9;
+		--chart-2: #4b7a3f;
+		--chart-3: #8a3a62;
+		--chart-4: #9a6b12;
+		--chart-5: #a8322c;
+		--chart-6: #5c6470;
+
 		/* Shiki (css-variables theme) wired to the code inks. */
 		--astro-code-foreground: var(--code-name);
 		--astro-code-background: var(--code-bg);
@@ -92,6 +108,17 @@
 		--code-punct: #8c7d67;
 		--code-comment: #9c8b72;
 		--code-bg: #e0d6c1;
+		--alert-note: #4a5288;
+		--alert-tip: #4e6e33;
+		--alert-important: #7b3b57;
+		--alert-warning: #8c5a0f;
+		--alert-caution: #94322a;
+		--chart-1: #4a5288;
+		--chart-2: #4e6e33;
+		--chart-3: #7b3b57;
+		--chart-4: #8c5a0f;
+		--chart-5: #94322a;
+		--chart-6: #6b6a66;
 	}
 
 	/* Night paper. Ink is deliberately not white — pure white on near-black
@@ -119,6 +146,17 @@
 		--code-punct: #918e87;
 		--code-comment: #7a7770;
 		--code-bg: #191a1f;
+		--alert-note: #93a8e4;
+		--alert-tip: #8fb877;
+		--alert-important: #d492b5;
+		--alert-warning: #d8ab52;
+		--alert-caution: #e8776e;
+		--chart-1: #93a8e4;
+		--chart-2: #8fb877;
+		--chart-3: #d492b5;
+		--chart-4: #d8ab52;
+		--chart-5: #e8776e;
+		--chart-6: #9aa0ab;
 	}
 
 	/* Reading face and ledger face, vendored from the Plans app
@@ -403,8 +441,11 @@
 		@apply relative;
 	}
 
-	/* The frame is drawn to match a blockquote rather than a floating card. */
-	pre.astro-code {
+	/* The frame is drawn to match a blockquote rather than a floating card.
+	   A mermaid fence is not highlighted, so it is framed by the second
+	   selector on the way to becoming a figure. */
+	pre.astro-code,
+	.prose pre.mermaid-source {
 		margin: 0.5em 0 1.2em;
 		padding: 6px 8px;
 		overflow: auto;
@@ -467,8 +508,10 @@ li:last-child > .tag-row {
 .prose {
 	max-width: 70ch;
 	font-family: var(--font-sans);
-	font-size: 16px;
-	line-height: 1.5;
+
+	/* 16px scaled for Work Sans, as the editor's applyType() computes it. */
+	font-size: 16.32px;
+	line-height: 1.62;
 	letter-spacing: normal;
 	color: var(--ink);
 }
@@ -497,13 +540,16 @@ li:last-child > .tag-row {
 }
 
 .prose h3 {
-	font-size: 1.06em;
+	font-size: 1.13em;
 	margin: 1.6em 0 0.4em;
 }
 
+/* Barely larger than the text, and slightly heavier, so the rank reads
+   without shouting. */
 .prose h4 {
-	font-size: 1em;
-	margin: 1.5em 0 0.4em;
+	font-size: 1.03em;
+	font-weight: 650;
+	margin: 1.4em 0 0.35em;
 }
 
 .prose p {
@@ -536,6 +582,41 @@ li:last-child > .tag-row {
 	height: 6px;
 	border-radius: 50%;
 	background: var(--rule-strong);
+}
+
+/* A bullet is one line of a list, not a paragraph: the paragraph margin
+   inside an item made every loose list read double-spaced. The item carries
+   a small gap of its own; a nested list sits tight under its parent line. */
+.prose li > p {
+	margin: 0;
+	padding: 2px 0;
+}
+
+.prose li > :is(ul, ol):not([class]) {
+	margin: 0.15em 0 0;
+}
+
+/* Task lists carry most of a plan's meaning; the box takes the bullet's
+   place and gets some presence. */
+.prose ul.contains-task-list {
+	margin: 0 0 0.9em;
+	padding-left: 34px;
+	list-style: none;
+}
+
+.prose li.task-list-item {
+	position: relative;
+	margin: 0.25em 0;
+}
+
+.prose li.task-list-item > input[type="checkbox"] {
+	position: absolute;
+	left: -26px;
+	top: 0.45em;
+	width: 14px;
+	height: 14px;
+	margin: 0;
+	accent-color: var(--ink);
 }
 
 .prose ol:not([class]) {
@@ -580,6 +661,134 @@ li:last-child > .tag-row {
 	font-style: italic;
 }
 
+/* ---------------------------------------------------------------------------
+   Alerts: `> [!NOTE]` and its four siblings, tagged by src/markdown/plugins.ts.
+
+   A callout is a quote with a colour, a tint, and its label worn as a badge.
+   The hue tokens live per paper above; only the shape is decided here.
+   --------------------------------------------------------------------------- */
+.prose blockquote.alert {
+	--alert-hue: var(--ink-2);
+
+	border-left-color: var(--alert-hue);
+	background: color-mix(in srgb, var(--alert-hue) 8%, transparent);
+	border-radius: 0 4px 4px 0;
+	padding: 0.6em 1em 0.1em;
+	color: var(--ink);
+	font-style: normal;
+}
+
+.prose blockquote.alert[data-alert="note"] {
+	--alert-hue: var(--alert-note);
+}
+
+.prose blockquote.alert[data-alert="tip"] {
+	--alert-hue: var(--alert-tip);
+}
+
+.prose blockquote.alert[data-alert="important"] {
+	--alert-hue: var(--alert-important);
+}
+
+.prose blockquote.alert[data-alert="warning"] {
+	--alert-hue: var(--alert-warning);
+}
+
+.prose blockquote.alert[data-alert="caution"] {
+	--alert-hue: var(--alert-caution);
+}
+
+.prose .alert-label {
+	display: inline-block;
+	font-family: var(--font-mono);
+	font-size: 0.68em;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	line-height: 1.6;
+	text-transform: uppercase;
+	color: var(--alert-hue);
+	border: 1px solid color-mix(in srgb, var(--alert-hue) 55%, transparent);
+	border-radius: 3px;
+	padding: 0 0.45em;
+	margin: 0 0.5em 0.1em 0;
+	vertical-align: 0.15em;
+}
+
+/* ---------------------------------------------------------------------------
+   Mermaid: the diagram sits under its source, as a figure under a caption.
+   The source is folded until the figure's chip asks for it.
+   --------------------------------------------------------------------------- */
+.prose pre.mermaid-source:not(.mermaid-source-shown) {
+	display: none;
+}
+
+.prose .mermaid-figure {
+	display: flex;
+	justify-content: center;
+	position: relative;
+	margin: 10px 0 1.8em;
+	padding: 18px 14px;
+	border: 1px solid var(--rule);
+	border-radius: 3px;
+	background: var(--paper);
+	overflow: hidden;
+}
+
+.prose .mermaid-figure .mermaid-stage {
+	width: 100%;
+}
+
+/* A tall diagram is capped rather than given the whole page: inline it is a
+   figure in a document, not the document. */
+.prose .mermaid-figure svg {
+	max-width: 100%;
+	max-height: 60vh;
+	height: auto;
+	display: block;
+	margin-inline: auto;
+}
+
+.mermaid-tools {
+	position: absolute;
+	top: 6px;
+	right: 6px;
+	display: flex;
+	gap: 4px;
+	opacity: 0;
+	transition: opacity 0.12s ease;
+}
+
+.mermaid-figure:hover .mermaid-tools,
+.mermaid-figure:focus-within .mermaid-tools {
+	opacity: 1;
+}
+
+.mermaid-tool {
+	padding: 2px 5px;
+	border: 1px solid var(--rule);
+	border-radius: 3px;
+	background: var(--raised);
+	font-family: var(--font-mono);
+	font-size: 9px;
+	line-height: 1.4;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: var(--ink-3);
+}
+
+.mermaid-tool:hover {
+	color: var(--ink);
+}
+
+/* A diagram that fails to parse says so quietly, in a line. */
+.prose .mermaid-figure.bad {
+	justify-content: flex-start;
+	font-family: var(--font-mono);
+	font-size: 10px;
+	letter-spacing: 0.06em;
+	color: var(--alert-warning);
+}
+
 .prose hr {
 	border: 0;
 	border-top: 1px solid var(--rule);
@@ -612,25 +821,124 @@ li:last-child > .tag-row {
 	border-radius: 3px;
 }
 
+/* Tables as the editor draws them: hairline rules in the page's own ink, a
+   head set off by weight and a rule, and a table wider than the measure
+   scrolling inside its own block rather than pushing the page sideways. */
+.prose .table-wrap {
+	display: block;
+	max-width: 100%;
+	overflow-x: auto;
+	margin: 1.1em 0;
+	-webkit-overflow-scrolling: touch;
+}
+
+/* Sized to fit first: `auto` shares the measure between the columns and
+   wraps the text in them; only when the columns cannot shrink any further
+   does it grow past the measure and scroll inside its block. */
 .prose table {
-	width: 100%;
 	border-collapse: collapse;
-	margin: 0 0 0.9em;
-	font-size: 0.88em;
+	border-spacing: 0;
+	width: auto;
+	min-width: min(100%, 24em);
+	max-width: none;
+	margin: 0;
+	font-size: 0.92em;
+	line-height: 1.45;
 }
 
-.prose thead th {
-	font-weight: 600;
+.prose th,
+.prose td {
+	border: 1px solid var(--rule);
+	padding: 0.4em 0.75em;
 	text-align: left;
+	vertical-align: top;
+	min-width: 4em;
+	white-space: normal;
+	overflow-wrap: break-word;
 	color: var(--ink);
-	border-bottom: 1px solid var(--rule-strong);
-	padding: 0.3em 0.9em 0.3em 0;
 }
 
-.prose tbody td {
-	border-bottom: 1px solid var(--rule);
-	padding: 0.3em 0.9em 0.3em 0;
+.prose th {
+	font-weight: 600;
+	border-bottom: 2px solid var(--ink-3);
+	background: var(--shade);
+}
+
+.prose tbody tr:nth-child(even) td {
+	background: color-mix(in srgb, var(--shade) 45%, transparent);
+}
+
+@media (width <= 620px) {
+	.prose table {
+		font-size: 0.86em;
+	}
+
+	.prose th,
+	.prose td {
+		padding: 0.35em 0.5em;
+		min-width: 3.5em;
+	}
+}
+
+/* A <details> section's head: the summary with a caret, folding what
+   follows — as the editor draws it. */
+.prose details {
+	margin: 0 0 0.9em;
+}
+
+.prose details > summary {
+	display: flex;
+	align-items: baseline;
+	gap: 0.5em;
+	padding: 0.35em 0.6em;
+	border: 1px solid var(--rule);
+	border-radius: 4px;
+	background: var(--shade);
 	color: var(--ink);
+	list-style: none;
+	cursor: pointer;
+}
+
+.prose details > summary::-webkit-details-marker {
+	display: none;
+}
+
+.prose details > summary::before {
+	content: "▶";
+	flex: none;
+	color: var(--ink-3);
+	font-size: 0.75em;
+	transition: transform 120ms;
+}
+
+.prose details > summary:hover {
+	border-color: var(--rule-strong);
+}
+
+.prose details[open] > summary::before {
+	transform: rotate(90deg);
+}
+
+.prose details > :not(summary) {
+	margin-top: 0.6em;
+}
+
+/* Footnotes collect under a rule, smaller and quieter than the text. */
+.prose .footnotes {
+	margin-top: 2.4em;
+	padding-top: 1em;
+	border-top: 1px solid var(--rule);
+	font-size: 0.88em;
+	color: var(--ink-2);
+}
+
+.prose .footnotes .sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
 }
 
 .prose kbd {
